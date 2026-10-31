@@ -29,7 +29,7 @@ jobs:
       - name: Unit tests and debug build
         run: |
           chmod +x gradlew
-          ./gradlew --console=plain testDebugUnitTest :app:assembleDebug
+          ./gradlew --console=plain --continue testDebugUnitTest :app:assembleDebug
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
