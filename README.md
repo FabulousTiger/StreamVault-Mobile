@@ -1,3 +1,79 @@
+# StreamVault Mobile Fork
+
+> **Based on [StreamVault](https://github.com/Davidona/StreamVault-IPTV) by David Nashash ([Davidona](https://github.com/Davidona)).**
+> This is an unofficial fork. It is not affiliated with or endorsed by the upstream project. Support the original developer on [Ko-fi](https://ko-fi.com/davidona).
+
+This repository is a personal fork of StreamVault focused on improving the Android mobile experience, synchronization reliability, load performance, sports discovery, and IPTV usability.
+
+The fork installs as a separate app (`com.streamvault.mobile`, shown as **StreamVault Mobile**), so it can sit next to the official StreamVault on the same device. In-app updates come from this fork's [Releases](https://github.com/FabulousTiger/StreamVault-Mobile/releases) page.
+
+## Goals
+
+- Faster initial data imports
+- Reliable background synchronization
+- Improved Samsung device compatibility
+- Dedicated mobile-first navigation
+- Sports schedule integration
+- Provider quality probing and ranking
+
+## Differences From Upstream
+
+| Area | Status | Change |
+|------|--------|--------|
+| Packaging | Done | Own application id `com.streamvault.mobile`, app name "StreamVault Mobile", signed with the fork's own key |
+| Updates | Done | In-app update checker points at this fork's releases |
+| About screen | Done | Extra "Based on StreamVault" and fork repository links; all upstream credits and links kept |
+| CI | Done | Every push to `main` builds a signed beta APK as a pre-release; PRs run unit tests and a debug build |
+| Background sync | Planned | Sync runs as foreground work with a progress notification, survives app close and screen lock, never blocks the UI |
+| Load performance | Planned | Staged import (live channels first), parallel fetches where the provider allows, larger batches on high-end devices |
+| Samsung | Planned | One-time prompt for the unrestricted battery setting so long syncs are not killed |
+| Mobile UI | Planned | Auto / TV / Mobile mode; bottom navigation, touch lists, player gestures, picture-in-picture |
+| Sports | Planned | Free schedule source with official broadcasters per match, broadcaster and EPG matching, merged channel list |
+| Probe & rank | Planned | Probe matched channels and rank by fps, resolution and bitrate; dead streams sorted last |
+
+See [FORK_NOTES.md](FORK_NOTES.md) for the technical details and [ROADMAP.md](ROADMAP.md) for the plan.
+
+## Download
+
+- **Beta:** every push to `main` publishes a pre-release `StreamVault.apk` on the [Releases](https://github.com/FabulousTiger/StreamVault-Mobile/releases) page. The beta build installs as `com.streamvault.mobile.beta`.
+- **Stable:** run the *Android CI and Release* workflow manually; it publishes a full release installed as `com.streamvault.mobile`.
+
+## Credits
+
+- **StreamVault** is created and maintained by **David Nashash (Davidona)**: <https://github.com/Davidona/StreamVault-IPTV>. All core functionality of this app comes from that project.
+- Thanks to all [upstream contributors](https://github.com/Davidona/StreamVault-IPTV/graphs/contributors) and translators.
+- Third-party libraries and their licenses: [docs/THIRD-PARTY-LICENSES.md](docs/THIRD-PARTY-LICENSES.md), FFmpeg notice: [docs/FFMPEG-LGPL-NOTICE.md](docs/FFMPEG-LGPL-NOTICE.md).
+- Support the original developer: <https://ko-fi.com/davidona>
+
+## Fork Policy
+
+- This project is **based on StreamVault** and derived from its source code.
+- The original [LICENSE](LICENSE) (StreamVault Source-Available License, Non-Commercial) stays in effect for all code in this repository, including the changes made here. This fork is non-commercial.
+- Ownership of StreamVault, its name and any trademarks remains with their respective owners. "StreamVault Mobile" is used only to identify this fork as derived from StreamVault.
+- Changes in this fork focus on mobile usability and performance. Fixes that are useful to everyone may be offered upstream as pull requests.
+- Bugs that also happen in the official app should be reported upstream; bugs in fork-only features belong in this repository's [issues](https://github.com/FabulousTiger/StreamVault-Mobile/issues).
+
+## Keeping Up To Date
+
+The fork tracks upstream `master` on its own `main` branch.
+
+```bash
+git remote add upstream https://github.com/Davidona/StreamVault-IPTV.git   # once
+git fetch upstream
+git checkout -b sync/upstream-$(date +%Y%m%d) main
+git merge upstream/master        # resolve conflicts, keep fork ids and credits
+./gradlew testDebugUnitTest      # or let the PR check run it
+git push -u origin HEAD          # open a PR into main
+```
+
+Watch these files during a merge, they carry fork-specific values: `app/build.gradle.kts` (application id), `app/src/main/res/values*/strings.xml` (`app_name`), `GitHubReleaseChecker.kt` (update repository), `.github/workflows/beta.yml` (branch `main`), and the About section. Record each upstream sync in [CHANGELOG.md](CHANGELOG.md).
+
+---
+
+# Upstream README
+
+The original StreamVault README follows unchanged.
+
 # StreamVault
 
 <p align="center">

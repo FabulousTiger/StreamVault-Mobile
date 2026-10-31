@@ -78,7 +78,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.streamvault.app"
+        applicationId = "com.streamvault.mobile"
         minSdk = 25
         targetSdk = 36
         versionCode = 24
@@ -91,7 +91,7 @@ android {
         providers.gradleProperty("compatApi").orNull?.let { expectedApi ->
             testInstrumentationRunnerArguments["expected_api"] = expectedApi
         }
-        buildConfigField("String", "OFFICIAL_APPLICATION_ID", "\"com.streamvault.app\"")
+        buildConfigField("String", "OFFICIAL_APPLICATION_ID", "\"com.streamvault.mobile\"")
         buildConfigField("String", "OFFICIAL_SIGNING_CERT_SHA256", "\"$officialSigningCertSha256\"")
         buildConfigField("String", "OPENSUBTITLES_API_KEY", buildStringLiteral(opensubtitlesApiKey.orEmpty()))
         buildConfigField("String", "APP_UPDATE_CHANNEL", "\"stable\"")

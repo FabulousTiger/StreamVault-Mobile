@@ -10,8 +10,8 @@ import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until
 import java.util.regex.Pattern
 
-internal const val RELEASE_TARGET_PACKAGE = "com.streamvault.app"
-internal const val SEEDED_DEBUG_PACKAGE = "com.streamvault.app.debug"
+internal const val RELEASE_TARGET_PACKAGE = "com.streamvault.mobile"
+internal const val SEEDED_DEBUG_PACKAGE = "com.streamvault.mobile.debug"
 private const val RELEASE_TARGET_ACTIVITY = "$RELEASE_TARGET_PACKAGE/com.streamvault.app.MainActivity"
 private const val SEEDED_DEBUG_ACTIVITY = "$SEEDED_DEBUG_PACKAGE/com.streamvault.app.MainActivity"
 private const val CLEAR_TASK_NEW_TASK_FLAGS = "0x10008000"

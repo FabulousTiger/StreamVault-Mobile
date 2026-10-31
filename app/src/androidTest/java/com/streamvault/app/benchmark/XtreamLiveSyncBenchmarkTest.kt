@@ -70,7 +70,7 @@ class XtreamLiveSyncBenchmarkTest {
         val args = InstrumentationRegistry.getArguments()
         assumeTrue(args.getString("xtreamSyncBenchmark") == "true")
         val app = ApplicationProvider.getApplicationContext<Application>()
-        check(app.packageName == "com.streamvault.app.syncbenchmark") {
+        check(app.packageName == "com.streamvault.mobile.syncbenchmark") {
             "Use the isolated APK built with -PxtreamSyncBenchmark=true"
         }
         val endpoint = requireNotNull(args.getString("fixtureUrl"))

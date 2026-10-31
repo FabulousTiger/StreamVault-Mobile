@@ -319,7 +319,7 @@ class TrueLiveWindowRuntimeTest {
         assertThat(logs).doesNotContain("live-ts-fallback")
         assertThat(logs).doesNotContain("fatal-error")
         assertThat(logs).doesNotContain("Player stuck")
-        assertThat(session).contains("com.streamvault.app.debug")
+        assertThat(session).contains("com.streamvault.mobile.debug")
         Log.i("V5DynamicLive", "complete behindLiveWindow=$sawBehind recoveredOffsetMs=$recoveredOffset prepares=$prepareCount " +
             "alphaRebuffers=${alphaEngine.playerStats.value.rebufferCount} betaRebuffers=${betaEngine.playerStats.value.rebufferCount}")
         // Leave the report readable through `run-as` before the connected-test

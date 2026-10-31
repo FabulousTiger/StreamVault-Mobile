@@ -130,7 +130,7 @@ internal data class CatalogSyncRuntimeProfile(
             }
         }
 
-        private const val BENCHMARK_APPLICATION_ID = "com.streamvault.app.syncbenchmark"
+        private const val BENCHMARK_APPLICATION_ID = "com.streamvault.mobile.syncbenchmark"
         private const val BENCHMARK_PROFILE_PREFERENCES = "xtream_sync_benchmark_profile"
         private const val KEY_TIER = "tier"
         private const val KEY_BATCH_SIZE = "batch_size"

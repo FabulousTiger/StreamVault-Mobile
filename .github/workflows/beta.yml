@@ -3,7 +3,7 @@ name: Android Beta Build
 on:
   push:
     branches:
-      - develop
+      - main
   workflow_dispatch:
 
 permissions:
@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build-beta:
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
       TRAKT_CLIENT_ID: ${{ secrets.TRAKT_CLIENT_ID }}
@@ -107,7 +107,7 @@ jobs:
 
   publish-beta:
     needs: build-beta
-    if: github.ref == 'refs/heads/develop'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -146,7 +146,7 @@ jobs:
           target_commitish: ${{ github.sha }}
           name: StreamVault Beta ${{ steps.app_version.outputs.version_name }} build ${{ steps.app_version.outputs.beta_sequence }}
           body: |
-            Automated beta build from `develop`.
+            Automated beta build from `main`.
 
             Beta sequence: `${{ steps.app_version.outputs.beta_sequence }}`
             Commit: `${{ github.sha }}`

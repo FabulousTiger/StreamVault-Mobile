@@ -1,0 +1,62 @@
+name: Bug report
+description: Something in StreamVault Mobile is broken or slow
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This is the StreamVault Mobile fork. If the same bug happens in the official StreamVault app, please report it upstream: https://github.com/Davidona/StreamVault-IPTV/issues
+        Never post provider URLs, usernames or passwords.
+  - type: input
+    id: version
+    attributes:
+      label: App version
+      description: Settings → About → Build
+      placeholder: 1.2.2-beta.3
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and Android version
+      placeholder: Samsung Galaxy S22 Ultra, Android 14
+    validations:
+      required: true
+  - type: dropdown
+    id: provider
+    attributes:
+      label: Provider type
+      options: [Xtream Codes, M3U, Stalker Portal, Jellyfin, Not provider related]
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: [Sync / loading, Live TV, Player, Guide / EPG, Sports, Movies / Series, Downloads, Settings, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+  - type: dropdown
+    id: upstream
+    attributes:
+      label: Does it also happen in the official StreamVault app?
+      options: ["Not tested", "Yes", "No"]
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or crash report
+      description: Settings → Support → crash report share, with credentials removed.
+      render: text

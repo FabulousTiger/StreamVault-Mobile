@@ -761,6 +761,10 @@
     <string name="settings_developer_name">David Nashash</string>
     <string name="settings_github">GitHub</string>
     <string name="settings_github_url">https://github.com/Davidona</string>
+    <string name="settings_upstream_repo" translatable="false">Based on StreamVault</string>
+    <string name="settings_upstream_repo_url" translatable="false">https://github.com/Davidona/StreamVault-IPTV</string>
+    <string name="settings_fork_repo" translatable="false">StreamVault Mobile fork</string>
+    <string name="settings_fork_repo_url" translatable="false">https://github.com/FabulousTiger/StreamVault-Mobile</string>
     <string name="settings_donate">Support on Ko-fi</string>
     <string name="settings_donate_url">https://ko-fi.com/davidona</string>
     <string name="settings_clear_history_dialog_title">Clear Watch History?</string>

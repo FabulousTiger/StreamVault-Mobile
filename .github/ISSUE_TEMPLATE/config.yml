@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Upstream StreamVault issues
+    url: https://github.com/Davidona/StreamVault-IPTV/issues
+    about: Bugs that also happen in the official StreamVault app
+  - name: StreamVault Discord
+    url: https://discord.gg/FrkumnnTz
+    about: Upstream community
