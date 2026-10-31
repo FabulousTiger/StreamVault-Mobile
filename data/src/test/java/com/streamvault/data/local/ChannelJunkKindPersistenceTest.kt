@@ -4,6 +4,7 @@ import androidx.room.Room
 import com.google.common.truth.Truth.assertThat
 import com.streamvault.data.local.entity.ChannelEntity
 import com.streamvault.data.local.entity.ChannelImportStageEntity
+import com.streamvault.data.local.entity.ProviderConfigEntity
 import com.streamvault.data.local.entity.ProviderEntity
 import com.streamvault.domain.model.ProviderType
 import com.streamvault.domain.util.LiveChannelJunkKind
@@ -34,6 +35,17 @@ class ChannelJunkKindPersistenceTest {
 
     private suspend fun seed() {
         database.providerDao().insert(ProviderEntity(id = 7, name = "P", type = ProviderType.M3U))
+        database.providerSnapshotDao().commitConfiguration(
+            ProviderConfigEntity(
+                providerId = 7,
+                type = ProviderType.M3U,
+                schemaVersion = 1,
+                configurationGeneration = 1,
+                identityKey = "identity",
+                encryptedConfigJson = "{}",
+                updatedAt = 1
+            )
+        )
         database.channelDao().insertAll(
             listOf(
                 channel(1, "CNN", 10),

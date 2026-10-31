@@ -86,7 +86,7 @@ class FeatureMigrationsV87To88Test {
     @Test
     fun `backfill is idempotent and spans several read batches`() {
         db.beginTransaction()
-        for (id in 1L..12_000L) insert(id, if (id % 1000 == 0L) "=== H$id ===" else "Channel $id")
+        for (id in 1L..12_000L) insert(id, if (id % 1000 == 0L) "=== H$id ===" else "Ch$id")
         db.setTransactionSuccessful()
         db.endTransaction()
 
