@@ -1,5 +1,6 @@
 package com.streamvault.feature.settings.presentation
 
+import com.streamvault.core.ui.input.withExternalText
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -179,24 +180,10 @@ fun EpgSourceTextField(
         }
     }
 
+    val echoGuard = remember { com.streamvault.core.ui.input.TextEchoGuard() }
     LaunchedEffect(value) {
-        if (value != fieldValue.text) {
-            val coercedSelectionStart = fieldValue.selection.start.coerceIn(0, value.length)
-            val coercedSelectionEnd = fieldValue.selection.end.coerceIn(0, value.length)
-            val coercedComposition = fieldValue.composition?.let { composition ->
-                val compositionStart = composition.start.coerceIn(0, value.length)
-                val compositionEnd = composition.end.coerceIn(0, value.length)
-                if (compositionStart <= compositionEnd) {
-                    TextRange(compositionStart, compositionEnd)
-                } else {
-                    null
-                }
-            }
-            fieldValue = fieldValue.copy(
-                text = value,
-                selection = TextRange(coercedSelectionStart, coercedSelectionEnd),
-                composition = coercedComposition
-            )
+        if (echoGuard.shouldAdopt(value, fieldValue.text)) {
+            fieldValue = fieldValue.withExternalText(value)
         }
     }
 
@@ -264,8 +251,10 @@ fun EpgSourceTextField(
             BasicTextField(
                 value = fieldValue,
                 onValueChange = { updatedValue ->
+                    val textChanged = updatedValue.text != fieldValue.text
                     fieldValue = updatedValue
-                    if (updatedValue.text != value) {
+                    if (textChanged) {
+                        echoGuard.noteLocalEdit(updatedValue.text)
                         onValueChange(updatedValue.text)
                     }
                 },

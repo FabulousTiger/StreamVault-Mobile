@@ -1,5 +1,6 @@
 package com.streamvault.feature.live.presentation.epg
 
+import com.streamvault.core.ui.input.withExternalText
 import android.view.inputmethod.InputMethodManager
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -79,8 +80,9 @@ fun LiveGuideProgramSearchRow(
     var localQuery by rememberSaveable { mutableStateOf(query) }
     var refocusToken by rememberSaveable { mutableStateOf(0) }
 
+    val echoGuard = remember { com.streamvault.core.ui.input.TextEchoGuard() }
     LaunchedEffect(query) {
-        if (query != localQuery) {
+        if (echoGuard.shouldAdopt(query, localQuery)) {
             localQuery = query
         }
     }
@@ -93,6 +95,7 @@ fun LiveGuideProgramSearchRow(
         }
         delay(250)
         if (localQuery != query) {
+            echoGuard.noteLocalEdit(localQuery)
             onQueryChange(localQuery)
         }
     }
@@ -229,24 +232,10 @@ fun LiveGuideSearchField(
         requestBringIntoView(120)
     }
 
+    val echoGuard = remember { com.streamvault.core.ui.input.TextEchoGuard() }
     LaunchedEffect(value) {
-        if (value != textFieldValue.text) {
-            val coercedSelectionStart = textFieldValue.selection.start.coerceIn(0, value.length)
-            val coercedSelectionEnd = textFieldValue.selection.end.coerceIn(0, value.length)
-            val coercedComposition = textFieldValue.composition?.let { composition ->
-                val compositionStart = composition.start.coerceIn(0, value.length)
-                val compositionEnd = composition.end.coerceIn(0, value.length)
-                if (compositionStart <= compositionEnd) {
-                    TextRange(compositionStart, compositionEnd)
-                } else {
-                    null
-                }
-            }
-            textFieldValue = textFieldValue.copy(
-                text = value,
-                selection = TextRange(coercedSelectionStart, coercedSelectionEnd),
-                composition = coercedComposition
-            )
+        if (echoGuard.shouldAdopt(value, textFieldValue.text)) {
+            textFieldValue = textFieldValue.withExternalText(value)
         }
     }
 
@@ -299,8 +288,10 @@ fun LiveGuideSearchField(
                 BasicTextField(
                     value = textFieldValue,
                     onValueChange = { updatedValue ->
+                        val textChanged = updatedValue.text != textFieldValue.text
                         textFieldValue = updatedValue
-                        if (updatedValue.text != value) {
+                        if (textChanged) {
+                            echoGuard.noteLocalEdit(updatedValue.text)
                             onValueChange(updatedValue.text)
                         }
                     },
