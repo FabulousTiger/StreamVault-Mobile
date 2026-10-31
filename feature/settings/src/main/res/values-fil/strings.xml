@@ -202,8 +202,12 @@
     <string name="settings_customize_home">I-customize ang Home</string>
     <string name="settings_default_landing_screen">Default na landing screen</string>
     <string name="settings_guide_default_category">Default na kategorya ng guide</string>
-    <string name="settings_hide_decorative_live_rows">Itago ang mga decorative provider row</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Itago ang mga hindi ma-play na section header tulad ng `#### GENERAL HD/4K ####` sa mga listahan at bilang ng Live TV.</string>
+    <string name="settings_hide_decorative_live_rows">Itago ang mga header/separator row</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Itago ang mga header ng seksyon at separator tulad ng `#### UK SPORTS ####` o `----- NL -----` sa mga listahan, bilang, gabay, at paghahanap ng Live TV.</string>
+    <string name="settings_hide_live_loop_channels">Itago ang mga 24/7 na channel</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Itago ang mga 24/7 na channel na walang tigil na umuulit sa mga listahan, bilang, gabay, at paghahanap ng Live TV.</string>
+    <string name="settings_hide_live_radio_channels">Itago ang mga radio channel</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Itago ang mga radio channel sa mga listahan, bilang, gabay, at paghahanap ng Live TV.</string>
     <string name="settings_live_tv_quick_filters">Mga Quick Filter ng Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Gumagana sa mga remote na nagpapadala ng Android red, green, yellow, at blue color key code.</string>
     <string name="settings_remote_shortcuts_title">Mga Colored Button ng Remote</string>

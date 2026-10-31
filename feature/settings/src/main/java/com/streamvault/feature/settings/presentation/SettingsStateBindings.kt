@@ -110,6 +110,8 @@ fun observeSettingsPreferenceSnapshot(
             liveTvCategoryFilters = emptyList(),
             liveTvQuickFilterVisibilityMode = LiveTvQuickFilterVisibilityMode.ALWAYS_VISIBLE,
             hideDecorativeLiveRows = true,
+            hideLiveLoopChannels = false,
+            hideLiveRadioChannels = false,
             liveChannelNumberingMode = ChannelNumberingMode.GROUP,
             liveChannelGroupingMode = LiveChannelGroupingMode.RAW_VARIANTS,
             groupedChannelLabelMode = GroupedChannelLabelMode.HYBRID,
@@ -272,6 +274,10 @@ fun observeSettingsPreferenceSnapshot(
         )
     }.combine(preferencesRepository.hideDecorativeLiveRows) { snapshot, hideDecorativeLiveRows ->
         snapshot.copy(hideDecorativeLiveRows = hideDecorativeLiveRows)
+    }.combine(preferencesRepository.hideLiveLoopChannels) { snapshot, hideLiveLoopChannels ->
+        snapshot.copy(hideLiveLoopChannels = hideLiveLoopChannels)
+    }.combine(preferencesRepository.hideLiveRadioChannels) { snapshot, hideLiveRadioChannels ->
+        snapshot.copy(hideLiveRadioChannels = hideLiveRadioChannels)
     }.combine(preferencesRepository.liveChannelNumberingMode) { snapshot, liveChannelNumberingMode ->
         snapshot.copy(liveChannelNumberingMode = liveChannelNumberingMode)
     }.combine(preferencesRepository.liveChannelGroupingMode) { snapshot, liveChannelGroupingMode ->

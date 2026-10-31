@@ -202,8 +202,12 @@
     <string name="settings_customize_home">Personalizo ekranin kryesor</string>
     <string name="settings_default_landing_screen">Ekrani fillestar i parazgjedhur</string>
     <string name="settings_guide_default_category">Kategoria e parazgjedhur e guidës</string>
-    <string name="settings_hide_decorative_live_rows">Fshih rreshtat dekorativë të ofruesit</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Fshih titujt e seksioneve që nuk luhen, si `#### GENERAL HD/4K ####`, nga listat dhe numërimet e Live TV.</string>
+    <string name="settings_hide_decorative_live_rows">Fshih rreshtat e titujve/ndarësve</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Fsheh titujt e seksioneve dhe ndarësit si `#### UK SPORTS ####` ose `----- NL -----` nga listat, numërimet, udhëzuesi dhe kërkimi i TV Live.</string>
+    <string name="settings_hide_live_loop_channels">Fshih kanalet 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Fsheh kanalet 24/7 që përsëriten pa fund nga listat, numërimet, udhëzuesi dhe kërkimi i TV Live.</string>
+    <string name="settings_hide_live_radio_channels">Fshih kanalet e radios</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Fsheh kanalet e radios nga listat, numërimet, udhëzuesi dhe kërkimi i TV Live.</string>
     <string name="settings_live_tv_quick_filters">Filtrat e shpejtë të Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Funksionon me telekomandat që dërgojnë kodet e tasteve me ngjyra të Android: të kuqe, të gjelbër, të verdhë dhe blu.</string>
     <string name="settings_remote_shortcuts_title">Tastet me ngjyra të telekomandës</string>

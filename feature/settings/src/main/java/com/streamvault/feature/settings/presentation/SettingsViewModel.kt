@@ -728,6 +728,18 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    fun setHideLiveLoopChannels(hide: Boolean) {
+        viewModelScope.launch {
+            preferencesRepository.setHideLiveLoopChannels(hide)
+        }
+    }
+
+    fun setHideLiveRadioChannels(hide: Boolean) {
+        viewModelScope.launch {
+            preferencesRepository.setHideLiveRadioChannels(hide)
+        }
+    }
+
     fun setLiveChannelGroupingMode(mode: LiveChannelGroupingMode) {
         viewModelScope.launch {
             preferencesRepository.setLiveChannelGroupingMode(mode)

@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Startscherm aanpassen</string>
     <string name="settings_default_landing_screen">Standaard startscherm</string>
     <string name="settings_guide_default_category">Standaardcategorie gids</string>
-    <string name="settings_hide_decorative_live_rows">Decoratieve providerrijen verbergen</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Verberg niet-afspeelbare sectiekoppen zoals `#### GENERAL HD/4K ####` in Live TV-lijsten en -tellingen.</string>
+    <string name="settings_hide_decorative_live_rows">Kop- en scheidingsrijen verbergen</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Verbergt sectiekoppen en scheidingsrijen zoals `#### UK SPORTS ####` of `----- NL -----` in lijsten, aantallen, gids en zoekresultaten van live-tv.</string>
+    <string name="settings_hide_live_loop_channels">24/7-zenders verbergen</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Verbergt eindeloos herhalende 24/7-zenders in lijsten, aantallen, gids en zoekresultaten van live-tv.</string>
+    <string name="settings_hide_live_radio_channels">Radiozenders verbergen</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Verbergt radiozenders in lijsten, aantallen, gids en zoekresultaten van live-tv.</string>
     <string name="settings_live_tv_quick_filters">Snelfilters voor Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Werkt op afstandsbedieningen die de rode, groene, gele en blauwe Android-kleurcodes verzenden.</string>
     <string name="settings_remote_shortcuts_title">Gekleurde afstandsbedieningsknoppen</string>

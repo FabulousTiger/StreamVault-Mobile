@@ -7,6 +7,7 @@ import com.streamvault.data.local.dao.ChannelDao
 import com.streamvault.data.local.dao.FavoriteDao
 import com.streamvault.data.local.dao.ProviderSnapshotDao
 import com.streamvault.data.local.entity.CategoryCount
+import com.streamvault.data.local.entity.ChannelJunkProbe
 import com.streamvault.data.local.entity.ChannelBrowseEntity
 import com.streamvault.data.local.entity.CategoryEntity
 import com.streamvault.data.local.entity.ProviderConfigEntity
@@ -65,8 +66,46 @@ class ChannelRepositoryImplTest {
         whenever(preferencesRepository.liveVariantSelections).thenReturn(flowOf(emptyMap()))
         whenever(preferencesRepository.liveVariantObservations).thenReturn(flowOf(emptyMap()))
         whenever(preferencesRepository.hideDecorativeLiveRows).thenReturn(flowOf(true))
+        whenever(preferencesRepository.hideLiveLoopChannels).thenReturn(flowOf(false))
+        whenever(preferencesRepository.hideLiveRadioChannels).thenReturn(flowOf(false))
         whenever(preferencesRepository.getHiddenChannelIds(any())).thenReturn(flowOf(emptySet()))
         whenever(providerSnapshotDao.getConfigSync(any())).thenReturn(null)
+    }
+
+    private fun junkProbes(vararg counts: Pair<Long, Int>): List<ChannelJunkProbe> =
+        counts.flatMap { (categoryId, n) ->
+            (1..n).map { index ->
+                ChannelJunkProbe(
+                    id = categoryId * 1000 + index,
+                    categoryId = categoryId,
+                    name = "Channel $categoryId-$index",
+                    logicalGroupId = "group-$categoryId-$index"
+                )
+            }
+        }
+
+    @Test
+    fun `junk filters hide separators, loops and radio from category counts and total`() = runTest {
+        whenever(preferencesRepository.hideLiveLoopChannels).thenReturn(flowOf(true))
+        whenever(preferencesRepository.hideLiveRadioChannels).thenReturn(flowOf(true))
+        whenever(categoryDao.getByProviderAndType(7L, ContentType.LIVE.name)).thenReturn(
+            flowOf(listOf(categoryEntity(id = 10L, name = "Mixed")))
+        )
+        val probes = listOf(
+            ChannelJunkProbe(id = 1, categoryId = 10L, name = "CNN", logicalGroupId = "cnn"),
+            ChannelJunkProbe(id = 2, categoryId = 10L, name = "Sky Sports 24", logicalGroupId = "sky"),
+            ChannelJunkProbe(id = 3, categoryId = 10L, name = "----- NL -----", logicalGroupId = "nl"),
+            ChannelJunkProbe(id = 4, categoryId = 10L, name = "Friends 24/7", logicalGroupId = "friends"),
+            ChannelJunkProbe(id = 5, categoryId = 10L, name = "Hits FM", categoryName = "UK | RADIO", logicalGroupId = "hits")
+        )
+        whenever(channelDao.getJunkProbes(7L)).thenReturn(flowOf(probes))
+        whenever(parentalControlManager.unlockedCategoriesForProvider(7L)).thenReturn(flowOf(emptySet()))
+
+        val repository = createRepository()
+
+        assertThat(repository.getCategories(7L).first().map { it.name to it.count })
+            .containsExactly("All Channels" to 2, "Mixed" to 2).inOrder()
+        assertThat(repository.getChannelCount(7L).first()).isEqualTo(2)
     }
 
     @Test
@@ -79,12 +118,9 @@ class ChannelRepositoryImplTest {
                 )
             )
         )
-        whenever(channelDao.getGroupedCategoryCounts(7L)).thenReturn(
+        whenever(channelDao.getJunkProbes(7L)).thenReturn(
             flowOf(
-                listOf(
-                    CategoryCount(categoryId = 10L, item_count = 4),
-                    CategoryCount(categoryId = 20L, item_count = 6)
-                )
+                junkProbes(10L to 4, 20L to 6)
             )
         )
         whenever(parentalControlManager.unlockedCategoriesForProvider(7L)).thenReturn(flowOf(emptySet()))
@@ -98,7 +134,7 @@ class ChannelRepositoryImplTest {
             "News" to 4,
             "Sports" to 6
         ).inOrder()
-        verify(channelDao).getGroupedCategoryCounts(7L)
+        verify(channelDao).getJunkProbes(7L)
         verify(channelDao, never()).getByProvider(any())
     }
 
@@ -122,7 +158,7 @@ class ChannelRepositoryImplTest {
             "News" to 5
         ).inOrder()
         verify(channelDao).getRawGroupedCategoryCounts(7L)
-        verify(channelDao, never()).getGroupedCategoryCounts(7L)
+        verify(channelDao, never()).getJunkProbes(7L)
     }
 
     @Test
@@ -135,12 +171,9 @@ class ChannelRepositoryImplTest {
                 )
             )
         )
-        whenever(channelDao.getGroupedCategoryCounts(7L)).thenReturn(
+        whenever(channelDao.getJunkProbes(7L)).thenReturn(
             flowOf(
-                listOf(
-                    CategoryCount(categoryId = 10L, item_count = 3),
-                    CategoryCount(categoryId = 20L, item_count = 5)
-                )
+                junkProbes(10L to 3, 20L to 5)
             )
         )
         whenever(preferencesRepository.parentalControlLevel).thenReturn(flowOf(2))
@@ -168,12 +201,9 @@ class ChannelRepositoryImplTest {
                 )
             )
         )
-        whenever(channelDao.getGroupedCategoryCounts(7L)).thenReturn(
+        whenever(channelDao.getJunkProbes(7L)).thenReturn(
             flowOf(
-                listOf(
-                    CategoryCount(categoryId = 10L, item_count = 3),
-                    CategoryCount(categoryId = 20L, item_count = 5)
-                )
+                junkProbes(10L to 3, 20L to 5)
             )
         )
         whenever(preferencesRepository.parentalControlLevel).thenReturn(flowOf(3))
@@ -194,11 +224,9 @@ class ChannelRepositoryImplTest {
         val categoryEntities = kotlinx.coroutines.flow.MutableStateFlow(
             listOf(categoryEntity(id = 10L, name = "Old"))
         )
-        val categoryCounts = kotlinx.coroutines.flow.MutableStateFlow(
-            listOf(CategoryCount(categoryId = 10L, item_count = 1))
-        )
+        val categoryCounts = kotlinx.coroutines.flow.MutableStateFlow(junkProbes(10L to 1))
         whenever(categoryDao.getByProviderAndType(7L, ContentType.LIVE.name)).thenReturn(categoryEntities)
-        whenever(channelDao.getGroupedCategoryCounts(7L)).thenReturn(categoryCounts)
+        whenever(channelDao.getJunkProbes(7L)).thenReturn(categoryCounts)
         whenever(parentalControlManager.unlockedCategoriesForProvider(7L)).thenReturn(flowOf(emptySet()))
 
         val repository = createRepository()
@@ -206,7 +234,7 @@ class ChannelRepositoryImplTest {
         verify(categoryFlowCache, times(1)).getOrCreate(eq(7L), any())
 
         categoryEntities.value = listOf(categoryEntity(id = 20L, name = "New"))
-        categoryCounts.value = listOf(CategoryCount(categoryId = 20L, item_count = 2))
+        categoryCounts.value = junkProbes(20L to 2)
 
         assertThat(repository.getCategoriesSnapshot(7L).map { it.name })
             .containsExactly("All Channels", "New")
@@ -225,12 +253,9 @@ class ChannelRepositoryImplTest {
                 )
             )
         )
-        whenever(channelDao.getGroupedCategoryCounts(7L)).thenReturn(
+        whenever(channelDao.getJunkProbes(7L)).thenReturn(
             flowOf(
-                listOf(
-                    CategoryCount(categoryId = 10L, item_count = 3),
-                    CategoryCount(categoryId = 20L, item_count = 5)
-                )
+                junkProbes(10L to 3, 20L to 5)
             )
         )
         whenever(parentalControlManager.unlockedCategoriesForProvider(7L)).thenReturn(flowOf(emptySet()))

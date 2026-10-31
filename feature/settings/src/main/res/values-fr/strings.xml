@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Personnaliser l’accueil</string>
     <string name="settings_default_landing_screen">Écran d’accueil par défaut</string>
     <string name="settings_guide_default_category">Catégorie par défaut du guide</string>
-    <string name="settings_hide_decorative_live_rows">Masquer les lignes décoratives du fournisseur</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Masquer les en-têtes de section non lisibles tels que `#### GENERAL HD/4K ####` des listes et des compteurs de la TV en direct.</string>
+    <string name="settings_hide_decorative_live_rows">Masquer les lignes d’en-tête et de séparation</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Masque les en-têtes de section et séparateurs tels que `#### UK SPORTS ####` ou `----- NL -----` dans les listes, compteurs, guide et recherche de la TV en direct.</string>
+    <string name="settings_hide_live_loop_channels">Masquer les chaînes 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Masque les chaînes 24/7 qui tournent en boucle dans les listes, compteurs, guide et recherche de la TV en direct.</string>
+    <string name="settings_hide_live_radio_channels">Masquer les chaînes de radio</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Masque les chaînes de radio dans les listes, compteurs, guide et recherche de la TV en direct.</string>
     <string name="settings_live_tv_quick_filters">Filtres rapides TV en direct</string>
     <string name="settings_remote_shortcuts_subtitle">Fonctionne sur les télécommandes qui envoient les codes des boutons de couleur rouge, vert, jaune et bleu d’Android.</string>
     <string name="settings_remote_shortcuts_title">Boutons de couleur de la télécommande</string>

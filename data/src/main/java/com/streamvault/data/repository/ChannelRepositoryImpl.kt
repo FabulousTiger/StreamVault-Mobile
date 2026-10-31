@@ -10,6 +10,7 @@ import com.streamvault.data.local.dao.ProviderSnapshotDao
 import com.streamvault.data.local.entity.CategoryEntity
 import com.streamvault.data.local.entity.ChannelBrowseEntity
 import com.streamvault.data.local.entity.CategoryCount
+import com.streamvault.data.local.entity.ChannelJunkProbe
 import com.streamvault.data.mapper.toDomain
 import com.streamvault.data.preferences.PreferencesRepository
 import com.streamvault.data.provider.ProviderConfigurationCodec
@@ -38,11 +39,13 @@ import com.streamvault.domain.model.StreamInfo
 import com.streamvault.domain.model.StreamType
 import com.streamvault.domain.repository.ChannelRepository
 import com.streamvault.domain.util.ChannelNormalizer
+import com.streamvault.domain.util.LiveJunkFilter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -93,9 +96,11 @@ class ChannelRepositoryImpl @Inject constructor(
         observeChannels(channelDao.getByProvider(providerId), providerId)
 
     override fun getChannelCount(providerId: Long): Flow<Int> =
-        preferencesRepository.hideDecorativeLiveRows.flatMapLatest { hideDecorativeRows ->
-            if (hideDecorativeRows) {
-                channelDao.getCount(providerId)
+        liveJunkFilterFlow().flatMapLatest { junkFilter ->
+            if (junkFilter.isActive) {
+                channelDao.getJunkProbes(providerId).map { probes ->
+                    probes.count { !junkFilter.hides(it.name, it.categoryName ?: it.groupTitle) }
+                }
             } else {
                 channelDao.getRawCount(providerId)
             }
@@ -158,7 +163,7 @@ class ChannelRepositoryImpl @Inject constructor(
         val level = preferencesRepository.parentalControlLevel.first()
         val unlockedCats = parentalControlManager.unlockedCategoriesForProvider(providerId).first()
         val hiddenIds = preferencesRepository.getHiddenChannelIds(providerId).first()
-        val hideDecorativeRows = preferencesRepository.hideDecorativeLiveRows.first()
+        val hideDecorativeRows = liveJunkFilterFlow().first()
         val entities = if (categoryId == ChannelRepository.ALL_CHANNELS_ID) {
             if (withoutErrors) channelDao.getByProviderWithoutErrorsBrowsePageOffset(providerId, limit, offset)
             else channelDao.getByProviderBrowsePageOffset(providerId, limit, offset)
@@ -334,7 +339,7 @@ class ChannelRepositoryImpl @Inject constructor(
                 entityPoolFlow,
                 preferencesRepository.parentalControlLevel,
                 currentPresentationSettingsFlow(),
-                preferencesRepository.hideDecorativeLiveRows
+                liveJunkFilterFlow()
             ) { requested, entityPool, level, settings, hideDecorativeRows ->
                 val filteredRequested = applyVisibilityFilter(requested, level, emptySet(), hideDecorativeRows)
                 val filteredPool = applyVisibilityFilter(entityPool, level, emptySet(), hideDecorativeRows)
@@ -381,7 +386,7 @@ class ChannelRepositoryImpl @Inject constructor(
         ) { entities, level, unlockedCats, settings, hiddenIds ->
             arrayOf(entities, level, unlockedCats, settings, hiddenIds)
         },
-        preferencesRepository.hideDecorativeLiveRows
+        liveJunkFilterFlow()
     ) { values, hideDecorativeRows ->
         @Suppress("UNCHECKED_CAST")
         val entities = values[0] as List<ChannelBrowseEntity>
@@ -405,21 +410,41 @@ class ChannelRepositoryImpl @Inject constructor(
     private fun decorativeAwareCategoryCountFlow(providerId: Long): Flow<List<CategoryCount>> =
         combine(
             preferencesRepository.liveChannelGroupingMode,
-            preferencesRepository.hideDecorativeLiveRows
-        ) { groupingMode, hideDecorativeRows ->
-            groupingMode to hideDecorativeRows
-        }.flatMapLatest { (groupingMode, hideDecorativeRows) ->
+            liveJunkFilterFlow()
+        ) { groupingMode, junkFilter ->
+            groupingMode to junkFilter
+        }.flatMapLatest { (groupingMode, junkFilter) ->
+            val grouped = groupingMode == LiveChannelGroupingMode.GROUPED
             when {
-                groupingMode == LiveChannelGroupingMode.GROUPED && hideDecorativeRows ->
-                    channelDao.getGroupedCategoryCounts(providerId)
-                groupingMode == LiveChannelGroupingMode.GROUPED ->
-                    channelDao.getRawGroupedCategoryCounts(providerId)
-                hideDecorativeRows ->
-                    channelDao.getCategoryCounts(providerId)
-                else ->
-                    channelDao.getRawCategoryCounts(providerId)
+                junkFilter.isActive -> channelDao.getJunkProbes(providerId).map { probes ->
+                    junkAwareCategoryCounts(probes, junkFilter, grouped)
+                }.flowOn(Dispatchers.Default)
+                grouped -> channelDao.getRawGroupedCategoryCounts(providerId)
+                else -> channelDao.getRawCategoryCounts(providerId)
             }
         }
+
+    private fun liveJunkFilterFlow(): Flow<LiveJunkFilter> = combine(
+        preferencesRepository.hideDecorativeLiveRows,
+        preferencesRepository.hideLiveLoopChannels,
+        preferencesRepository.hideLiveRadioChannels,
+        ::LiveJunkFilter
+    ).distinctUntilChanged()
+
+    private fun junkAwareCategoryCounts(
+        probes: List<ChannelJunkProbe>,
+        junkFilter: LiveJunkFilter,
+        grouped: Boolean
+    ): List<CategoryCount> {
+        val kept = HashMap<Long, MutableSet<Any>>()
+        probes.forEach { probe ->
+            val categoryId = probe.categoryId ?: return@forEach
+            if (junkFilter.hides(probe.name, probe.categoryName ?: probe.groupTitle)) return@forEach
+            val key: Any = if (grouped && probe.logicalGroupId.isNotEmpty()) probe.logicalGroupId else probe.id
+            kept.getOrPut(categoryId) { HashSet() }.add(key)
+        }
+        return kept.map { (categoryId, keys) -> CategoryCount(categoryId, keys.size) }
+    }
 
     private fun currentPresentationSettingsFlow(): Flow<ChannelPresentationSettings> =
         combine(
@@ -744,11 +769,11 @@ class ChannelRepositoryImpl @Inject constructor(
         entities: List<ChannelBrowseEntity>,
         level: Int,
         unlockedCats: Set<Long>,
-        hideDecorativeRows: Boolean
+        hideDecorativeRows: LiveJunkFilter
     ): List<ChannelBrowseEntity> {
-        val usable = if (hideDecorativeRows) {
+        val usable = if (hideDecorativeRows.isActive) {
             entities.filterNot { entity ->
-                ChannelNormalizer.isHashWrappedHeader(entity.name)
+                hideDecorativeRows.hides(entity.name, entity.categoryName ?: entity.groupTitle)
             }
         } else {
             entities

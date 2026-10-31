@@ -177,6 +177,18 @@ public fun LazyListScope.settingsBrowsingSection(
                     onCheckedChange = viewModel::setHideDecorativeLiveRows
                 ,
                     modifier = if (targetItemId == "live.hide_decorative_rows") targetFocusModifier else Modifier,)
+                SwitchSettingsRow(
+                    label = stringResource(R.string.settings_hide_live_loop_channels),
+                    value = stringResource(R.string.settings_hide_live_loop_channels_subtitle),
+                    checked = uiState.hideLiveLoopChannels,
+                    onCheckedChange = viewModel::setHideLiveLoopChannels,
+                    modifier = if (targetItemId == "live.hide_loop_channels") targetFocusModifier else Modifier,)
+                SwitchSettingsRow(
+                    label = stringResource(R.string.settings_hide_live_radio_channels),
+                    value = stringResource(R.string.settings_hide_live_radio_channels_subtitle),
+                    checked = uiState.hideLiveRadioChannels,
+                    onCheckedChange = viewModel::setHideLiveRadioChannels,
+                    modifier = if (targetItemId == "live.hide_radio_channels") targetFocusModifier else Modifier,)
                 ClickableSettingsRow(
                     label = stringResource(R.string.settings_live_channel_numbering_mode),
                     value = stringResource(uiState.liveChannelNumberingMode.labelResId()),

@@ -212,8 +212,12 @@
     <string name="settings_customize_home">Customize Home</string>
     <string name="settings_default_landing_screen">Default landing screen</string>
     <string name="settings_guide_default_category">Guide default category</string>
-    <string name="settings_hide_decorative_live_rows">Hide decorative provider rows</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Hide non-playable section headers such as `#### GENERAL HD/4K ####` from Live TV lists and counts.</string>
+    <string name="settings_hide_decorative_live_rows">Hide header/separator rows</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Hide section headers and separators such as `#### UK SPORTS ####` or `----- NL -----` from Live TV lists, counts, guide and search.</string>
+    <string name="settings_hide_live_loop_channels">Hide 24/7 channels</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Hide endlessly looping 24/7 channels from Live TV lists, counts, guide and search.</string>
+    <string name="settings_hide_live_radio_channels">Hide radio channels</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Hide radio channels from Live TV lists, counts, guide and search.</string>
     <string name="settings_live_tv_quick_filters">Live TV Quick Filters</string>
     <string name="settings_remote_shortcuts_subtitle">Works on remotes that send the Android red, green, yellow, and blue color key codes.</string>
     <string name="settings_remote_shortcuts_title">Colored Remote Buttons</string>

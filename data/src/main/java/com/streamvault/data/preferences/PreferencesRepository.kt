@@ -462,6 +462,8 @@ class PreferencesRepository @Inject constructor(
         val LIVE_TV_CATEGORY_FILTERS = stringPreferencesKey("live_tv_category_filters")
         val LIVE_TV_QUICK_FILTER_VISIBILITY = stringPreferencesKey("live_tv_quick_filter_visibility")
         val HIDE_DECORATIVE_LIVE_ROWS = booleanPreferencesKey("hide_decorative_live_rows")
+        val HIDE_LIVE_LOOP_CHANNELS = booleanPreferencesKey("hide_live_loop_channels")
+        val HIDE_LIVE_RADIO_CHANNELS = booleanPreferencesKey("hide_live_radio_channels")
         val LIVE_CHANNEL_NUMBERING_MODE = stringPreferencesKey("live_channel_numbering_mode")
         val LIVE_CHANNEL_GROUPING_MODE = stringPreferencesKey("live_channel_grouping_mode")
         val GROUPED_CHANNEL_LABEL_MODE = stringPreferencesKey("grouped_channel_label_mode")
@@ -2271,6 +2273,26 @@ class PreferencesRepository @Inject constructor(
     override suspend fun setHideDecorativeLiveRows(hide: Boolean) {
         context.dataStore.edit { preferences ->
             preferences[PreferencesKeys.HIDE_DECORATIVE_LIVE_ROWS] = hide
+        }
+    }
+
+    override val hideLiveLoopChannels: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.HIDE_LIVE_LOOP_CHANNELS] ?: false
+    }
+
+    override suspend fun setHideLiveLoopChannels(hide: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.HIDE_LIVE_LOOP_CHANNELS] = hide
+        }
+    }
+
+    override val hideLiveRadioChannels: Flow<Boolean> = context.dataStore.data.map { preferences ->
+        preferences[PreferencesKeys.HIDE_LIVE_RADIO_CHANNELS] ?: false
+    }
+
+    override suspend fun setHideLiveRadioChannels(hide: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.HIDE_LIVE_RADIO_CHANNELS] = hide
         }
     }
 

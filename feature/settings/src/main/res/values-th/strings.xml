@@ -202,8 +202,12 @@
     <string name="settings_customize_home">ปรับแต่งหน้าแรก</string>
     <string name="settings_default_landing_screen">หน้าจอเริ่มต้น</string>
     <string name="settings_guide_default_category">หมวดหมู่เริ่มต้นของผังรายการ</string>
-    <string name="settings_hide_decorative_live_rows">ซ่อนแถวตกแต่งของผู้ให้บริการ</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">ซ่อนหัวข้อส่วนที่เล่นไม่ได้ เช่น `#### GENERAL HD/4K ####` จากรายการและจำนวนของทีวีสด</string>
+    <string name="settings_hide_decorative_live_rows">ซ่อนแถวหัวข้อ/ตัวคั่น</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">ซ่อนหัวข้อส่วนและตัวคั่น เช่น `#### UK SPORTS ####` หรือ `----- NL -----` จากรายการ จำนวน ผังรายการ และการค้นหาของ Live TV</string>
+    <string name="settings_hide_live_loop_channels">ซ่อนช่อง 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">ซ่อนช่อง 24/7 ที่เล่นวนซ้ำไม่สิ้นสุดจากรายการ จำนวน ผังรายการ และการค้นหาของ Live TV</string>
+    <string name="settings_hide_live_radio_channels">ซ่อนช่องวิทยุ</string>
+    <string name="settings_hide_live_radio_channels_subtitle">ซ่อนช่องวิทยุจากรายการ จำนวน ผังรายการ และการค้นหาของ Live TV</string>
     <string name="settings_live_tv_quick_filters">ตัวกรองด่วนทีวีสด</string>
     <string name="settings_remote_shortcuts_subtitle">ใช้ได้กับรีโมตที่ส่งรหัสปุ่มสีแดง เขียว เหลือง และน้ำเงินของ Android</string>
     <string name="settings_remote_shortcuts_title">ปุ่มสีบนรีโมต</string>

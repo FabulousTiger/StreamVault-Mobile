@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Personalizați ecranul Acasă</string>
     <string name="settings_default_landing_screen">Ecranul de pornire implicit</string>
     <string name="settings_guide_default_category">Categorie implicită ghid</string>
-    <string name="settings_hide_decorative_live_rows">Ascundeți rândurile decorative ale furnizorului</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Ascundeți anteturile de secțiune ne-redabile precum `#### GENERAL HD/4K ####` din listele și numărătorile TV în direct.</string>
+    <string name="settings_hide_decorative_live_rows">Ascunde rândurile de antet/separator</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Ascunde antetele de secțiune și separatoarele precum `#### UK SPORTS ####` sau `----- NL -----` din listele, numărătorile, ghidul și căutarea TV în direct.</string>
+    <string name="settings_hide_live_loop_channels">Ascunde canalele 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Ascunde canalele 24/7 care se repetă la nesfârșit din listele, numărătorile, ghidul și căutarea TV în direct.</string>
+    <string name="settings_hide_live_radio_channels">Ascunde canalele radio</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Ascunde canalele radio din listele, numărătorile, ghidul și căutarea TV în direct.</string>
     <string name="settings_live_tv_quick_filters">Filtre rapide TV live</string>
     <string name="settings_remote_shortcuts_subtitle">Funcționează pe telecomenzile care trimit codurile de taste colorate roșu, verde, galben și albastru Android.</string>
     <string name="settings_remote_shortcuts_title">Butoane colorate pe telecomandă</string>

@@ -115,7 +115,7 @@ internal object PreferenceBackupRegistry {
         "remoteShortcutPreferences", "liveTvCategoryFilters", "liveTvQuickFilterVisibility", "liveTvChannelMode",
         "liveTvAutoHideCategories",
         "showLiveSourceSwitcher", "showFavoritesCategory", "showAllChannelsCategory", "showRecentChannelsCategory",
-        "hideDecorativeLiveRows", "liveChannelNumberingMode", "liveChannelGroupingMode", "groupedChannelLabelMode",
+        "hideDecorativeLiveRows", "hideLiveLoopChannels", "hideLiveRadioChannels", "liveChannelNumberingMode", "liveChannelGroupingMode", "groupedChannelLabelMode",
         "liveVariantPreferenceMode", "vodViewMode", "vodTypeBadgeAsIcon", "vodInfiniteScroll", "vodPortalSearch",
         "showTraktTrendingMovies", "showTraktPopularMovies", "showTraktTrendingSeries", "showTraktPopularSeries",
         "traktScrobblingEnabled", "traktHistorySyncEnabled",

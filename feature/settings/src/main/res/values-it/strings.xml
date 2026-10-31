@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Personalizza Home</string>
     <string name="settings_default_landing_screen">Schermata iniziale predefinita</string>
     <string name="settings_guide_default_category">Categoria guida predefinita</string>
-    <string name="settings_hide_decorative_live_rows">Nascondi righe decorative del provider</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Nascondi le intestazioni di sezione non riproducibili come `#### GENERAL HD/4K ####` dagli elenchi e dai conteggi della TV in diretta.</string>
+    <string name="settings_hide_decorative_live_rows">Nascondi righe di intestazione e separatori</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Nasconde intestazioni di sezione e separatori come `#### UK SPORTS ####` o `----- NL -----` da elenchi, conteggi, guida e ricerca della TV in diretta.</string>
+    <string name="settings_hide_live_loop_channels">Nascondi canali 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Nasconde i canali 24/7 in loop continuo da elenchi, conteggi, guida e ricerca della TV in diretta.</string>
+    <string name="settings_hide_live_radio_channels">Nascondi canali radio</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Nasconde i canali radio da elenchi, conteggi, guida e ricerca della TV in diretta.</string>
     <string name="settings_live_tv_quick_filters">Filtri rapidi Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Funziona sui telecomandi che inviano i codici tasto Android per i colori rosso, verde, giallo e blu.</string>
     <string name="settings_remote_shortcuts_title">Tasti colorati del telecomando</string>

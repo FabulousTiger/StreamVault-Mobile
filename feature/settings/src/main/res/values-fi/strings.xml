@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Mukauta aloitusnäyttöä</string>
     <string name="settings_default_landing_screen">Oletusaloitusnäyttö</string>
     <string name="settings_guide_default_category">Oppaan oletuskategoria</string>
-    <string name="settings_hide_decorative_live_rows">Piilota koristeelliset palveluntarjoajarivit</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Piilota ei-toistettavat osio-otsikot, kuten `#### GENERAL HD/4K ####`, Live TV -luetteloista ja -laskureista.</string>
+    <string name="settings_hide_decorative_live_rows">Piilota otsikko- ja erotinrivit</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Piilota osio-otsikot ja erottimet, kuten `#### UK SPORTS ####` tai `----- NL -----`, Live TV:n luetteloista, määristä, oppaasta ja hausta.</string>
+    <string name="settings_hide_live_loop_channels">Piilota 24/7-kanavat</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Piilota loputtomasti toistuvat 24/7-kanavat Live TV:n luetteloista, määristä, oppaasta ja hausta.</string>
+    <string name="settings_hide_live_radio_channels">Piilota radiokanavat</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Piilota radiokanavat Live TV:n luetteloista, määristä, oppaasta ja hausta.</string>
     <string name="settings_live_tv_quick_filters">Live-TV:n pikasuodattimet</string>
     <string name="settings_remote_shortcuts_subtitle">Toimii kaukosäätimissä, jotka lähettävät Androidin punaisen, vihreän, keltaisen ja sinisen väripainikkeen koodit.</string>
     <string name="settings_remote_shortcuts_title">Värilliset kaukosäätimen painikkeet</string>

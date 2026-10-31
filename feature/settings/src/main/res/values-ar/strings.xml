@@ -182,8 +182,12 @@
     <string name="settings_customize_home">تخصيص الشاشة الرئيسية</string>
     <string name="settings_default_landing_screen">شاشة البدء الافتراضية</string>
     <string name="settings_guide_default_category">الفئة الافتراضية للدليل</string>
-    <string name="settings_hide_decorative_live_rows">إخفاء صفوف المزوّد الزخرفية</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">إخفاء عناوين الأقسام غير القابلة للتشغيل مثل `#### GENERAL HD/4K ####` من قوائم البث المباشر وأعدادها.</string>
+    <string name="settings_hide_decorative_live_rows">إخفاء صفوف العناوين والفواصل</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">إخفاء عناوين الأقسام والفواصل مثل `#### UK SPORTS ####` أو `----- NL -----` من قوائم التلفزيون المباشر والأعداد والدليل والبحث.</string>
+    <string name="settings_hide_live_loop_channels">إخفاء قنوات 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">إخفاء قنوات 24/7 المعاد بثها باستمرار من قوائم التلفزيون المباشر والأعداد والدليل والبحث.</string>
+    <string name="settings_hide_live_radio_channels">إخفاء قنوات الراديو</string>
+    <string name="settings_hide_live_radio_channels_subtitle">إخفاء قنوات الراديو من قوائم التلفزيون المباشر والأعداد والدليل والبحث.</string>
     <string name="settings_live_tv_quick_filters">فلاتر البث المباشر السريعة</string>
     <string name="settings_remote_shortcuts_subtitle">يعمل مع أجهزة التحكم التي ترسل رموز الأزرار الملوّنة في Android (الأحمر والأخضر والأصفر والأزرق).</string>
     <string name="settings_remote_shortcuts_title">أزرار التحكم الملوّنة</string>

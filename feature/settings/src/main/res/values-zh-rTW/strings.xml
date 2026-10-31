@@ -202,8 +202,12 @@
     <string name="settings_customize_home">自訂首頁</string>
     <string name="settings_default_landing_screen">預設起始畫面</string>
     <string name="settings_guide_default_category">指南預設分類</string>
-    <string name="settings_hide_decorative_live_rows">隱藏裝飾性供應商列</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">從直播電視清單和計數中隱藏不可播放的區段標題，例如 `#### GENERAL HD/4K ####`。</string>
+    <string name="settings_hide_decorative_live_rows">隱藏標題/分隔列</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">從直播電視的清單、計數、節目指南和搜尋中隱藏 `#### UK SPORTS ####` 或 `----- NL -----` 等分區標題和分隔列。</string>
+    <string name="settings_hide_live_loop_channels">隱藏 24/7 頻道</string>
+    <string name="settings_hide_live_loop_channels_subtitle">從直播電視的清單、計數、節目指南和搜尋中隱藏無限循環播放的 24/7 頻道。</string>
+    <string name="settings_hide_live_radio_channels">隱藏廣播電台頻道</string>
+    <string name="settings_hide_live_radio_channels_subtitle">從直播電視的清單、計數、節目指南和搜尋中隱藏廣播電台頻道。</string>
     <string name="settings_live_tv_quick_filters">直播電視快速篩選</string>
     <string name="settings_remote_shortcuts_subtitle">適用於會傳送 Android 紅色、綠色、黃色和藍色鍵碼的遙控器。</string>
     <string name="settings_remote_shortcuts_title">遙控器彩色按鈕</string>

@@ -623,6 +623,15 @@ abstract class ChannelDao {
     )
     abstract fun getGroupedCategoryCounts(providerId: Long): Flow<List<CategoryCount>>
 
+    @Query(
+        """
+        SELECT id, category_id, name, category_name, group_title, logical_group_id
+        FROM channels
+        WHERE provider_id = :providerId
+        """
+    )
+    abstract fun getJunkProbes(providerId: Long): Flow<List<ChannelJunkProbe>>
+
     @Query("SELECT COUNT(*) FROM channels WHERE provider_id = :providerId")
     abstract fun getRawCount(providerId: Long): Flow<Int>
 

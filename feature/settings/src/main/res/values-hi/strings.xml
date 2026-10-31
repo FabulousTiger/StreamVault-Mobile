@@ -202,8 +202,12 @@
     <string name="settings_customize_home">होम को अनुकूलित करें</string>
     <string name="settings_default_landing_screen">डिफ़ॉल्ट लैंडिंग स्क्रीन</string>
     <string name="settings_guide_default_category">गाइड डिफ़ॉल्ट श्रेणी</string>
-    <string name="settings_hide_decorative_live_rows">सजावटी प्रोवाइडर पंक्तियाँ छिपाएँ</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">लाइव टीवी सूचियों और गिनतियों से `#### GENERAL HD/4K ####` जैसे गैर-चलने योग्य अनुभाग शीर्षक छिपाएँ।</string>
+    <string name="settings_hide_decorative_live_rows">हेडर/विभाजक पंक्तियाँ छिपाएँ</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">`#### UK SPORTS ####` या `----- NL -----` जैसे अनुभाग शीर्षक और विभाजक लाइव टीवी की सूचियों, गिनती, गाइड और खोज से छिपाएँ।</string>
+    <string name="settings_hide_live_loop_channels">24/7 चैनल छिपाएँ</string>
+    <string name="settings_hide_live_loop_channels_subtitle">लगातार दोहराए जाने वाले 24/7 चैनल लाइव टीवी की सूचियों, गिनती, गाइड और खोज से छिपाएँ।</string>
+    <string name="settings_hide_live_radio_channels">रेडियो चैनल छिपाएँ</string>
+    <string name="settings_hide_live_radio_channels_subtitle">रेडियो चैनल लाइव टीवी की सूचियों, गिनती, गाइड और खोज से छिपाएँ।</string>
     <string name="settings_live_tv_quick_filters">लाइव टीवी त्वरित फ़िल्टर</string>
     <string name="settings_remote_shortcuts_subtitle">उन रिमोट पर काम करता है जो Android लाल, हरा, पीला और नीला रंग कुंजी कोड भेजते हैं।</string>
     <string name="settings_remote_shortcuts_title">रंगीन रिमोट बटन</string>

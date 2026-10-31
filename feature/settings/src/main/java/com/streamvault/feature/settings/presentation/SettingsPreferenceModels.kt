@@ -118,6 +118,8 @@ data class SettingsPreferenceSnapshot(
     val liveTvCategoryFilters: List<String>,
     val liveTvQuickFilterVisibilityMode: LiveTvQuickFilterVisibilityMode,
     val hideDecorativeLiveRows: Boolean,
+    val hideLiveLoopChannels: Boolean,
+    val hideLiveRadioChannels: Boolean,
     val liveChannelNumberingMode: ChannelNumberingMode,
     val liveChannelGroupingMode: LiveChannelGroupingMode,
     val groupedChannelLabelMode: GroupedChannelLabelMode,

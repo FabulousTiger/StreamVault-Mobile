@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Ana Sayfayı Özelleştir</string>
     <string name="settings_default_landing_screen">Varsayılan başlangıç ekranı</string>
     <string name="settings_guide_default_category">Rehber varsayılan kategorisi</string>
-    <string name="settings_hide_decorative_live_rows">Dekoratif sağlayıcı satırlarını gizle</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Canlı TV listelerinden ve sayımlarından `#### GENERAL HD/4K ####` gibi oynatılamayan bölüm başlıklarını gizleyin.</string>
+    <string name="settings_hide_decorative_live_rows">Başlık/ayırıcı satırlarını gizle</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">`#### UK SPORTS ####` veya `----- NL -----` gibi bölüm başlıklarını ve ayırıcıları Canlı TV listelerinden, sayılarından, rehberinden ve aramasından gizler.</string>
+    <string name="settings_hide_live_loop_channels">24/7 kanallarını gizle</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Sonsuz döngüde yayın yapan 24/7 kanallarını Canlı TV listelerinden, sayılarından, rehberinden ve aramasından gizler.</string>
+    <string name="settings_hide_live_radio_channels">Radyo kanallarını gizle</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Radyo kanallarını Canlı TV listelerinden, sayılarından, rehberinden ve aramasından gizler.</string>
     <string name="settings_live_tv_quick_filters">Canlı TV Hızlı Filtreleri</string>
     <string name="settings_remote_shortcuts_subtitle">Android kırmızı, yeşil, sarı ve mavi renk tuş kodlarını gönderen kumandalarda çalışır.</string>
     <string name="settings_remote_shortcuts_title">Renkli Kumanda Düğmeleri</string>

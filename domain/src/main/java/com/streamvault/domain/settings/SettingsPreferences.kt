@@ -409,6 +409,14 @@ interface SettingsPreferences {
 
     suspend fun setHideDecorativeLiveRows(hide: Boolean)
 
+    val hideLiveLoopChannels: Flow<Boolean>
+
+    suspend fun setHideLiveLoopChannels(hide: Boolean)
+
+    val hideLiveRadioChannels: Flow<Boolean>
+
+    suspend fun setHideLiveRadioChannels(hide: Boolean)
+
     val liveChannelNumberingMode: Flow<ChannelNumberingMode>
 
     suspend fun setLiveChannelNumberingMode(mode: ChannelNumberingMode)

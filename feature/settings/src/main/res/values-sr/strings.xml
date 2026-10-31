@@ -202,8 +202,12 @@
     <string name="settings_customize_home">Прилагоди почетну</string>
     <string name="settings_default_landing_screen">Подразумевани почетни екран</string>
     <string name="settings_guide_default_category">Подразумевана категорија водича</string>
-    <string name="settings_hide_decorative_live_rows">Сакриј декоративне редове провајдера</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Сакриј заглавља секција која се не могу пуштати, као што је `#### GENERAL HD/4K ####`, из листа и бројања на ТВ-у уживо.</string>
+    <string name="settings_hide_decorative_live_rows">Сакриј редове заглавља и раздвајача</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Сакрива заглавља секција и раздвајаче као што су `#### UK SPORTS ####` или `----- NL -----` из листа, бројача, водича и претраге ТВ-а уживо.</string>
+    <string name="settings_hide_live_loop_channels">Сакриј канале 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Сакрива канале 24/7 који се бесконачно понављају из листа, бројача, водича и претраге ТВ-а уживо.</string>
+    <string name="settings_hide_live_radio_channels">Сакриј радио канале</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Сакрива радио канале из листа, бројача, водича и претраге ТВ-а уживо.</string>
     <string name="settings_live_tv_quick_filters">Брзи филтери за ТВ уживо</string>
     <string name="settings_remote_shortcuts_subtitle">Ради на даљинским управљачима који шаљу Android кодове црвеног, зеленог, жутог и плавог тастера.</string>
     <string name="settings_remote_shortcuts_title">Обојена дугмад на даљинском</string>

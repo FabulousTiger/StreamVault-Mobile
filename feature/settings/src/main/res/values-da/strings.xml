@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Tilpas hjem</string>
     <string name="settings_default_landing_screen">Standard startskærm</string>
     <string name="settings_guide_default_category">Guide standardkategori</string>
-    <string name="settings_hide_decorative_live_rows">Skjul dekorative udbyderrækker</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Skjul ikke-afspilbare sektionsoverskrifter som `#### GENERAL HD/4K ####` i Live TV-lister og -antal.</string>
+    <string name="settings_hide_decorative_live_rows">Skjul overskrifts- og skillerækker</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Skjul sektionsoverskrifter og skillelinjer som `#### UK SPORTS ####` eller `----- NL -----` på lister, antal, guide og søgning i Live TV.</string>
+    <string name="settings_hide_live_loop_channels">Skjul 24/7-kanaler</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Skjul uendeligt gentagne 24/7-kanaler på lister, antal, guide og søgning i Live TV.</string>
+    <string name="settings_hide_live_radio_channels">Skjul radiokanaler</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Skjul radiokanaler på lister, antal, guide og søgning i Live TV.</string>
     <string name="settings_live_tv_quick_filters">Hurtige Live TV-filtre</string>
     <string name="settings_remote_shortcuts_subtitle">Virker på fjernbetjeninger, der sender Androids røde, grønne, gule og blå farveknapkoder.</string>
     <string name="settings_remote_shortcuts_title">Farvede fjernbetjeningsknapper</string>

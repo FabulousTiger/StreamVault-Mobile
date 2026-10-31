@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Kezdőlap testreszabása</string>
     <string name="settings_default_landing_screen">Alapértelmezett kezdőképernyő</string>
     <string name="settings_guide_default_category">Műsorújság alapértelmezett kategória</string>
-    <string name="settings_hide_decorative_live_rows">Dekoratív szolgáltatói sorok elrejtése</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">A nem lejátszható szakaszfejlécek, például a `#### GENERAL HD/4K ####`, elrejtése az Élő TV listáiból és számaiból.</string>
+    <string name="settings_hide_decorative_live_rows">Fejléc- és elválasztósorok elrejtése</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Elrejti a szakaszfejléceket és elválasztókat, például `#### UK SPORTS ####` vagy `----- NL -----`, az élő TV listáiból, számlálóiból, műsorfüzetéből és keresőjéből.</string>
+    <string name="settings_hide_live_loop_channels">24/7 csatornák elrejtése</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Elrejti a végtelenített 24/7 csatornákat az élő TV listáiból, számlálóiból, műsorfüzetéből és keresőjéből.</string>
+    <string name="settings_hide_live_radio_channels">Rádiócsatornák elrejtése</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Elrejti a rádiócsatornákat az élő TV listáiból, számlálóiból, műsorfüzetéből és keresőjéből.</string>
     <string name="settings_live_tv_quick_filters">Élő TV gyorsszűrők</string>
     <string name="settings_remote_shortcuts_subtitle">Azokon a távirányítókon működik, amelyek az Android piros, zöld, sárga és kék színbillentyű-kódjait küldik.</string>
     <string name="settings_remote_shortcuts_title">Színes távirányítógombok</string>
