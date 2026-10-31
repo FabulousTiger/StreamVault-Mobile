@@ -1,16 +1,15 @@
 package com.streamvault.data.sync.foreground
 
+import java.util.concurrent.atomic.AtomicReference
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.conflate
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.updateAndGet
+import kotlinx.coroutines.launch
 
 /** Eager work goes foreground at once; lazy work on first real progress or its deadline. */
 internal class SyncForegroundController(
@@ -22,11 +21,6 @@ internal class SyncForegroundController(
     private val minUpdateIntervalMillis: Long = MIN_UPDATE_INTERVAL_MILLIS,
     private val promotionRetryMillis: Long = PROMOTION_RETRY_MILLIS
 ) {
-    private sealed interface Event {
-        data class Progress(val value: SyncNotificationProgress) : Event
-        data object Deadline : Event
-    }
-
     @Volatile
     var promoted: Boolean = false
         private set
@@ -35,35 +29,49 @@ internal class SyncForegroundController(
     var attempted: Boolean = false
         private set
 
+    /** Runs until cancelled; progress arriving during the update pause collapses into its latest value. */
     suspend fun run(initial: SyncNotificationProgress, progress: Flow<SyncNotificationProgress>) {
-        var latest = initial
-        var shown: SyncNotificationProgress? = null
-        var lastAttemptAt: Long? = null
+        coroutineScope {
+            val latest = AtomicReference(initial)
+            val wakeUps = Channel<Unit>(Channel.CONFLATED)
+            var shown: SyncNotificationProgress? = null
+            var lastAttemptAt: Long? = null
 
-        suspend fun attemptPromotion() {
-            val now = nowMillis()
-            if (lastAttemptAt?.let { now - it < promotionRetryMillis } == true) return
-            lastAttemptAt = now
-            attempted = true
-            if (promote(latest)) {
-                promoted = true
-                shown = latest
+            suspend fun attemptPromotion() {
+                val now = nowMillis()
+                if (lastAttemptAt?.let { now - it < promotionRetryMillis } == true) return
+                lastAttemptAt = now
+                attempted = true
+                val candidate = latest.get()
+                if (promote(candidate)) {
+                    promoted = true
+                    shown = candidate
+                }
             }
-        }
 
-        if (eager) attemptPromotion()
-        val deadline: Flow<Event> = if (eager) emptyFlow() else flow {
-            delay(lazyPromotionDelayMillis)
-            emit(Event.Deadline)
-        }
-        merge(progress.map { Event.Progress(it) }, deadline).conflate().collect { event ->
-            if (event is Event.Progress) latest = event.value
-            if (!promoted) {
-                attemptPromotion()
-            } else if (latest != shown) {
-                update(latest)
-                shown = latest
-                delay(minUpdateIntervalMillis)
+            if (eager) attemptPromotion()
+            launch {
+                progress.collect { value ->
+                    latest.set(value)
+                    wakeUps.trySend(Unit)
+                }
+            }
+            if (!eager) {
+                launch {
+                    delay(lazyPromotionDelayMillis)
+                    wakeUps.trySend(Unit)
+                }
+            }
+            while (true) {
+                wakeUps.receive()
+                val current = latest.get()
+                if (!promoted) {
+                    attemptPromotion()
+                } else if (current != shown) {
+                    update(current)
+                    shown = current
+                    delay(minUpdateIntervalMillis)
+                }
             }
         }
     }

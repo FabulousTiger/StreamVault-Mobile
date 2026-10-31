@@ -1,5 +1,6 @@
 package com.streamvault.data.sync
 
+import com.streamvault.data.sync.foreground.SyncCancellationRegistry
 import com.streamvault.domain.util.KeyedMutexRegistry
 import java.util.concurrent.atomic.AtomicInteger
 import kotlinx.coroutines.sync.Mutex
@@ -22,8 +23,9 @@ class ProviderWorkLockRegistry @Inject constructor() {
 
     fun isAnyWorkActiveOrWaiting(): Boolean = admittedCount.get() > 0
 
+    /** Catalog work holding the lock is registered so the sync notification can cancel it. */
     suspend fun <T> withProviderLock(providerId: Long, block: suspend () -> T): T =
-        withAdmission(providerMutexes, providerId, block)
+        withAdmission(providerMutexes, providerId) { SyncCancellationRegistry.track(providerId, block) }
 
     suspend fun <T> withStalkerGuideLock(providerId: Long, block: suspend () -> T): T =
         withAdmission(stalkerGuideMutexes, providerId, block)

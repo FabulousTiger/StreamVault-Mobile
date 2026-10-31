@@ -1,9 +1,12 @@
 package com.streamvault.data.sync
 
 import com.google.common.truth.Truth.assertThat
+import com.streamvault.data.sync.foreground.SyncCancellationRegistry
+import com.streamvault.data.sync.foreground.UserCancelledSyncException
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import java.util.concurrent.atomic.AtomicInteger
@@ -158,5 +161,33 @@ class ProviderWorkLockRegistryTest {
         assertThat(maintenance.await()).isTrue()
         providerWork.await()
         assertThat(providerEntered.isCompleted).isTrue()
+    }
+
+    @Test
+    fun `provider-locked work can be stopped from the sync notification and frees the lock`() = runTest {
+        SyncCancellationRegistry.resetForTest()
+        try {
+            val registry = ProviderWorkLockRegistry()
+            val entered = CompletableDeferred<Unit>()
+            val work = async {
+                runCatching {
+                    registry.withProviderLock(7L) {
+                        entered.complete(Unit)
+                        awaitCancellation()
+                    }
+                }
+            }
+            entered.await()
+
+            assertThat(SyncCancellationRegistry.active.value.map { it.providerId }).containsExactly(7L)
+            assertThat(SyncCancellationRegistry.cancel(7L)).isTrue()
+
+            assertThat(work.await().exceptionOrNull()).isInstanceOf(UserCancelledSyncException::class.java)
+            assertThat(registry.isAnyWorkActiveOrWaiting()).isFalse()
+            assertThat(SyncCancellationRegistry.active.value).isEmpty()
+            assertThat(registry.withProviderLock(7L) { "next" }).isEqualTo("next")
+        } finally {
+            SyncCancellationRegistry.resetForTest()
+        }
     }
 }

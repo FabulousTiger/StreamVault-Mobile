@@ -8,8 +8,8 @@
     <string name="sync_fg_section_movies">映画</string>
     <string name="sync_fg_section_series">シリーズ</string>
     <string name="sync_fg_section_guide">番組表</string>
-    <string name="sync_fg_progress_count">%1$s: %2$s</string>
-    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_progress_count">%1$s：%2$s</string>
+    <string name="sync_fg_progress_total">%1$s：%2$s / %3$s</string>
     <string name="sync_fg_section_working">%1$s: 更新中…</string>
     <string name="sync_fg_cancel">キャンセル</string>
 </resources>

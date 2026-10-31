@@ -1,7 +1,6 @@
 package com.streamvault.data.sync
 
 import com.streamvault.data.sync.foreground.InProcessSyncKeepAliveWorker
-import com.streamvault.data.sync.foreground.SyncCancellationRegistry
 import com.streamvault.data.BuildConfig
 
 import android.content.Context
@@ -864,7 +863,7 @@ class SyncManager @Inject constructor(
     fun isAnySyncActive(): Boolean = providerWorkLocks.isAnyWorkActiveOrWaiting()
 
     private suspend fun <T> withProviderLock(providerId: Long, block: suspend () -> T): T {
-        return providerWorkLocks.withProviderLock(providerId) { SyncCancellationRegistry.track(providerId, block) }
+        return providerWorkLocks.withProviderLock(providerId, block)
     }
 
     private suspend fun <T> withStalkerIndexSectionLock(

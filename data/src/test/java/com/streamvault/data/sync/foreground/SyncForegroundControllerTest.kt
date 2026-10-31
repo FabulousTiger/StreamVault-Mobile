@@ -61,6 +61,19 @@ class SyncForegroundControllerTest {
     }
 
     @Test
+    fun `lazy work whose progress stream completes is still promoted at its deadline`() = runTest {
+        val recorder = Recorder()
+        val controller = controller(recorder, eager = false)
+
+        val job = launch { controller.run(initial, emptyFlow()) }
+        advanceTimeBy(10_001L)
+
+        assertThat(recorder.promotions).containsExactly(initial)
+        assertThat(controller.promoted).isTrue()
+        job.cancel()
+    }
+
+    @Test
     fun `lazy work is promoted by its first real progress`() = runTest {
         val recorder = Recorder()
         val progress = MutableSharedFlow<SyncNotificationProgress>()
