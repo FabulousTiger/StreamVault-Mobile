@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Kullanılabilir depolama alanı denetlenemedi. Torrent oynatma güvenli biçimde sürdürülemez.</string>
     <string name="nav_extensions">Eklentiler</string>
     <string name="nav_sports">Spor</string>
+    <string name="sync_battery_prompt_title">Arka planda senkronizasyona devam et</string>
+    <string name="sync_battery_prompt_message">Büyük katalogların senkronizasyonu zaman alabilir. Pil optimizasyonu açıkken Android, senkronizasyonu arka planda veya ekran kilitliyken durdurabilir. Tamamlanabilmesi için sınırsız pil kullanımına izin verin. Samsung telefonlarda ayrıca uygulamanın uyku moduna alınmadığından emin olun.</string>
+    <string name="sync_battery_prompt_open">Pil ayarlarını aç</string>
+    <string name="sync_battery_prompt_dismiss">Hayır, teşekkürler</string>
 </resources>

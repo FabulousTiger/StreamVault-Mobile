@@ -1,5 +1,7 @@
 package com.streamvault.data.sync
 
+import com.streamvault.data.sync.foreground.SyncWorkKind
+import com.streamvault.data.sync.foreground.runWithSyncForeground
 import android.content.Context
 import android.database.sqlite.SQLiteException
 import android.util.Log
@@ -38,7 +40,9 @@ class BackgroundEpgSyncWorker(
         fun xtreamIndexJobDao(): XtreamIndexJobDao
     }
 
-    override suspend fun doWork(): Result {
+    override suspend fun doWork(): Result = runWithSyncForeground(SyncWorkKind.GUIDE) { runGuideWork() }
+
+    private suspend fun runGuideWork(): Result {
         val providerId = inputData.getLong(KEY_PROVIDER_ID, INVALID_PROVIDER_ID)
         if (providerId == INVALID_PROVIDER_ID) {
             return Result.failure()

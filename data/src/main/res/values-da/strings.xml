@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Katalogsynkronisering</string>
+    <string name="sync_fg_channel_description">Viser fremskridt, mens kanaler, film, serier og tv-guiden opdateres.</string>
+    <string name="sync_fg_title_fallback">Opdaterer katalog</string>
+    <string name="sync_fg_preparing">Forbereder…</string>
+    <string name="sync_fg_section_live">Live-tv</string>
+    <string name="sync_fg_section_movies">Film</string>
+    <string name="sync_fg_section_series">Serier</string>
+    <string name="sync_fg_section_guide">Tv-guide</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: opdaterer…</string>
+    <string name="sync_fg_cancel">Annuller</string>
+</resources>

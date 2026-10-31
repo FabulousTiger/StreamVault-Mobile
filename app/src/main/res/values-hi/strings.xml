@@ -344,4 +344,8 @@
     <string name="torrent_storage_check_failed">उपलब्ध स्टोरेज की जाँच नहीं हो सकी। टोरेंट प्लेबैक सुरक्षित रूप से जारी नहीं रह सकता।</string>
     <string name="nav_extensions">एक्सटेंशन</string>
     <string name="nav_sports">खेल</string>
+    <string name="sync_battery_prompt_title">बैकग्राउंड में सिंक जारी रखें</string>
+    <string name="sync_battery_prompt_message">बड़े कैटलॉग को सिंक होने में समय लग सकता है। बैटरी ऑप्टिमाइज़ेशन चालू होने पर Android बैकग्राउंड में या स्क्रीन लॉक होने पर सिंक रोक सकता है। इसे पूरा होने देने के लिए बैटरी के असीमित उपयोग की अनुमति दें। Samsung फ़ोन पर यह भी पक्का करें कि ऐप को स्लीप में न डाला जाए।</string>
+    <string name="sync_battery_prompt_open">बैटरी सेटिंग खोलें</string>
+    <string name="sync_battery_prompt_dismiss">नहीं, धन्यवाद</string>
 </resources>

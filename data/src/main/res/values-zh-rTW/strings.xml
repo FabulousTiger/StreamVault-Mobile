@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">目錄同步</string>
+    <string name="sync_fg_channel_description">在更新頻道、電影、影集和電視節目表時顯示進度。</string>
+    <string name="sync_fg_title_fallback">正在更新目錄</string>
+    <string name="sync_fg_preparing">正在準備…</string>
+    <string name="sync_fg_section_live">直播電視</string>
+    <string name="sync_fg_section_movies">電影</string>
+    <string name="sync_fg_section_series">影集</string>
+    <string name="sync_fg_section_guide">電視節目表</string>
+    <string name="sync_fg_progress_count">%1$s：%2$s</string>
+    <string name="sync_fg_progress_total">%1$s：%2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s：正在更新…</string>
+    <string name="sync_fg_cancel">取消</string>
+</resources>

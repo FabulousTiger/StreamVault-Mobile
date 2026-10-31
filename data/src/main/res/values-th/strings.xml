@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">ซิงค์แคตตาล็อก</string>
+    <string name="sync_fg_channel_description">แสดงความคืบหน้าขณะอัปเดตช่อง ภาพยนตร์ ซีรีส์ และผังรายการทีวี</string>
+    <string name="sync_fg_title_fallback">กำลังอัปเดตแคตตาล็อก</string>
+    <string name="sync_fg_preparing">กำลังเตรียม…</string>
+    <string name="sync_fg_section_live">ทีวีสด</string>
+    <string name="sync_fg_section_movies">ภาพยนตร์</string>
+    <string name="sync_fg_section_series">ซีรีส์</string>
+    <string name="sync_fg_section_guide">ผังรายการทีวี</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: กำลังอัปเดต…</string>
+    <string name="sync_fg_cancel">ยกเลิก</string>
+</resources>

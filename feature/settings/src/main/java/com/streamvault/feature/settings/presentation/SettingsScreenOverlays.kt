@@ -28,6 +28,14 @@ public fun BoxScope.SettingsScreenOverlays(
             .padding(bottom = 16.dp)
     )
 
+    SettingsSyncStatusBanner(
+        uiState = uiState,
+        onCancel = { viewModel.cancelSync() },
+        modifier = Modifier
+            .align(Alignment.BottomEnd)
+            .padding(end = 16.dp, bottom = 16.dp, start = 16.dp)
+    )
+
     if (dialogState.showRecordingBrowserDialog) {
         recordingBrowserContent()
     }

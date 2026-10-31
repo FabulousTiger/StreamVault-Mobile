@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">无法检查可用存储空间，无法安全地继续播放种子内容。</string>
     <string name="nav_extensions">扩展功能</string>
     <string name="nav_sports">体育</string>
+    <string name="sync_battery_prompt_title">在后台继续同步</string>
+    <string name="sync_battery_prompt_message">大型目录的同步可能需要一段时间。开启电池优化后，Android 可能会在后台或锁屏时停止同步。请允许不受限制地使用电池，以便同步完成。在三星手机上，还请确保应用不会被设为休眠。</string>
+    <string name="sync_battery_prompt_open">打开电池设置</string>
+    <string name="sync_battery_prompt_dismiss">不用了</string>
 </resources>

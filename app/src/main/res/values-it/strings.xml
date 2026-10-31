@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Impossibile controllare lo spazio disponibile. La riproduzione del torrent non può continuare in sicurezza.</string>
     <string name="nav_extensions">Estensioni</string>
     <string name="nav_sports">Sport</string>
+    <string name="sync_battery_prompt_title">Continua la sincronizzazione in background</string>
+    <string name="sync_battery_prompt_message">La sincronizzazione dei cataloghi grandi può richiedere tempo. Con l\'ottimizzazione della batteria attiva, Android può interromperla in background o a schermo bloccato. Consenti l\'uso illimitato della batteria per completarla. Sui telefoni Samsung, assicurati anche che l\'app non venga messa in sospensione.</string>
+    <string name="sync_battery_prompt_open">Apri impostazioni batteria</string>
+    <string name="sync_battery_prompt_dismiss">No, grazie</string>
 </resources>

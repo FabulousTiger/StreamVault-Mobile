@@ -1,5 +1,6 @@
 package com.streamvault.data.sync
 
+import com.streamvault.data.sync.foreground.isAutomaticSyncPausedByUser
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.BatteryManager
@@ -95,6 +96,7 @@ class AutomaticSyncRunner @Inject constructor(
     }
 
     suspend fun check(providerId: Long): Result<Unit> = withContext(AutomaticSyncExecution.automatic.asContextElement(true)) {
+        if (isAutomaticSyncPausedByUser(context, providerId)) return@withContext Result.success(Unit)
         val now = System.currentTimeMillis()
         val policy = preferences.automaticSyncConfiguration.first().forProvider(providerId)
         val snapshot = snapshots.getSnapshot(providerId) ?: return@withContext Result.error("Provider configuration is unavailable")

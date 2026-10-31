@@ -347,4 +347,8 @@
     <string name="torrent_storage_check_failed">Свободното място не можа да бъде проверено. Възпроизвеждането на торент не може да продължи безопасно.</string>
     <string name="nav_extensions">Разширения</string>
     <string name="nav_sports">Спорт</string>
+    <string name="sync_battery_prompt_title">Продължаване на синхронизирането във фонов режим</string>
+    <string name="sync_battery_prompt_message">Синхронизирането на големи каталози може да отнеме време. При включена оптимизация на батерията Android може да го спре във фонов режим или при заключен екран. Разрешете неограничено използване на батерията, за да може да завърши. На телефони Samsung проверете също, че приложението не се приспива.</string>
+    <string name="sync_battery_prompt_open">Отваряне на настройките за батерията</string>
+    <string name="sync_battery_prompt_dismiss">Не, благодаря</string>
 </resources>

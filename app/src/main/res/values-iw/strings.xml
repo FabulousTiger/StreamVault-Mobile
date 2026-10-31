@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">לא ניתן לבדוק את נפח האחסון הזמין. אי אפשר להמשיך לנגן את הטורנט בבטחה.</string>
     <string name="nav_extensions">הרחבות</string>
     <string name="nav_sports">ספורט</string>
+    <string name="sync_battery_prompt_title">להמשיך לסנכרן ברקע</string>
+    <string name="sync_battery_prompt_message">סנכרון של קטלוגים גדולים עשוי להימשך זמן מה. כשאופטימיזציית הסוללה פעילה, Android עלול לעצור את הסנכרון ברקע או כשהמסך נעול. אפשרו שימוש בלתי מוגבל בסוללה כדי שהסנכרון יסתיים. בטלפונים של Samsung, ודאו גם שהאפליקציה לא מועברת למצב שינה.</string>
+    <string name="sync_battery_prompt_open">פתיחת הגדרות הסוללה</string>
+    <string name="sync_battery_prompt_dismiss">לא, תודה</string>
 </resources>

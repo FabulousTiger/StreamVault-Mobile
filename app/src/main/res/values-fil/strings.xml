@@ -344,4 +344,8 @@
     <string name="torrent_storage_check_failed">Hindi masuri ang available na storage. Hindi ligtas na maipagpapatuloy ang pag-play ng torrent.</string>
     <string name="nav_extensions">Mga extension</string>
     <string name="nav_sports">Palakasan</string>
+    <string name="sync_battery_prompt_title">Ituloy ang pag-sync sa background</string>
+    <string name="sync_battery_prompt_message">Maaaring matagalan ang pag-sync ng malalaking katalogo. Kapag naka-on ang battery optimization, puwedeng ihinto ng Android ang pag-sync sa background o kapag naka-lock ang screen. Payagan ang walang limitasyong paggamit ng baterya para matapos ito. Sa mga Samsung phone, tiyakin ding hindi pinapatulog ang app.</string>
+    <string name="sync_battery_prompt_open">Buksan ang mga setting ng baterya</string>
+    <string name="sync_battery_prompt_dismiss">Huwag na lang</string>
 </resources>

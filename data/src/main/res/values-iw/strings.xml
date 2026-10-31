@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">סנכרון קטלוג</string>
+    <string name="sync_fg_channel_description">מציג את ההתקדמות בזמן עדכון הערוצים, הסרטים, הסדרות ומדריך השידורים.</string>
+    <string name="sync_fg_title_fallback">מעדכן את הקטלוג</string>
+    <string name="sync_fg_preparing">בהכנה…</string>
+    <string name="sync_fg_section_live">טלוויזיה בשידור חי</string>
+    <string name="sync_fg_section_movies">סרטים</string>
+    <string name="sync_fg_section_series">סדרות</string>
+    <string name="sync_fg_section_guide">מדריך שידורים</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: מתעדכן…</string>
+    <string name="sync_fg_cancel">ביטול</string>
+</resources>

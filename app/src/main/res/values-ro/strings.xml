@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Spațiul disponibil nu a putut fi verificat. Redarea torrentului nu poate continua în siguranță.</string>
     <string name="nav_extensions">Extensii</string>
     <string name="nav_sports">Sport</string>
+    <string name="sync_battery_prompt_title">Continuă sincronizarea în fundal</string>
+    <string name="sync_battery_prompt_message">Sincronizarea cataloagelor mari poate dura. Cu optimizarea bateriei activată, Android poate opri sincronizarea în fundal sau când ecranul este blocat. Permite utilizarea nerestricționată a bateriei pentru ca aceasta să se termine. Pe telefoanele Samsung, asigură-te și că aplicația nu este pusă în repaus.</string>
+    <string name="sync_battery_prompt_open">Deschide setările bateriei</string>
+    <string name="sync_battery_prompt_dismiss">Nu, mulțumesc</string>
 </resources>

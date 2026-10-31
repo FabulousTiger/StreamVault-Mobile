@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Synchronizacja katalogu</string>
+    <string name="sync_fg_channel_description">Pokazuje postęp podczas aktualizacji kanałów, filmów, seriali i przewodnika TV.</string>
+    <string name="sync_fg_title_fallback">Aktualizowanie katalogu</string>
+    <string name="sync_fg_preparing">Przygotowywanie…</string>
+    <string name="sync_fg_section_live">Telewizja na żywo</string>
+    <string name="sync_fg_section_movies">Filmy</string>
+    <string name="sync_fg_section_series">Seriale</string>
+    <string name="sync_fg_section_guide">Przewodnik TV</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: aktualizowanie…</string>
+    <string name="sync_fg_cancel">Anuluj</string>
+</resources>

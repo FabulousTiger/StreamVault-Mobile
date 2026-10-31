@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">مزامنة الكتالوج</string>
+    <string name="sync_fg_channel_description">يعرض التقدم أثناء تحديث القنوات والأفلام والمسلسلات ودليل التلفزيون.</string>
+    <string name="sync_fg_title_fallback">جارٍ تحديث الكتالوج</string>
+    <string name="sync_fg_preparing">جارٍ التحضير…</string>
+    <string name="sync_fg_section_live">البث المباشر</string>
+    <string name="sync_fg_section_movies">الأفلام</string>
+    <string name="sync_fg_section_series">المسلسلات</string>
+    <string name="sync_fg_section_guide">دليل التلفزيون</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: جارٍ التحديث…</string>
+    <string name="sync_fg_cancel">إلغاء</string>
+</resources>

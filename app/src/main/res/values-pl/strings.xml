@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Nie można sprawdzić dostępnego miejsca. Odtwarzanie torrenta nie może być bezpiecznie kontynuowane.</string>
     <string name="nav_extensions">Rozszerzenia</string>
     <string name="nav_sports">Sport</string>
+    <string name="sync_battery_prompt_title">Kontynuuj synchronizację w tle</string>
+    <string name="sync_battery_prompt_message">Synchronizacja dużych katalogów może chwilę potrwać. Przy włączonej optymalizacji baterii Android może ją zatrzymać w tle lub po zablokowaniu ekranu. Zezwól na nieograniczone użycie baterii, aby mogła się zakończyć. Na telefonach Samsung upewnij się też, że aplikacja nie jest usypiana.</string>
+    <string name="sync_battery_prompt_open">Otwórz ustawienia baterii</string>
+    <string name="sync_battery_prompt_dismiss">Nie, dziękuję</string>
 </resources>

@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Не удалось проверить доступное место. Воспроизведение торрента нельзя безопасно продолжить.</string>
     <string name="nav_extensions">Расширения</string>
     <string name="nav_sports">Спорт</string>
+    <string name="sync_battery_prompt_title">Продолжать синхронизацию в фоне</string>
+    <string name="sync_battery_prompt_message">Синхронизация больших каталогов может занять время. При включённой оптимизации батареи Android может остановить её в фоне или при заблокированном экране. Разрешите неограниченное использование батареи, чтобы она завершилась. На телефонах Samsung также убедитесь, что приложение не переводится в спящий режим.</string>
+    <string name="sync_battery_prompt_open">Открыть настройки батареи</string>
+    <string name="sync_battery_prompt_dismiss">Нет, спасибо</string>
 </resources>

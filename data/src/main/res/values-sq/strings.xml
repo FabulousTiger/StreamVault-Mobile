@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Sinkronizimi i katalogut</string>
+    <string name="sync_fg_channel_description">Tregon ecurinë ndërsa përditësohen kanalet, filmat, serialet dhe udhëzuesi TV.</string>
+    <string name="sync_fg_title_fallback">Po përditësohet katalogu</string>
+    <string name="sync_fg_preparing">Po përgatitet…</string>
+    <string name="sync_fg_section_live">TV live</string>
+    <string name="sync_fg_section_movies">Filmat</string>
+    <string name="sync_fg_section_series">Serialet</string>
+    <string name="sync_fg_section_guide">Udhëzuesi TV</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: po përditësohet…</string>
+    <string name="sync_fg_cancel">Anulo</string>
+</resources>

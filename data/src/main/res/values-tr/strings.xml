@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Katalog senkronizasyonu</string>
+    <string name="sync_fg_channel_description">Kanallar, filmler, diziler ve TV rehberi güncellenirken ilerlemeyi gösterir.</string>
+    <string name="sync_fg_title_fallback">Katalog güncelleniyor</string>
+    <string name="sync_fg_preparing">Hazırlanıyor…</string>
+    <string name="sync_fg_section_live">Canlı TV</string>
+    <string name="sync_fg_section_movies">Filmler</string>
+    <string name="sync_fg_section_series">Diziler</string>
+    <string name="sync_fg_section_guide">TV rehberi</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: güncelleniyor…</string>
+    <string name="sync_fg_cancel">İptal</string>
+</resources>

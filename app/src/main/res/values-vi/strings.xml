@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Không thể kiểm tra dung lượng lưu trữ còn trống. Không thể tiếp tục phát torrent một cách an toàn.</string>
     <string name="nav_extensions">Tiện ích mở rộng</string>
     <string name="nav_sports">Thể thao</string>
+    <string name="sync_battery_prompt_title">Tiếp tục đồng bộ trong nền</string>
+    <string name="sync_battery_prompt_message">Danh mục lớn có thể mất một lúc để đồng bộ. Khi bật tối ưu hóa pin, Android có thể dừng đồng bộ trong nền hoặc khi màn hình bị khóa. Hãy cho phép dùng pin không hạn chế để quá trình hoàn tất. Trên điện thoại Samsung, hãy đảm bảo ứng dụng không bị đưa vào trạng thái ngủ.</string>
+    <string name="sync_battery_prompt_open">Mở cài đặt pin</string>
+    <string name="sync_battery_prompt_dismiss">Không, cảm ơn</string>
 </resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">카탈로그 동기화</string>
+    <string name="sync_fg_channel_description">채널, 영화, 시리즈, TV 편성표를 업데이트하는 동안 진행 상황을 표시합니다.</string>
+    <string name="sync_fg_title_fallback">카탈로그 업데이트 중</string>
+    <string name="sync_fg_preparing">준비 중…</string>
+    <string name="sync_fg_section_live">라이브 TV</string>
+    <string name="sync_fg_section_movies">영화</string>
+    <string name="sync_fg_section_series">시리즈</string>
+    <string name="sync_fg_section_guide">TV 편성표</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: 업데이트 중…</string>
+    <string name="sync_fg_cancel">취소</string>
+</resources>

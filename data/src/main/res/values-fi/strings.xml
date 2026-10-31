@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Luettelon synkronointi</string>
+    <string name="sync_fg_channel_description">Näyttää edistymisen, kun kanavia, elokuvia, sarjoja ja TV-opasta päivitetään.</string>
+    <string name="sync_fg_title_fallback">Päivitetään luetteloa</string>
+    <string name="sync_fg_preparing">Valmistellaan…</string>
+    <string name="sync_fg_section_live">Live-TV</string>
+    <string name="sync_fg_section_movies">Elokuvat</string>
+    <string name="sync_fg_section_series">Sarjat</string>
+    <string name="sync_fg_section_guide">TV-opas</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: päivitetään…</string>
+    <string name="sync_fg_cancel">Peruuta</string>
+</resources>

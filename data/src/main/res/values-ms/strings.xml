@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Penyegerakan katalog</string>
+    <string name="sync_fg_channel_description">Menunjukkan kemajuan semasa saluran, filem, siri dan panduan TV dikemas kini.</string>
+    <string name="sync_fg_title_fallback">Mengemas kini katalog</string>
+    <string name="sync_fg_preparing">Menyediakan…</string>
+    <string name="sync_fg_section_live">TV Langsung</string>
+    <string name="sync_fg_section_movies">Filem</string>
+    <string name="sync_fg_section_series">Siri</string>
+    <string name="sync_fg_section_guide">Panduan TV</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: mengemas kini…</string>
+    <string name="sync_fg_cancel">Batal</string>
+</resources>

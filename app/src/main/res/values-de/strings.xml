@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Der verfügbare Speicher konnte nicht geprüft werden. Die Torrent-Wiedergabe kann nicht sicher fortgesetzt werden.</string>
     <string name="nav_extensions">Erweiterungen</string>
     <string name="nav_sports">Sport</string>
+    <string name="sync_battery_prompt_title">Im Hintergrund weiter synchronisieren</string>
+    <string name="sync_battery_prompt_message">Große Kataloge brauchen eine Weile. Bei aktiver Akkuoptimierung kann Android die Synchronisierung im Hintergrund oder bei gesperrtem Bildschirm stoppen. Erlaube die uneingeschränkte Akkunutzung, damit sie abgeschlossen werden kann. Achte auf Samsung-Geräten außerdem darauf, dass die App nicht in den Standby-Modus versetzt wird.</string>
+    <string name="sync_battery_prompt_open">Akkueinstellungen öffnen</string>
+    <string name="sync_battery_prompt_dismiss">Nein danke</string>
 </resources>

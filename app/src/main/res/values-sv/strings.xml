@@ -292,4 +292,8 @@
     <string name="torrent_storage_check_failed">Det gick inte att kontrollera tillgängligt lagringsutrymme. Torrentuppspelningen kan inte fortsätta på ett säkert sätt.</string>
     <string name="nav_extensions">Tillägg</string>
     <string name="nav_sports">Sport</string>
+    <string name="sync_battery_prompt_title">Fortsätt synkronisera i bakgrunden</string>
+    <string name="sync_battery_prompt_message">Stora kataloger kan ta en stund att synkronisera. Med batterioptimering på kan Android stoppa synkroniseringen i bakgrunden eller när skärmen är låst. Tillåt obegränsad batterianvändning så att den kan slutföras. På Samsung-telefoner bör du även se till att appen inte försätts i viloläge.</string>
+    <string name="sync_battery_prompt_open">Öppna batteriinställningar</string>
+    <string name="sync_battery_prompt_dismiss">Nej tack</string>
 </resources>

@@ -347,4 +347,8 @@
     <string name="torrent_storage_check_failed">بررسی فضای ذخیره‌سازی ممکن نشد و پخش تورنت نمی‌تواند با اطمینان ادامه یابد.</string>
     <string name="nav_extensions">افزونه‌ها</string>
     <string name="nav_sports">ورزش</string>
+    <string name="sync_battery_prompt_title">ادامهٔ همگام‌سازی در پس‌زمینه</string>
+    <string name="sync_battery_prompt_message">همگام‌سازی فهرست‌های بزرگ ممکن است زمان‌بر باشد. وقتی بهینه‌سازی باتری روشن است، Android ممکن است همگام‌سازی را در پس‌زمینه یا هنگام قفل بودن صفحه متوقف کند. استفادهٔ نامحدود از باتری را مجاز کنید تا کامل شود. در گوشی‌های Samsung همچنین مطمئن شوید که برنامه به حالت خواب نمی‌رود.</string>
+    <string name="sync_battery_prompt_open">باز کردن تنظیمات باتری</string>
+    <string name="sync_battery_prompt_dismiss">نه، متشکرم</string>
 </resources>
