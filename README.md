@@ -24,12 +24,16 @@ The fork installs as a separate app (`com.streamvault.mobile`, shown as **Stream
 | Updates | Done | In-app update checker points at this fork's releases |
 | About screen | Done | Extra "Based on StreamVault" and fork repository links; all upstream credits and links kept |
 | CI | Done | Every push to `main` builds a signed beta APK as a pre-release; PRs run unit tests and a debug build |
-| Background sync | Planned | Sync runs as foreground work with a progress notification, survives app close and screen lock, never blocks the UI |
-| Load performance | Planned | Staged import (live channels first), parallel fetches where the provider allows, larger batches on high-end devices |
-| Samsung | Planned | One-time prompt for the unrestricted battery setting so long syncs are not killed |
-| Mobile UI | Planned | Auto / TV / Mobile mode; bottom navigation, touch lists, player gestures, picture-in-picture |
-| Sports | Planned | Free schedule source with official broadcasters per match, broadcaster and EPG matching, merged channel list |
-| Probe & rank | Planned | Probe matched channels and rank by fps, resolution and bitrate; dead streams sorted last |
+| Backup import | Done | Backups from the official release build import correctly; backup field names are stable in all builds |
+| Background sync | Phase 2 | Foreground sync with progress notification and Cancel, survives app close and screen lock, never blocks the UI |
+| Load performance | Phase 2 | Incremental loading (Live → EPG → Movies → Series), faster imports, fast reopen from cache |
+| Typing | Phase 2 | Text fields no longer drop letters, jump the cursor or lose focus while results update |
+| Channel list | Phase 2 | Header/separator rows, 24/7 loops and radio can be hidden |
+| Samsung | Phase 2 | One-time guidance for the unrestricted battery setting so long syncs are not killed |
+| Mobile UI | Phase 3 | Auto / TV / Mobile mode, bottom navigation, touch lists, player gestures, picture-in-picture, mobile data quality limits, global search |
+| Sports | Phase 4 | ESPN and OpenLigaDB schedules, official broadcaster badges, EPG team matching, Android game reminders with a Watch action |
+| Probe & failover | Phase 5 | Stream probing and ranking, cross-provider channel linking (auto-detected, user-confirmed), automatic failover |
+| Distribution | Phase 6 | Stable / Beta / Nightly update channels, sanitized log export |
 
 See [FORK_NOTES.md](FORK_NOTES.md) for the technical details and [ROADMAP.md](ROADMAP.md) for the plan.
 
