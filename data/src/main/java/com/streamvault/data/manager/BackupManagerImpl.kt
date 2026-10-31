@@ -1140,6 +1140,7 @@ class BackupManagerImpl @Inject constructor(
         } catch (cancelled: CancellationException) {
             throw cancelled
         } catch (e: Exception) {
+            runCatching { android.util.Log.w(BACKUP_LOG_TAG, "inspect failed: ${e.javaClass.simpleName}", e) }
             Result.error("Failed to inspect backup: ${e.message}", e)
         }
     }
@@ -2092,7 +2093,41 @@ class BackupManagerImpl @Inject constructor(
             portableMultiViewPresetsV14 = portableMultiViewPresetsV14,
             stremioAddons = stremioAddons,
             stremioPlaybackHistory = stremioPlaybackHistory
-        )
+        ).withNullSafeNestedCollections().also(::logParsedBackupSummary)
+    }
+
+    // Gson bypasses Kotlin defaults, so a missing nested list arrives as null despite its non-null type.
+    @Suppress("USELESS_ELVIS", "SENSELESS_COMPARISON")
+    private fun BackupData.withNullSafeNestedCollections(): BackupData = copy(
+        portableCustomGroups = portableCustomGroups?.map { it.copy(members = it.members ?: emptyList()) },
+        combinedM3uProfiles = combinedM3uProfiles?.map { it.copy(members = it.members ?: emptyList()) },
+        portableMultiViewPresetsV14 = portableMultiViewPresetsV14?.map {
+            it.copy(channels = it.channels ?: emptyList())
+        },
+        multiViewPresets = multiViewPresets?.mapValues { (_, ids) -> ids ?: emptyList() },
+        portableMultiViewPresets = portableMultiViewPresets?.mapValues { (_, refs) -> refs ?: emptyList() },
+        activeLiveSource = activeLiveSource?.let {
+            it.copy(combinedProfileProviders = it.combinedProfileProviders ?: emptyList())
+        },
+        sportsProviders = sportsProviders?.map { it.copy(eventLeagueIds = it.eventLeagueIds ?: emptyList()) }
+    )
+
+    private fun logParsedBackupSummary(data: BackupData) {
+        val sections = listOf(
+            "providerSnapshots" to data.providerSnapshots?.size,
+            "providers" to data.providers?.size,
+            "preferences" to data.preferences?.size,
+            "favorites" to data.favorites?.size,
+            "portableFavorites" to data.portableFavorites?.size,
+            "portableCustomGroups" to data.portableCustomGroups?.size,
+            "portablePlaybackHistory" to data.portablePlaybackHistory?.size,
+            "portableContentPreferences" to data.portableContentPreferences?.size,
+            "portableMultiViewPresetsV14" to data.portableMultiViewPresetsV14?.size,
+            "epgSources" to data.epgSources?.size,
+            "scheduledRecordings" to data.scheduledRecordings?.size,
+            "stremioAddons" to data.stremioAddons?.size
+        ).filter { it.second != null }.joinToString { (name, count) -> "$name=$count" }
+        runCatching { android.util.Log.i(BACKUP_LOG_TAG, "parsed backup v${data.version}: $sections") }
     }
 
     private fun <T : Any> readLimitedArray(
@@ -2181,7 +2216,7 @@ class BackupManagerImpl @Inject constructor(
             PROGRAM_REMINDER_TYPE -> listOf(
                 "provider", "channelId", "channelName", "programTitle", "programStartTime", "leadTimeMinutes"
             )
-            else -> return element
+            else -> return normalizeLegacyPortableElement(element, type)
         }
         val objectValue = element.asJsonObject
         fieldNames.forEachIndexed { index, fieldName ->
@@ -2253,6 +2288,66 @@ class BackupManagerImpl @Inject constructor(
             else -> Unit
         }
         return objectValue
+    }
+
+    // Portable DTOs had no R8 keep rule, so official release backups carry a, b, c... for their fields.
+    private fun normalizeLegacyPortableElement(element: JsonElement, type: Type): JsonElement {
+        val fieldNames = when (type) {
+            PORTABLE_CONTENT_REFERENCE_TYPE -> listOf(
+                "provider", "contentType", "remoteContentId", "parentRemoteContentId",
+                "remoteCategoryId", "name", "urlFallback"
+            )
+            PORTABLE_FAVORITE_TYPE -> listOf("content", "position", "addedAt")
+            PORTABLE_CUSTOM_GROUP_TYPE -> listOf(
+                "provider", "contentType", "name", "icon", "position", "createdAt", "members"
+            )
+            PORTABLE_PLAYBACK_HISTORY_TYPE -> listOf(
+                "content", "resumePositionMs", "totalDurationMs", "lastWatchedAt", "watchCount",
+                "watchedStatus", "posterUrl", "seasonNumber", "episodeNumber"
+            )
+            PORTABLE_PROTECTED_CONTENT_TYPE, PORTABLE_HIDDEN_CONTENT_TYPE -> listOf("content")
+            PORTABLE_CONTENT_PREFERENCE_TYPE -> listOf("content", "aspectRatio", "audioVideoOffsetMs")
+            PORTABLE_VARIANT_CHOICE_TYPE -> listOf("logicalGroupId", "selectedContent")
+            PORTABLE_MANUAL_EPG_V14_TYPE -> listOf(
+                "content", "sourceUrl", "xmltvChannelId", "sourceType", "matchType", "confidence", "source"
+            )
+            PORTABLE_MULTIVIEW_V14_TYPE -> listOf("name", "channels")
+            PORTABLE_SEARCH_HISTORY_TYPE -> listOf("query", "contentScope", "provider", "usedAt", "useCount")
+            else -> return element
+        }
+        val objectValue = element.asJsonObject
+        renameLegacyFields(objectValue, fieldNames)
+        objectValue.normalizeChild("provider", BACKUP_PROVIDER_REFERENCE_TYPE)
+        objectValue.normalizeChild("content", PORTABLE_CONTENT_REFERENCE_TYPE)
+        objectValue.normalizeChild("selectedContent", PORTABLE_CONTENT_REFERENCE_TYPE)
+        when (type) {
+            PORTABLE_CUSTOM_GROUP_TYPE -> objectValue.normalizeChildArray("members", PORTABLE_FAVORITE_TYPE)
+            PORTABLE_MULTIVIEW_V14_TYPE -> objectValue.normalizeChildArray("channels", PORTABLE_CONTENT_REFERENCE_TYPE)
+            else -> Unit
+        }
+        return objectValue
+    }
+
+    private fun renameLegacyFields(objectValue: com.google.gson.JsonObject, fieldNames: List<String>) {
+        fieldNames.forEachIndexed { index, fieldName ->
+            val legacyName = ('a'.code + index).toChar().toString()
+            if (!objectValue.has(fieldName) && objectValue.has(legacyName)) {
+                objectValue.add(fieldName, objectValue.remove(legacyName))
+            }
+        }
+    }
+
+    private fun com.google.gson.JsonObject.normalizeChild(fieldName: String, type: Type) {
+        get(fieldName)?.takeIf { it.isJsonObject }?.let { child ->
+            add(fieldName, normalizeLegacyBackupElement(child, type))
+        }
+    }
+
+    private fun com.google.gson.JsonObject.normalizeChildArray(fieldName: String, type: Type) {
+        val items = get(fieldName)?.takeIf { it.isJsonArray }?.asJsonArray ?: return
+        val normalized = com.google.gson.JsonArray()
+        items.forEach { item -> normalized.add(normalizeLegacyBackupElement(item, type)) }
+        add(fieldName, normalized)
     }
 
     private fun readStringMap(
@@ -6571,6 +6666,8 @@ private val M3U_CLASSIFICATION_RULE_TYPE: Type = M3uClassificationRuleBackup::cl
 private val M3U_CLASSIFICATION_RULE_LIST_TYPE: Type =
     object : TypeToken<List<M3uClassificationRuleBackup>>() {}.type
 private val PROGRAM_REMINDER_TYPE: Type = ProgramReminderBackup::class.java
+private const val BACKUP_LOG_TAG = "StreamVaultBackup"
+private val PORTABLE_CONTENT_REFERENCE_TYPE: Type = PortableContentReference::class.java
 private val PORTABLE_FAVORITE_TYPE: Type = PortableFavoriteBackup::class.java
 private val PORTABLE_CUSTOM_GROUP_TYPE: Type = PortableCustomGroupBackup::class.java
 private val PORTABLE_PLAYBACK_HISTORY_TYPE: Type = PortablePlaybackHistoryBackup::class.java

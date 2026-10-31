@@ -452,6 +452,41 @@ class BackupManagerImplTest {
     }
 
     @Test
+    fun `official release backup with obfuscated portable sections is readable`() = runBlocking {
+        val provider = """{"providerType":"XTREAM_CODES","serverUrl":"https://example.com","username":"user"}"""
+        val content = """{"a":$provider,"b":"MOVIE","c":"123","f":"Movie name","g":"https://example.com/m/123"}"""
+        val json = """{"version":18,""" +
+            """"portableMultiViewPresetsV14":[{"a":"preset_1","b":[]},{"a":"preset_2"}],""" +
+            """"portablePlaybackHistory":[{"a":$content,"b":100,"c":200,"d":300,"e":2,"f":"IN_PROGRESS"}],""" +
+            """"portableContentPreferences":[{"a":$content,"b":"FIT"}],""" +
+            """"portableCustomGroups":[{"a":$provider,"b":"LIVE","c":"Sports"}]}"""
+        val context: Context = mock()
+        val contentResolver: ContentResolver = mock()
+        whenever(context.contentResolver).thenReturn(contentResolver)
+        whenever(contentResolver.openInputStream(anyOrNull())).thenReturn(ByteArrayInputStream(json.toByteArray()))
+
+        val manager = backupManagerForValidation(context)
+        val readMethod = BackupManagerImpl::class.java
+            .getDeclaredMethod("readBackupData", String::class.java)
+            .apply { isAccessible = true }
+        val parsed = readMethod.invoke(manager, "content://official-release-backup")
+        val dataField = parsed!!::class.java.getDeclaredField("data").apply { isAccessible = true }
+        val data = dataField.get(parsed) as BackupData
+
+        assertThat(data.portableMultiViewPresetsV14?.map { it.name }).containsExactly("preset_1", "preset_2")
+        assertThat(data.portableMultiViewPresetsV14?.all { it.channels.isEmpty() }).isTrue()
+        val history = data.portablePlaybackHistory!!.single()
+        assertThat(history.content.remoteContentId).isEqualTo("123")
+        assertThat(history.content.provider.serverUrl).isEqualTo("https://example.com")
+        assertThat(history.resumePositionMs).isEqualTo(100L)
+        assertThat(history.watchCount).isEqualTo(2)
+        assertThat(data.portableContentPreferences!!.single().aspectRatio).isEqualTo("FIT")
+        val group = data.portableCustomGroups!!.single()
+        assertThat(group.name).isEqualTo("Sports")
+        assertThat(group.members).isEmpty()
+    }
+
+    @Test
     fun `importConfig preserves explicit EPG source timezone interpretation`() = runBlocking {
         val context: Context = mock()
         val providerDao: ProviderDao = mock()
