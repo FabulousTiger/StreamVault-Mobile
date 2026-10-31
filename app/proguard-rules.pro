@@ -65,6 +65,8 @@
 -keep class com.streamvault.domain.manager.PortableChannelReference { *; }
 -keep class com.streamvault.domain.manager.ProtectedCategoryBackup { *; }
 -keep class com.streamvault.domain.manager.ScheduledRecordingBackup { *; }
+# Every backup DTO keeps its field names so the backup wire format is stable across builds.
+-keepclassmembers class com.streamvault.domain.manager.** { <fields>; }
 -keep class com.streamvault.data.local.entity.** { *; }
 -keep class com.streamvault.data.remote.xtream.model.** { *; }
 
