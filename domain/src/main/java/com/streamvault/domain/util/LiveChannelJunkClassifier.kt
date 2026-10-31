@@ -2,7 +2,17 @@ package com.streamvault.domain.util
 
 import java.util.Locale
 
-enum class LiveChannelJunkKind { NORMAL, HEADER, LOOP_24_7, RADIO }
+/** [code] is persisted in `channels.junk_kind`; never renumber existing values. */
+enum class LiveChannelJunkKind(val code: Int) {
+    NORMAL(0),
+    HEADER(1),
+    LOOP_24_7(2),
+    RADIO(3);
+
+    companion object {
+        fun fromCode(code: Int): LiveChannelJunkKind = entries.firstOrNull { it.code == code } ?: NORMAL
+    }
+}
 
 data class LiveJunkFilter(
     val hideHeaders: Boolean = false,
@@ -20,6 +30,10 @@ data class LiveJunkFilter(
 
     fun hides(name: String, groupName: String?): Boolean =
         isActive && hides(LiveChannelJunkClassifier.classify(name, groupName))
+
+    /** Persisted kind codes hidden by this filter, for `junk_kind NOT IN (:codes)`. */
+    fun hiddenKindCodes(): List<Int> =
+        LiveChannelJunkKind.entries.filter(::hides).map(LiveChannelJunkKind::code)
 }
 
 /**

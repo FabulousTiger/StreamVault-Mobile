@@ -76,4 +76,22 @@ class LiveChannelJunkClassifierTest {
         assertThat(LiveJunkFilter().isActive).isFalse()
         assertThat(LiveJunkFilter().hides("=== X ===", null)).isFalse()
     }
+
+    @Test
+    fun `persisted codes are stable and round trip`() {
+        assertThat(LiveChannelJunkKind.entries.map { it.code }).containsExactly(0, 1, 2, 3).inOrder()
+        LiveChannelJunkKind.entries.forEach {
+            assertThat(LiveChannelJunkKind.fromCode(it.code)).isEqualTo(it)
+        }
+        assertThat(LiveChannelJunkKind.fromCode(99)).isEqualTo(LiveChannelJunkKind.NORMAL)
+    }
+
+    @Test
+    fun `hidden kind codes follow the toggles`() {
+        assertThat(LiveJunkFilter().hiddenKindCodes()).isEmpty()
+        assertThat(LiveJunkFilter(hideHeaders = true).hiddenKindCodes()).containsExactly(1)
+        assertThat(LiveJunkFilter(hideLoops = true, hideRadio = true).hiddenKindCodes())
+            .containsExactly(2, 3).inOrder()
+        assertThat(LiveJunkFilter(true, true, true).hiddenKindCodes()).containsExactly(1, 2, 3).inOrder()
+    }
 }

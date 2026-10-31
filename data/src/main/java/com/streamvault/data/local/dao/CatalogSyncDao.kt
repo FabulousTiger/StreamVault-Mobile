@@ -306,6 +306,13 @@ interface CatalogSyncDao {
                   AND stage.provider_id = :providerId
                   AND stage.stream_id = channels.stream_id
             ),
+            junk_kind = (
+                SELECT stage.junk_kind
+                FROM channel_import_stage AS stage
+                WHERE stage.session_id = :sessionId
+                  AND stage.provider_id = :providerId
+                  AND stage.stream_id = channels.stream_id
+            ),
             stream_url = (
                 SELECT stage.stream_url
                 FROM channel_import_stage AS stage
@@ -417,7 +424,8 @@ interface CatalogSyncDao {
             is_adult,
             is_user_protected,
             playback_metadata_json,
-            sync_fingerprint
+            sync_fingerprint,
+            junk_kind
         )
         SELECT
             stage.stream_id,
@@ -444,7 +452,8 @@ interface CatalogSyncDao {
                   AND category.is_user_protected = 1
             ) THEN 1 ELSE 0 END,
             stage.playback_metadata_json,
-            stage.sync_fingerprint
+            stage.sync_fingerprint,
+            stage.junk_kind
         FROM channel_import_stage AS stage
         WHERE stage.session_id = :sessionId
           AND stage.provider_id = :providerId
