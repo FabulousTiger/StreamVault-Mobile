@@ -37,5 +37,19 @@ Upstream requires every user-facing string to be translated into all advertised 
 ### Sports (phase 4)
 - Upstream sports providers need keys (TheSportsDB rejects the free key `123`), so without one, events only come from EPG classification. Plan: add a no-key schedule source with official broadcasters per match, map broadcasters to provider channels, and merge with EPG programme matches.
 
+### Logical channel model
+
+Requirement: favorites, cross-provider linking, probe & rank and failover must allow several streams (SD/HD/HEVC/UHD, and the same channel on another provider) to belong to one logical channel, so the future unified-variants feature needs no rewrite.
+
+Upstream already has the core of this in `domain/model/Channel.kt`:
+- `LiveChannelVariant` carries a `logicalGroupId`, `providerId`, parsed `attributes` (resolution, codec, fps, HDR, region, language) and `observedQuality` (last width/height/bitrate/fps, success count).
+- `Channel.selectedVariantId`, `qualityOptions` and `alternativeStreams` expose the variant choice; `liveChannelGroupingMode` / `liveVariantPreferenceMode` control grouping and the preferred variant, and backups carry `PortableVariantChoiceBackup(logicalGroupId, ...)`.
+
+Fork rules built on that:
+- Probe results are stored per variant (provider + stream id) and feed `observedQuality`; ranking works on a logical group's variants.
+- Cross-provider links are stored as accepted mappings into one logical group (variants from different `providerId`s), never by merging provider rows.
+- Favorites and reminders point at the logical group when one exists, else at the raw channel.
+- Failover walks the group's variants in rank order, respecting each provider's connection limit.
+
 ### Probe & rank (phase 5)
 - Ported from the YNOTV fork: probe matched channels serially per provider (one connection each), rank by fps ≥ 50, then height, then bitrate, < 100 kbps = no signal (sorted last), 30-minute probe cache with a log.
