@@ -21,7 +21,7 @@ internal object PreferenceBackupRegistry {
         "app_home_dashboard_shelves", "app_time_format", "app_theme", "live_tv_channel_mode", "live_tv_auto_hide_categories",
         "show_live_source_switcher", "show_favorites_category", "show_all_channels_category",
         "show_recent_channels_category", "live_tv_category_filters", "live_tv_quick_filter_visibility",
-        "hide_decorative_live_rows", "live_channel_numbering_mode", "live_channel_grouping_mode",
+        "hide_decorative_live_rows", "hide_live_loop_channels", "hide_live_radio_channels", "live_channel_numbering_mode", "live_channel_grouping_mode",
         "grouped_channel_label_mode", "live_variant_preference_mode", "live_variant_selections",
         "vod_view_mode", "vod_type_badge_as_icon", "vod_infinite_scroll", "vod_portal_search",
         "show_trakt_trending_movies", "show_trakt_popular_movies", "show_trakt_trending_series",
