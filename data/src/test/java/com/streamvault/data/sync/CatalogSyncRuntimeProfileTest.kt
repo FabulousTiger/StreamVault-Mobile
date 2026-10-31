@@ -37,6 +37,6 @@ class CatalogSyncRuntimeProfileTest {
     }
 
     private companion object {
-        const val BENCHMARK_APPLICATION_ID = "com.streamvault.app.syncbenchmark"
+        const val BENCHMARK_APPLICATION_ID = "com.streamvault.mobile.syncbenchmark"
     }
 }
