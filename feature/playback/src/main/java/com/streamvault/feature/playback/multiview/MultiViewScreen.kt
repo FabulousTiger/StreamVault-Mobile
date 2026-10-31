@@ -1,5 +1,6 @@
 package com.streamvault.feature.playback.multiview
 
+import com.streamvault.core.ui.input.withExternalText
 import com.streamvault.core.ui.layout.isPortraitLayout
 
 import com.streamvault.core.ui.design.BrowseShapes
@@ -810,9 +811,25 @@ private fun ReplaceSlotDialog(
         widthFraction = 0.62f,
         content = {
             // Search bar
+            val echoGuard = remember { com.streamvault.core.ui.input.TextEchoGuard() }
+            var searchFieldValue by remember {
+                mutableStateOf(androidx.compose.ui.text.input.TextFieldValue(searchQuery, androidx.compose.ui.text.TextRange(searchQuery.length)))
+            }
+            LaunchedEffect(searchQuery) {
+                if (echoGuard.shouldAdopt(searchQuery, searchFieldValue.text)) {
+                    searchFieldValue = searchFieldValue.withExternalText(searchQuery)
+                }
+            }
             BasicTextField(
-                value = searchQuery,
-                onValueChange = onSearchChange,
+                value = searchFieldValue,
+                onValueChange = { updated ->
+                    val textChanged = updated.text != searchFieldValue.text
+                    searchFieldValue = updated
+                    if (textChanged) {
+                        echoGuard.noteLocalEdit(updated.text)
+                        onSearchChange(updated.text)
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .background(Color.White.copy(alpha = 0.07f), BrowseShapes.Artwork)

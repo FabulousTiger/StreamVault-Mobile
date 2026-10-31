@@ -1,5 +1,7 @@
 package com.streamvault.core.ui.components
 
+import com.streamvault.core.ui.input.requiresInputActivation
+import com.streamvault.core.ui.input.withExternalText
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -84,7 +86,7 @@ fun SearchInput(
     val isTelevisionDevice = rememberIsTelevisionDevice()
     var hasContainerFocus by remember { mutableStateOf(false) }
     var hasInputFocus by remember { mutableStateOf(false) }
-    var acceptsInput by remember { mutableStateOf(false) }
+    var acceptsInput by remember(isTelevisionDevice) { mutableStateOf(!requiresInputActivation(isTelevisionDevice)) }
     var pendingInputActivation by remember { mutableStateOf(false) }
     var textFieldValue by remember {
         mutableStateOf(TextFieldValue(text = value, selection = TextRange(value.length)))
@@ -122,24 +124,10 @@ fun SearchInput(
         requestBringIntoView()
     }
 
+    val echoGuard = remember { com.streamvault.core.ui.input.TextEchoGuard() }
     LaunchedEffect(value) {
-        if (value != textFieldValue.text) {
-            val coercedSelectionStart = textFieldValue.selection.start.coerceIn(0, value.length)
-            val coercedSelectionEnd = textFieldValue.selection.end.coerceIn(0, value.length)
-            val coercedComposition = textFieldValue.composition?.let { composition ->
-                val compositionStart = composition.start.coerceIn(0, value.length)
-                val compositionEnd = composition.end.coerceIn(0, value.length)
-                if (compositionStart <= compositionEnd) {
-                    TextRange(compositionStart, compositionEnd)
-                } else {
-                    null
-                }
-            }
-            textFieldValue = textFieldValue.copy(
-                text = value,
-                selection = TextRange(coercedSelectionStart, coercedSelectionEnd),
-                composition = coercedComposition
-            )
+        if (echoGuard.shouldAdopt(value, textFieldValue.text)) {
+            textFieldValue = textFieldValue.withExternalText(value)
         }
     }
 
@@ -153,7 +141,7 @@ fun SearchInput(
         pendingInputActivation = false
     }
 
-    BackHandler(enabled = shouldConsumeSearchInputBack(acceptsInput)) {
+    BackHandler(enabled = requiresInputActivation(isTelevisionDevice) && shouldConsumeSearchInputBack(acceptsInput)) {
         pendingInputActivation = false
         acceptsInput = false
         keyboardController?.hide()
@@ -208,8 +196,10 @@ fun SearchInput(
                 BasicTextField(
                     value = textFieldValue,
                     onValueChange = { updatedValue ->
+                        val textChanged = updatedValue.text != textFieldValue.text
                         textFieldValue = updatedValue
-                        if (updatedValue.text != value) {
+                        if (textChanged) {
+                            echoGuard.noteLocalEdit(updatedValue.text)
                             onValueChange(updatedValue.text)
                         }
                     },
@@ -227,7 +217,7 @@ fun SearchInput(
                             hasInputFocus = enabled && it.hasFocus
                             if (it.hasFocus) {
                                 requestBringIntoView(120)
-                            } else {
+                            } else if (requiresInputActivation(isTelevisionDevice)) {
                                 acceptsInput = false
                                 keyboardController?.hide()
                             }
@@ -255,12 +245,12 @@ fun SearchInput(
                     singleLine = true,
                     cursorBrush = SolidColor(Primary),
                     enabled = enabled,
-                    readOnly = !acceptsInput,
+                    readOnly = requiresInputActivation(isTelevisionDevice) && !acceptsInput,
                     keyboardOptions = KeyboardOptions(imeAction = imeAction),
                     keyboardActions = KeyboardActions(
                         onSearch = {
                             onSearch()
-                            acceptsInput = false
+                            if (requiresInputActivation(isTelevisionDevice)) acceptsInput = false
                             keyboardController?.hide()
                             val movedFocus = focusManager.moveFocus(FocusDirection.Down)
                             if (!movedFocus) {

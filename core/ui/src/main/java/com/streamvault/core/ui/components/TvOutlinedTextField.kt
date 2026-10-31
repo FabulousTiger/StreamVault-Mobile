@@ -21,7 +21,12 @@ import androidx.compose.ui.focus.focusProperties
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import com.streamvault.core.ui.device.rememberIsTelevisionDevice
+import com.streamvault.core.ui.input.TextEchoGuard
+import com.streamvault.core.ui.input.requiresInputActivation
+import com.streamvault.core.ui.input.withExternalText
 import com.streamvault.core.ui.interaction.mouseClickable
 
 /**
@@ -51,6 +56,14 @@ fun TvOutlinedTextField(
     var hasInputFocus by remember { mutableStateOf(false) }
     var acceptsInput by remember(isTelevisionDevice) { mutableStateOf(!isTelevisionDevice) }
     var pendingInputActivation by remember { mutableStateOf(false) }
+    val echoGuard = remember { TextEchoGuard() }
+    var fieldValue by remember { mutableStateOf(TextFieldValue(value, TextRange(value.length))) }
+
+    LaunchedEffect(value) {
+        if (echoGuard.shouldAdopt(value, fieldValue.text)) {
+            fieldValue = fieldValue.withExternalText(value)
+        }
+    }
 
     fun activateInput() {
         if (!enabled) return
@@ -88,14 +101,21 @@ fun TvOutlinedTextField(
             .focusable(enabled = enabled),
     ) {
         OutlinedTextField(
-            value = value,
-            onValueChange = onValueChange,
+            value = fieldValue,
+            onValueChange = { updated ->
+                val textChanged = updated.text != fieldValue.text
+                fieldValue = updated
+                if (textChanged) {
+                    echoGuard.noteLocalEdit(updated.text)
+                    onValueChange(updated.text)
+                }
+            },
             label = label,
             singleLine = singleLine,
             minLines = minLines,
             maxLines = maxLines,
             enabled = enabled,
-            readOnly = isTelevisionDevice && !acceptsInput,
+            readOnly = requiresInputActivation(isTelevisionDevice) && !acceptsInput,
             keyboardOptions = keyboardOptions,
             keyboardActions = keyboardActions,
             modifier = Modifier

@@ -97,6 +97,17 @@ class SearchViewModelTest {
     }
 
     @Test
+    fun `typing keeps raw text without trimming or auto-submitting`() = runTest {
+        viewModel.onQueryChange("ne")
+        viewModel.onQueryChange("news ")
+        advanceUntilIdle()
+
+        assertThat(viewModel.query.value).isEqualTo("news ")
+        org.mockito.kotlin.verify(preferencesRepository, org.mockito.kotlin.never())
+            .recordRecentSearchQuery(any(), any(), anyOrNull(), any())
+    }
+
+    @Test
     fun `clearRecentQueries removes all stored search shortcuts`() = runTest {
         viewModel.clearRecentQueries()
         advanceUntilIdle()

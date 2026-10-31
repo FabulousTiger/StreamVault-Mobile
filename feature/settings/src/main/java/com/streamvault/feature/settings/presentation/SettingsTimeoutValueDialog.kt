@@ -121,8 +121,9 @@ private fun NumericSettingsTextField(
     }
     val isFocused = hasContainerFocus || hasInputFocus
 
+    val echoGuard = remember { com.streamvault.core.ui.input.TextEchoGuard() }
     LaunchedEffect(value) {
-        if (value != fieldValue.text) {
+        if (echoGuard.shouldAdopt(value, fieldValue.text)) {
             fieldValue = TextFieldValue(text = value, selection = TextRange(value.length))
         }
     }
@@ -167,6 +168,7 @@ private fun NumericSettingsTextField(
                         selection = TextRange(digitsOnly.length.coerceAtMost(digitsOnly.length))
                     )
                     if (digitsOnly != value) {
+                        echoGuard.noteLocalEdit(digitsOnly)
                         onValueChange(digitsOnly)
                     }
                 },
