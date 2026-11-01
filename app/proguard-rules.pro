@@ -65,7 +65,15 @@
 -keep class com.streamvault.domain.manager.PortableChannelReference { *; }
 -keep class com.streamvault.domain.manager.ProtectedCategoryBackup { *; }
 -keep class com.streamvault.domain.manager.ScheduledRecordingBackup { *; }
-# Every backup DTO keeps its field names so the backup wire format is stable across builds.
+# Gson reads backup DTO fields reflectively. Keep every portable and *Backup wire
+# type's field names stable; the importer still accepts compact aliases emitted by
+# older minified releases.
+-keep class com.streamvault.domain.manager.Portable* { *; }
+-keep class com.streamvault.domain.manager.*Backup { *; }
+-keep class com.streamvault.domain.manager.ProviderCredentials { *; }
+-keep class com.streamvault.domain.settings.VodTrackPreference { *; }
+-keep class com.streamvault.domain.settings.VodTrackPreferences { *; }
+# Fork: also keep field names on every other domain.manager backup DTO.
 -keepclassmembers class com.streamvault.domain.manager.** { <fields>; }
 -keep class com.streamvault.data.local.entity.** { *; }
 -keep class com.streamvault.data.remote.xtream.model.** { *; }
@@ -111,6 +119,11 @@
 -keepattributes SourceFile,LineNumberTable       # Better crash reports
 -renamesourcefileattribute SourceFile
 -keepattributes RuntimeVisibleAnnotations,RuntimeVisibleParameterAnnotations
+
+# jcifs-ng loads these Bouncy Castle MD4 classes by name during NTLM authentication.
+-keepnames class org.bouncycastle.jcajce.provider.digest.MD4
+-keep class org.bouncycastle.jcajce.provider.digest.MD4$Mappings { *; }
+-keep class org.bouncycastle.jcajce.provider.digest.MD4$Digest { *; }
 
 # SLF4J's binding is optional; jcifs-ng uses the API without bundling a backend.
 -dontwarn org.slf4j.impl.StaticLoggerBinder
