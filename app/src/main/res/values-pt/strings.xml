@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Não foi possível verificar o armazenamento disponível. A reprodução do torrent não pode continuar com segurança.</string>
     <string name="nav_extensions">Extensões</string>
     <string name="nav_sports">Desporto</string>
+    <string name="sync_battery_prompt_title">Continuar sincronizando em segundo plano</string>
+    <string name="sync_battery_prompt_message">Catálogos grandes podem levar algum tempo para sincronizar. Com a otimização de bateria ativada, o Android pode interromper a sincronização em segundo plano ou com a tela bloqueada. Permita o uso irrestrito da bateria para que ela termine. Em celulares Samsung, verifique também se o app não está sendo colocado em suspensão.</string>
+    <string name="sync_battery_prompt_open">Abrir configurações de bateria</string>
+    <string name="sync_battery_prompt_dismiss">Não, obrigado</string>
 </resources>

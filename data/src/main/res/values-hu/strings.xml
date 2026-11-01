@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Katalógus szinkronizálása</string>
+    <string name="sync_fg_channel_description">Mutatja a folyamatot, amíg a csatornák, filmek, sorozatok és a műsorújság frissül.</string>
+    <string name="sync_fg_title_fallback">Katalógus frissítése</string>
+    <string name="sync_fg_preparing">Előkészítés…</string>
+    <string name="sync_fg_section_live">Élő TV</string>
+    <string name="sync_fg_section_movies">Filmek</string>
+    <string name="sync_fg_section_series">Sorozatok</string>
+    <string name="sync_fg_section_guide">Műsorújság</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: frissítés…</string>
+    <string name="sync_fg_cancel">Mégse</string>
+</resources>

@@ -258,6 +258,7 @@ class MainActivity : ComponentActivity(), CatalogPlatformHost {
                                 catalogPlatformHost = this@MainActivity,
                                 onCloseApp = ::closeApp
                             )
+                            com.streamvault.app.sync.SyncBackgroundGuidanceHost()
                             LaunchedEffect(Unit) {
                                 dispatchPendingExternalNavigationRequests()
                                 window.decorView.doOnPreDraw {

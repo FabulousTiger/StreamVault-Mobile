@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Не вдалося перевірити доступне сховище. Відтворення торрента не можна безпечно продовжити.</string>
     <string name="nav_extensions">Розширення</string>
     <string name="nav_sports">Спорт</string>
+    <string name="sync_battery_prompt_title">Продовжувати синхронізацію у фоні</string>
+    <string name="sync_battery_prompt_message">Синхронізація великих каталогів може тривати довго. Якщо оптимізацію батареї ввімкнено, Android може зупинити її у фоні або коли екран заблоковано. Дозвольте необмежене використання батареї, щоб вона завершилася. На телефонах Samsung також переконайтеся, що застосунок не переводиться в режим сну.</string>
+    <string name="sync_battery_prompt_open">Відкрити налаштування батареї</string>
+    <string name="sync_battery_prompt_dismiss">Ні, дякую</string>
 </resources>

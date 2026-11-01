@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Sinkronizacija kataloga</string>
+    <string name="sync_fg_channel_description">Prikazuje napredak dok se ažuriraju kanali, filmovi, serije i TV vodič.</string>
+    <string name="sync_fg_title_fallback">Ažuriranje kataloga</string>
+    <string name="sync_fg_preparing">Priprema…</string>
+    <string name="sync_fg_section_live">TV uživo</string>
+    <string name="sync_fg_section_movies">Filmovi</string>
+    <string name="sync_fg_section_series">Serije</string>
+    <string name="sync_fg_section_guide">TV vodič</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: ažuriranje…</string>
+    <string name="sync_fg_cancel">Odustani</string>
+</resources>

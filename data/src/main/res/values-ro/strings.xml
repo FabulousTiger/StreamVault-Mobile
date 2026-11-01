@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Sincronizare catalog</string>
+    <string name="sync_fg_channel_description">Afișează progresul în timp ce canalele, filmele, serialele și ghidul TV se actualizează.</string>
+    <string name="sync_fg_title_fallback">Se actualizează catalogul</string>
+    <string name="sync_fg_preparing">Se pregătește…</string>
+    <string name="sync_fg_section_live">TV în direct</string>
+    <string name="sync_fg_section_movies">Filme</string>
+    <string name="sync_fg_section_series">Seriale</string>
+    <string name="sync_fg_section_guide">Ghid TV</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: se actualizează…</string>
+    <string name="sync_fg_cancel">Anulează</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Catalogussynchronisatie</string>
+    <string name="sync_fg_channel_description">Toont de voortgang terwijl zenders, films, series en de tv-gids worden bijgewerkt.</string>
+    <string name="sync_fg_title_fallback">Catalogus bijwerken</string>
+    <string name="sync_fg_preparing">Voorbereiden…</string>
+    <string name="sync_fg_section_live">Live-tv</string>
+    <string name="sync_fg_section_movies">Films</string>
+    <string name="sync_fg_section_series">Series</string>
+    <string name="sync_fg_section_guide">Tv-gids</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: bijwerken…</string>
+    <string name="sync_fg_cancel">Annuleren</string>
+</resources>

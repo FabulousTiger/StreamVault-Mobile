@@ -313,4 +313,8 @@
     <string name="torrent_storage_check_failed">無法檢查可用儲存空間，因此無法安全地繼續播放 Torrent。</string>
     <string name="nav_extensions">擴充功能</string>
     <string name="nav_sports">體育</string>
+    <string name="sync_battery_prompt_title">在背景繼續同步</string>
+    <string name="sync_battery_prompt_message">大型目錄的同步可能需要一段時間。開啟電池最佳化後，Android 可能會在背景或螢幕鎖定時停止同步。請允許不受限制地使用電池，讓同步得以完成。在三星手機上，也請確認應用程式不會被設為休眠。</string>
+    <string name="sync_battery_prompt_open">開啟電池設定</string>
+    <string name="sync_battery_prompt_dismiss">不用了</string>
 </resources>

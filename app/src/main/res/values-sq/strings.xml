@@ -344,4 +344,8 @@
     <string name="torrent_storage_check_failed">Nuk mund të kontrollohej hapësira e disponueshme. Luajtja e torrentit nuk mund të vazhdojë në mënyrë të sigurt.</string>
     <string name="nav_extensions">Zgjerimet</string>
     <string name="nav_sports">Sport</string>
+    <string name="sync_battery_prompt_title">Vazhdo sinkronizimin në sfond</string>
+    <string name="sync_battery_prompt_message">Sinkronizimi i katalogëve të mëdhenj mund të zgjasë. Me optimizimin e baterisë të aktivizuar, Android mund ta ndalojë sinkronizimin në sfond ose kur ekrani është i kyçur. Lejo përdorimin e pakufizuar të baterisë që të përfundojë. Në telefonat Samsung, sigurohu gjithashtu që aplikacioni të mos vihet në gjumë.</string>
+    <string name="sync_battery_prompt_open">Hap cilësimet e baterisë</string>
+    <string name="sync_battery_prompt_dismiss">Jo, faleminderit</string>
 </resources>

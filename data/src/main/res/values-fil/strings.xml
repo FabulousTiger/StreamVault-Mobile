@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Pag-sync ng katalogo</string>
+    <string name="sync_fg_channel_description">Ipinapakita ang progreso habang ina-update ang mga channel, pelikula, serye at TV guide.</string>
+    <string name="sync_fg_title_fallback">Ina-update ang katalogo</string>
+    <string name="sync_fg_preparing">Inihahanda…</string>
+    <string name="sync_fg_section_live">Live TV</string>
+    <string name="sync_fg_section_movies">Mga Pelikula</string>
+    <string name="sync_fg_section_series">Mga Serye</string>
+    <string name="sync_fg_section_guide">Gabay sa TV</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: ina-update…</string>
+    <string name="sync_fg_cancel">Kanselahin</string>
+</resources>

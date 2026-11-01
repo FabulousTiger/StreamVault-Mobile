@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Синхронизиране на каталога</string>
+    <string name="sync_fg_channel_description">Показва напредъка, докато каналите, филмите, сериалите и ТВ програмата се обновяват.</string>
+    <string name="sync_fg_title_fallback">Обновяване на каталога</string>
+    <string name="sync_fg_preparing">Подготовка…</string>
+    <string name="sync_fg_section_live">ТВ на живо</string>
+    <string name="sync_fg_section_movies">Филми</string>
+    <string name="sync_fg_section_series">Сериали</string>
+    <string name="sync_fg_section_guide">ТВ програма</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: обновяване…</string>
+    <string name="sync_fg_cancel">Отказ</string>
+</resources>

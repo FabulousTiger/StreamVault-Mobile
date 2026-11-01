@@ -292,4 +292,8 @@
     <string name="torrent_storage_check_failed">空き容量を確認できませんでした。安全にトレント再生を続けられません。</string>
     <string name="nav_extensions">拡張機能</string>
     <string name="nav_sports">スポーツ</string>
+    <string name="sync_battery_prompt_title">バックグラウンドで同期を続ける</string>
+    <string name="sync_battery_prompt_message">大きなカタログの同期には時間がかかることがあります。電池の最適化がオンの場合、バックグラウンドや画面ロック中に Android が同期を停止することがあります。同期を完了できるよう、電池の使用を「制限なし」にしてください。Samsung のスマートフォンでは、アプリがスリープ状態にならないことも確認してください。</string>
+    <string name="sync_battery_prompt_open">電池の設定を開く</string>
+    <string name="sync_battery_prompt_dismiss">今はしない</string>
 </resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Đồng bộ danh mục</string>
+    <string name="sync_fg_channel_description">Hiển thị tiến trình khi kênh, phim, phim bộ và lịch phát sóng đang được cập nhật.</string>
+    <string name="sync_fg_title_fallback">Đang cập nhật danh mục</string>
+    <string name="sync_fg_preparing">Đang chuẩn bị…</string>
+    <string name="sync_fg_section_live">TV trực tiếp</string>
+    <string name="sync_fg_section_movies">Phim</string>
+    <string name="sync_fg_section_series">Phim bộ</string>
+    <string name="sync_fg_section_guide">Lịch phát sóng</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: đang cập nhật…</string>
+    <string name="sync_fg_cancel">Hủy</string>
+</resources>

@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">A szabad tárhely nem ellenőrizhető. A torrent lejátszása nem folytatható biztonságosan.</string>
     <string name="nav_extensions">Kiterjesztések</string>
     <string name="nav_sports">Sport</string>
+    <string name="sync_battery_prompt_title">Szinkronizálás folytatása a háttérben</string>
+    <string name="sync_battery_prompt_message">A nagy katalógusok szinkronizálása eltarthat egy ideig. Bekapcsolt akkumulátor-optimalizálás mellett az Android leállíthatja a szinkronizálást a háttérben vagy zárolt képernyőnél. Engedélyezze a korlátlan akkumulátorhasználatot, hogy befejeződhessen. Samsung telefonokon arról is gondoskodjon, hogy az alkalmazás ne kerüljön alvó állapotba.</string>
+    <string name="sync_battery_prompt_open">Akkumulátorbeállítások megnyitása</string>
+    <string name="sync_battery_prompt_dismiss">Nem, köszönöm</string>
 </resources>

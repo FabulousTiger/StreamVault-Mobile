@@ -345,4 +345,8 @@
 
     <string name="nav_extensions">Sambungan</string>
     <string name="nav_sports">Sukan</string>
+    <string name="sync_battery_prompt_title">Teruskan penyegerakan di latar belakang</string>
+    <string name="sync_battery_prompt_message">Penyegerakan katalog besar boleh mengambil masa. Apabila pengoptimuman bateri dihidupkan, Android mungkin menghentikan penyegerakan di latar belakang atau semasa skrin dikunci. Benarkan penggunaan bateri tanpa had supaya ia dapat diselesaikan. Pada telefon Samsung, pastikan juga apl tidak ditidurkan.</string>
+    <string name="sync_battery_prompt_open">Buka tetapan bateri</string>
+    <string name="sync_battery_prompt_dismiss">Tidak, terima kasih</string>
 </resources>

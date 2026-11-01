@@ -1,5 +1,7 @@
 package com.streamvault.data.sync
 
+import com.streamvault.data.sync.foreground.SyncWorkKind
+import com.streamvault.data.sync.foreground.runWithSyncForeground
 import android.content.Context
 import kotlinx.coroutines.asContextElement
 import kotlinx.coroutines.withContext
@@ -53,7 +55,7 @@ class StalkerIndexWorker(
             .automaticSyncRunner().settings(inputData.getLong(KEY_PROVIDER_ID, INVALID_PROVIDER_ID)) else null
         return withContext(AutomaticSyncExecution.automatic.asContextElement(automatic) +
             AutomaticSyncExecution.policy.asContextElement(policy) +
-            AutomaticSyncExecution.idleSatisfied.asContextElement(inputData.getBoolean("idle_constraint", false))) { runIndexWork() }
+            AutomaticSyncExecution.idleSatisfied.asContextElement(inputData.getBoolean("idle_constraint", false))) { runWithSyncForeground(SyncWorkKind.STALKER_INDEX) { runIndexWork() } }
     }
 
     private suspend fun runIndexWork(): Result {

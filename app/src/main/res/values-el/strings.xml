@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Δεν ήταν δυνατός ο έλεγχος του διαθέσιμου χώρου. Η αναπαραγωγή torrent δεν μπορεί να συνεχιστεί με ασφάλεια.</string>
     <string name="nav_extensions">Επεκτάσεις</string>
     <string name="nav_sports">Αθλητικά</string>
+    <string name="sync_battery_prompt_title">Συνέχιση συγχρονισμού στο παρασκήνιο</string>
+    <string name="sync_battery_prompt_message">Ο συγχρονισμός μεγάλων καταλόγων μπορεί να διαρκέσει. Με ενεργή τη βελτιστοποίηση μπαταρίας, το Android μπορεί να τον σταματήσει στο παρασκήνιο ή όταν η οθόνη είναι κλειδωμένη. Επιτρέψτε απεριόριστη χρήση μπαταρίας για να ολοκληρωθεί. Στα τηλέφωνα Samsung, βεβαιωθείτε επίσης ότι η εφαρμογή δεν τίθεται σε αναστολή.</string>
+    <string name="sync_battery_prompt_open">Άνοιγμα ρυθμίσεων μπαταρίας</string>
+    <string name="sync_battery_prompt_dismiss">Όχι, ευχαριστώ</string>
 </resources>

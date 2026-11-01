@@ -58,7 +58,7 @@ public fun SettingsScreenDialogs(
     val providerState = rememberSettingsProviderSectionState(dialogState)
 
     SyncingOverlay(
-        isSyncing = uiState.isSyncing,
+        isSyncing = uiState.showsBlockingSyncOverlay(),
         providerName = uiState.syncingProviderName,
         progress = uiState.syncProgress,
         sectionLabel = uiState.syncSectionLabel,

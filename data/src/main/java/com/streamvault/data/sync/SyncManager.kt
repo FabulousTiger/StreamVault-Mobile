@@ -1,5 +1,6 @@
 package com.streamvault.data.sync
 
+import com.streamvault.data.sync.foreground.InProcessSyncKeepAliveWorker
 import com.streamvault.data.BuildConfig
 
 import android.content.Context
@@ -228,6 +229,9 @@ class SyncManager @Inject constructor(
     private val m3uClassificationRepository: M3uClassificationRepository? = null,
     private val pendingBackupRestoreCoordinator: PendingBackupRestoreCoordinator? = null
 ) : ProviderSyncCommands, CatalogHydrationCommands, ProviderSyncStateSource, ProviderSyncLifecycle {
+    init {
+        InProcessSyncKeepAliveWorker.install(applicationContext)
+    }
     private val syncProviderSnapshotAdapter = SyncProviderSnapshotAdapter(providerSnapshotRepository)
     private val syncStatusPublicationCoordinator = SyncStatusPublicationCoordinator(
         syncMetadataRepository = syncMetadataRepository,

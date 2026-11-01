@@ -343,4 +343,8 @@
     <string name="torrent_storage_check_failed">Не може да се провери достапниот простор. Репродукцијата на торент не може безбедно да продолжи.</string>
     <string name="nav_extensions">Проширувања</string>
     <string name="nav_sports">Спорт</string>
+    <string name="sync_battery_prompt_title">Продолжи со синхронизација во позадина</string>
+    <string name="sync_battery_prompt_message">Синхронизацијата на големи каталози може да потрае. Со вклучена оптимизација на батеријата, Android може да ја запре синхронизацијата во позадина или кога екранот е заклучен. Дозволете неограничено користење на батеријата за да заврши. На Samsung телефони проверете и дека апликацијата не се става во мирување.</string>
+    <string name="sync_battery_prompt_open">Отвори поставки за батерија</string>
+    <string name="sync_battery_prompt_dismiss">Не, благодарам</string>
 </resources>

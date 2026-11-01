@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Synchronizace katalogu</string>
+    <string name="sync_fg_channel_description">Zobrazuje průběh aktualizace kanálů, filmů, seriálů a TV průvodce.</string>
+    <string name="sync_fg_title_fallback">Aktualizace katalogu</string>
+    <string name="sync_fg_preparing">Příprava…</string>
+    <string name="sync_fg_section_live">Živé TV</string>
+    <string name="sync_fg_section_movies">Filmy</string>
+    <string name="sync_fg_section_series">Seriály</string>
+    <string name="sync_fg_section_guide">TV průvodce</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: aktualizace…</string>
+    <string name="sync_fg_cancel">Zrušit</string>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Синхронизација на каталогот</string>
+    <string name="sync_fg_channel_description">Го прикажува напредокот додека се ажурираат каналите, филмовите, сериите и ТВ водичот.</string>
+    <string name="sync_fg_title_fallback">Се ажурира каталогот</string>
+    <string name="sync_fg_preparing">Се подготвува…</string>
+    <string name="sync_fg_section_live">ТВ во живо</string>
+    <string name="sync_fg_section_movies">Филмови</string>
+    <string name="sync_fg_section_series">Серии</string>
+    <string name="sync_fg_section_guide">ТВ водич</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: се ажурира…</string>
+    <string name="sync_fg_cancel">Откажи</string>
+</resources>

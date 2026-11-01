@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">همگام‌سازی فهرست</string>
+    <string name="sync_fg_channel_description">پیشرفت به‌روزرسانی کانال‌ها، فیلم‌ها، سریال‌ها و راهنمای تلویزیون را نشان می‌دهد.</string>
+    <string name="sync_fg_title_fallback">در حال به‌روزرسانی فهرست</string>
+    <string name="sync_fg_preparing">در حال آماده‌سازی…</string>
+    <string name="sync_fg_section_live">پخش زنده</string>
+    <string name="sync_fg_section_movies">فیلم‌ها</string>
+    <string name="sync_fg_section_series">سریال‌ها</string>
+    <string name="sync_fg_section_guide">راهنمای تلویزیون</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: در حال به‌روزرسانی…</string>
+    <string name="sync_fg_cancel">لغو</string>
+</resources>

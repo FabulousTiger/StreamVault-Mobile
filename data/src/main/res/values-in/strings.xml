@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Sinkronisasi katalog</string>
+    <string name="sync_fg_channel_description">Menampilkan progres saat saluran, film, serial, dan panduan TV diperbarui.</string>
+    <string name="sync_fg_title_fallback">Memperbarui katalog</string>
+    <string name="sync_fg_preparing">Menyiapkan…</string>
+    <string name="sync_fg_section_live">TV Langsung</string>
+    <string name="sync_fg_section_movies">Film</string>
+    <string name="sync_fg_section_series">Serial</string>
+    <string name="sync_fg_section_guide">Panduan TV</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: memperbarui…</string>
+    <string name="sync_fg_cancel">Batal</string>
+</resources>

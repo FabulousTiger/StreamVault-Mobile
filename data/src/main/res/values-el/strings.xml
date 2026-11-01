@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">Συγχρονισμός καταλόγου</string>
+    <string name="sync_fg_channel_description">Δείχνει την πρόοδο ενώ ενημερώνονται κανάλια, ταινίες, σειρές και ο οδηγός TV.</string>
+    <string name="sync_fg_title_fallback">Ενημέρωση καταλόγου</string>
+    <string name="sync_fg_preparing">Προετοιμασία…</string>
+    <string name="sync_fg_section_live">Ζωντανή TV</string>
+    <string name="sync_fg_section_movies">Ταινίες</string>
+    <string name="sync_fg_section_series">Σειρές</string>
+    <string name="sync_fg_section_guide">Οδηγός TV</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: ενημέρωση…</string>
+    <string name="sync_fg_cancel">Ακύρωση</string>
+</resources>

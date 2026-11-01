@@ -344,4 +344,8 @@
     <string name="torrent_cache_capacity_reached">Torrent playback reached its temporary storage limit. Clear the cache or free device storage, then try again.</string>
     <string name="torrent_storage_check_failed">Available storage could not be checked. Torrent playback cannot continue safely.</string>
     <string name="nav_sports">Sports</string>
+    <string name="sync_battery_prompt_title">Keep syncing in the background</string>
+    <string name="sync_battery_prompt_message">Large catalogs can take a while to sync. With battery optimization on, Android may stop the sync in the background or when the screen is locked. Allow unrestricted battery use so it can finish. On Samsung phones, also make sure the app is not put to sleep.</string>
+    <string name="sync_battery_prompt_open">Open battery settings</string>
+    <string name="sync_battery_prompt_dismiss">No thanks</string>
 </resources>

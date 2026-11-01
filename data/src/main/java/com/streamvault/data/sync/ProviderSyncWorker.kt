@@ -1,5 +1,7 @@
 package com.streamvault.data.sync
 
+import com.streamvault.data.sync.foreground.SyncWorkKind
+import com.streamvault.data.sync.foreground.runWithSyncForeground
 import android.content.Context
 import kotlinx.coroutines.asContextElement
 import android.database.sqlite.SQLiteException
@@ -172,7 +174,7 @@ class ProviderSyncWorker(
 
     override suspend fun doWork(): Result = kotlinx.coroutines.withContext(
         AutomaticSyncExecution.idleSatisfied.asContextElement(inputData.getBoolean("idle_constraint", false))
-    ) { runProviderWork() }
+    ) { runWithSyncForeground(SyncWorkKind.PROVIDER) { runProviderWork() } }
 
     private suspend fun runProviderWork(): Result {
         return try {

@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Volné úložiště se nepodařilo zkontrolovat. Přehrávání torrentu nemůže bezpečně pokračovat.</string>
     <string name="nav_extensions">Rozšíření</string>
     <string name="nav_sports">Sport</string>
+    <string name="sync_battery_prompt_title">Pokračovat v synchronizaci na pozadí</string>
+    <string name="sync_battery_prompt_message">Synchronizace velkých katalogů může chvíli trvat. Se zapnutou optimalizací baterie ji Android může na pozadí nebo při zamčené obrazovce zastavit. Povolte neomezené využití baterie, aby se mohla dokončit. Na telefonech Samsung také zkontrolujte, že aplikace není uspávána.</string>
+    <string name="sync_battery_prompt_open">Otevřít nastavení baterie</string>
+    <string name="sync_battery_prompt_dismiss">Ne, díky</string>
 </resources>

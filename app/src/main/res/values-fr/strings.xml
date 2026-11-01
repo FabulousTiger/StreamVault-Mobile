@@ -303,4 +303,8 @@
     <string name="torrent_storage_check_failed">Impossible de vérifier le stockage disponible. La lecture du torrent ne peut pas continuer en toute sécurité.</string>
     <string name="nav_extensions">Extensions</string>
     <string name="nav_sports">Sports</string>
+    <string name="sync_battery_prompt_title">Continuer la synchronisation en arrière-plan</string>
+    <string name="sync_battery_prompt_message">La synchronisation des grands catalogues peut prendre du temps. Avec l\'optimisation de la batterie activée, Android peut l\'arrêter en arrière-plan ou lorsque l\'écran est verrouillé. Autorisez une utilisation illimitée de la batterie pour qu\'elle se termine. Sur les téléphones Samsung, vérifiez aussi que l\'application n\'est pas mise en veille.</string>
+    <string name="sync_battery_prompt_open">Ouvrir les paramètres de batterie</string>
+    <string name="sync_battery_prompt_dismiss">Non merci</string>
 </resources>

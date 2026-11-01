@@ -291,4 +291,8 @@
     <string name="torrent_storage_check_failed">Penyimpanan yang tersedia tidak dapat diperiksa. Pemutaran torrent tidak dapat dilanjutkan dengan aman.</string>
     <string name="nav_extensions">Ekstensi</string>
     <string name="nav_sports">Olahraga</string>
+    <string name="sync_battery_prompt_title">Lanjutkan sinkronisasi di latar belakang</string>
+    <string name="sync_battery_prompt_message">Sinkronisasi katalog besar bisa memakan waktu. Saat pengoptimalan baterai aktif, Android dapat menghentikan sinkronisasi di latar belakang atau saat layar terkunci. Izinkan penggunaan baterai tanpa batasan agar sinkronisasi selesai. Di ponsel Samsung, pastikan juga aplikasi tidak ditidurkan.</string>
+    <string name="sync_battery_prompt_open">Buka setelan baterai</string>
+    <string name="sync_battery_prompt_dismiss">Tidak, terima kasih</string>
 </resources>

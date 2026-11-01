@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sync_fg_channel_name">कैटलॉग सिंक</string>
+    <string name="sync_fg_channel_description">चैनल, फ़िल्में, सीरीज़ और टीवी गाइड अपडेट होते समय प्रगति दिखाता है।</string>
+    <string name="sync_fg_title_fallback">कैटलॉग अपडेट हो रहा है</string>
+    <string name="sync_fg_preparing">तैयारी हो रही है…</string>
+    <string name="sync_fg_section_live">लाइव टीवी</string>
+    <string name="sync_fg_section_movies">फ़िल्में</string>
+    <string name="sync_fg_section_series">सीरीज़</string>
+    <string name="sync_fg_section_guide">टीवी गाइड</string>
+    <string name="sync_fg_progress_count">%1$s: %2$s</string>
+    <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
+    <string name="sync_fg_section_working">%1$s: अपडेट हो रहा है…</string>
+    <string name="sync_fg_cancel">रद्द करें</string>
+</resources>

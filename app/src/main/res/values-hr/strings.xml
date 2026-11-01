@@ -344,4 +344,8 @@
     <string name="torrent_storage_check_failed">Nije moguće provjeriti dostupnu pohranu. Reprodukcija torrenta ne može se sigurno nastaviti.</string>
     <string name="nav_extensions">Proširenja</string>
     <string name="nav_sports">Sport</string>
+    <string name="sync_battery_prompt_title">Nastavi sinkronizaciju u pozadini</string>
+    <string name="sync_battery_prompt_message">Sinkronizacija velikih kataloga može potrajati. Uz uključenu optimizaciju baterije Android može zaustaviti sinkronizaciju u pozadini ili kad je zaslon zaključan. Dopustite neograničenu potrošnju baterije kako bi se dovršila. Na Samsung telefonima također provjerite da aplikacija nije uspavana.</string>
+    <string name="sync_battery_prompt_open">Otvori postavke baterije</string>
+    <string name="sync_battery_prompt_dismiss">Ne, hvala</string>
 </resources>
