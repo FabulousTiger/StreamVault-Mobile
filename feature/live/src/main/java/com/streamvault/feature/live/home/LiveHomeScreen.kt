@@ -408,6 +408,7 @@ fun LiveHomeScreen(
                 var preferredRestoreTarget by rememberSaveable { mutableStateOf(FocusRestoreTarget.CHANNEL.name) }
                 var pendingRestoreTarget by remember { mutableStateOf<FocusRestoreTarget?>(null) }
                 var focusRestoreNonce by rememberSaveable { mutableStateOf(0) }
+                var isCategorySearchFocused by remember { mutableStateOf(false) }
                 var focusedRemoteShortcutTarget by remember { mutableStateOf<FocusedRemoteShortcutTarget?>(null) }
 
                 fun requestChannelFocus(channelId: Long?): Boolean {
@@ -494,6 +495,7 @@ fun LiveHomeScreen(
 
                 LaunchedEffect(sidebarRevealNonce, visibleCategories) {
                     if (sidebarRevealNonce == 0 || isCategorySidebarHidden) return@LaunchedEffect
+                    if (!shouldAutoMoveLiveFocus(isCategorySearchFocused)) return@LaunchedEffect
 
                     val targetCategoryId = lastFocusedCategoryId
                         ?.takeIf { categoryId -> visibleCategories.any { it.id == categoryId } }
@@ -605,8 +607,10 @@ fun LiveHomeScreen(
                     }
                 }
 
-                LaunchedEffect(focusRestoreNonce, uiState.categories, uiState.filteredChannels) {
+                LaunchedEffect(focusRestoreNonce, uiState.categories, uiState.filteredChannels, isCategorySearchFocused) {
                     val restoreTarget = pendingRestoreTarget ?: return@LaunchedEffect
+                    // Keep the restore queued while typing; it runs once search loses focus.
+                    if (!shouldAutoMoveLiveFocus(isCategorySearchFocused)) return@LaunchedEffect
                     kotlinx.coroutines.delay(80)
                     val restored = when (restoreTarget) {
                         FocusRestoreTarget.CHANNEL -> requestChannelFocus(lastFocusedChannelId)
@@ -775,6 +779,7 @@ fun LiveHomeScreen(
                             onShowHiddenChannels = { showHiddenChannelsDialog = true },
                             onAddFilter = { showAddQuickFilterDialog = true },
                             onAllSelected = viewModel::clearCategorySearchQuery,
+                            onCategorySearchFocusChanged = { isCategorySearchFocused = it },
                             onSavedFilterSelected = viewModel::applySavedCategoryFilter
                         )
 

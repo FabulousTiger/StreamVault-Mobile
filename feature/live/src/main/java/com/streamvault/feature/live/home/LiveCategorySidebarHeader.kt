@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.unit.dp
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Text
@@ -57,7 +58,8 @@ fun LiveCategorySidebarHeader(
     onAddFilter: () -> Unit,
     onAllSelected: () -> Unit,
     onSavedFilterSelected: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCategorySearchFocusChanged: (Boolean) -> Unit = {}
 ) {
     Column(
         modifier = modifier
@@ -96,7 +98,9 @@ fun LiveCategorySidebarHeader(
             onValueChange = { if (!isReorderMode) onCategorySearchQueryChanged(it) },
             placeholder = categorySearchPlaceholder,
             focusRequester = categorySearchFocusRequester,
-            modifier = Modifier.padding(bottom = 10.dp),
+            modifier = Modifier
+                .padding(bottom = 10.dp)
+                .onFocusChanged { onCategorySearchFocusChanged(it.hasFocus) },
             enabled = !isReorderMode
         )
 
