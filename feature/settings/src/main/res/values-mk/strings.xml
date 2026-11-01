@@ -202,8 +202,12 @@
     <string name="settings_customize_home">Прилагоди почетна</string>
     <string name="settings_default_landing_screen">Стандарден почетен екран</string>
     <string name="settings_guide_default_category">Стандардна категорија за водичот</string>
-    <string name="settings_hide_decorative_live_rows">Скриј ги декоративните редови од провајдерот</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Скриј ги непуштачките наслови на секции како `#### GENERAL HD/4K ####` од листите и бројачите во ТВ во живо.</string>
+    <string name="settings_hide_decorative_live_rows">Сокриј редови со наслови/разделувачи</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Ги сокрива насловите на секциите и разделувачите како `#### UK SPORTS ####` или `----- NL -----` од листите, бројачите, водичот и пребарувањето на ТВ во живо.</string>
+    <string name="settings_hide_live_loop_channels">Сокриј канали 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Ги сокрива каналите 24/7 што се повторуваат бескрајно од листите, бројачите, водичот и пребарувањето на ТВ во живо.</string>
+    <string name="settings_hide_live_radio_channels">Сокриј радио канали</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Ги сокрива радио каналите од листите, бројачите, водичот и пребарувањето на ТВ во живо.</string>
     <string name="settings_live_tv_quick_filters">Брзи филтри за ТВ во живо</string>
     <string name="settings_remote_shortcuts_subtitle">Работи на далечински управувачи што ги испраќаат кодовите за црвено, зелено, жолто и сино копче на Android.</string>
     <string name="settings_remote_shortcuts_title">Обоени копчиња на далечинскиот управувач</string>

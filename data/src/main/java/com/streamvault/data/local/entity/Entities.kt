@@ -7,6 +7,7 @@ import androidx.room.Fts4
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.streamvault.domain.model.ContentType
+import com.streamvault.domain.util.LiveChannelJunkClassifier
 import com.streamvault.domain.model.CatalogLayout
 import com.streamvault.domain.model.ProviderEpgSyncMode
 import com.streamvault.domain.model.ProviderStatus
@@ -211,7 +212,8 @@ data class BackupRestoreCheckpointEntity(
         Index(value = ["provider_id", "category_id"]),
         Index(value = ["provider_id", "stream_id"], unique = true),
         Index(value = ["logical_group_id"]),
-        Index(value = ["provider_id", "category_id", "logical_group_id"])
+        Index(value = ["provider_id", "category_id", "logical_group_id"]),
+        Index(value = ["provider_id", "category_id", "junk_kind"])
     ]
 )
 data class ChannelEntity(
@@ -236,7 +238,9 @@ data class ChannelEntity(
     @ColumnInfo(name = "error_count") val errorCount: Int = 0,
     @ColumnInfo(name = "quality_options_json") val qualityOptionsJson: String? = null,
     @ColumnInfo(name = "playback_metadata_json") val playbackMetadataJson: String? = null,
-    @ColumnInfo(name = "sync_fingerprint") val syncFingerprint: String = ""
+    @ColumnInfo(name = "sync_fingerprint") val syncFingerprint: String = "",
+    @ColumnInfo(name = "junk_kind", defaultValue = "0") val junkKind: Int =
+        LiveChannelJunkClassifier.classify(name, categoryName ?: groupTitle).code
 )
 
 data class ChannelBrowseEntity(
@@ -260,7 +264,9 @@ data class ChannelBrowseEntity(
     @ColumnInfo(name = "is_adult") val isAdult: Boolean = false,
     @ColumnInfo(name = "is_user_protected") val isUserProtected: Boolean = false,
     @ColumnInfo(name = "logical_group_id") val logicalGroupId: String = "",
-    @ColumnInfo(name = "error_count") val errorCount: Int = 0
+    @ColumnInfo(name = "error_count") val errorCount: Int = 0,
+    @ColumnInfo(name = "junk_kind") val junkKind: Int =
+        LiveChannelJunkClassifier.classify(name, categoryName ?: groupTitle).code
 )
 
 data class ChannelGuideLookupEntity(
@@ -646,7 +652,9 @@ data class ChannelImportStageEntity(
     @ColumnInfo(name = "logical_group_id") val logicalGroupId: String = "",
     @ColumnInfo(name = "error_count") val errorCount: Int = 0,
     @ColumnInfo(name = "playback_metadata_json") val playbackMetadataJson: String? = null,
-    @ColumnInfo(name = "sync_fingerprint") val syncFingerprint: String = ""
+    @ColumnInfo(name = "sync_fingerprint") val syncFingerprint: String = "",
+    @ColumnInfo(name = "junk_kind", defaultValue = "0") val junkKind: Int =
+        LiveChannelJunkClassifier.classify(name, categoryName ?: groupTitle).code
 )
 
 @Entity(

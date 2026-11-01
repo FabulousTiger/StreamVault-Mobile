@@ -202,8 +202,12 @@
     <string name="settings_customize_home">Prilagodi početni zaslon</string>
     <string name="settings_default_landing_screen">Zadani početni zaslon</string>
     <string name="settings_guide_default_category">Zadana kategorija vodiča</string>
-    <string name="settings_hide_decorative_live_rows">Sakrij ukrasne redove pružatelja</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Sakriva neigriva zaglavlja odjeljaka poput `#### GENERAL HD/4K ####` s popisa i brojanja u TV-u uživo.</string>
+    <string name="settings_hide_decorative_live_rows">Sakrij retke zaglavlja i razdjelnika</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Sakriva zaglavlja odjeljaka i razdjelnike poput `#### UK SPORTS ####` ili `----- NL -----` na popisima, brojačima, vodiču i pretraživanju TV-a uživo.</string>
+    <string name="settings_hide_live_loop_channels">Sakrij kanale 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Sakriva kanale 24/7 koji se beskonačno ponavljaju na popisima, brojačima, vodiču i pretraživanju TV-a uživo.</string>
+    <string name="settings_hide_live_radio_channels">Sakrij radijske kanale</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Sakriva radijske kanale na popisima, brojačima, vodiču i pretraživanju TV-a uživo.</string>
     <string name="settings_live_tv_quick_filters">Brzi filtri TV-a uživo</string>
     <string name="settings_remote_shortcuts_subtitle">Radi na daljinskim upravljačima koji šalju Androidove kodove crvene, zelene, žute i plave tipke.</string>
     <string name="settings_remote_shortcuts_title">Obojene tipke daljinskog upravljača</string>

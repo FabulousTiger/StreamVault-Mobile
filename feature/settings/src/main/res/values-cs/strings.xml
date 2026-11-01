@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Přizpůsobit domovskou obrazovku</string>
     <string name="settings_default_landing_screen">Výchozí úvodní obrazovka</string>
     <string name="settings_guide_default_category">Výchozí kategorie průvodce</string>
-    <string name="settings_hide_decorative_live_rows">Skrýt dekorativní řádky poskytovatele</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Skrýt nehratelné záhlaví sekcí, jako je `#### GENERAL HD/4K ####`, ze seznamů a počtů živé TV.</string>
+    <string name="settings_hide_decorative_live_rows">Skrýt řádky záhlaví a oddělovačů</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Skryje záhlaví sekcí a oddělovače jako `#### UK SPORTS ####` nebo `----- NL -----` v seznamech, počtech, průvodci a vyhledávání živé TV.</string>
+    <string name="settings_hide_live_loop_channels">Skrýt kanály 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Skryje nekonečně opakující se kanály 24/7 v seznamech, počtech, průvodci a vyhledávání živé TV.</string>
+    <string name="settings_hide_live_radio_channels">Skrýt rozhlasové kanály</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Skryje rozhlasové kanály v seznamech, počtech, průvodci a vyhledávání živé TV.</string>
     <string name="settings_live_tv_quick_filters">Rychlé filtry Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Funguje na dálkových ovladačích, které odesílají kódy barevných tlačítek Androidu – červené, zelené, žluté a modré.</string>
     <string name="settings_remote_shortcuts_title">Barevná tlačítka dálkového ovladače</string>

@@ -286,6 +286,8 @@ class BackupManagerImpl @Inject constructor(
                 put("showAllChannelsCategory", preferencesRepository.showAllChannelsCategory.first().toString())
                 put("showRecentChannelsCategory", preferencesRepository.showRecentChannelsCategory.first().toString())
                 put("hideDecorativeLiveRows", preferencesRepository.hideDecorativeLiveRows.first().toString())
+                put("hideLiveLoopChannels", preferencesRepository.hideLiveLoopChannels.first().toString())
+                put("hideLiveRadioChannels", preferencesRepository.hideLiveRadioChannels.first().toString())
                 put("liveChannelNumberingMode", preferencesRepository.liveChannelNumberingMode.first().name)
                 put("liveChannelGroupingMode", preferencesRepository.liveChannelGroupingMode.first().name)
                 put("groupedChannelLabelMode", preferencesRepository.groupedChannelLabelMode.first().name)
@@ -3634,6 +3636,8 @@ class BackupManagerImpl @Inject constructor(
             put("showAllChannelsCategory", preferencesRepository.showAllChannelsCategory.first().toString())
             put("showRecentChannelsCategory", preferencesRepository.showRecentChannelsCategory.first().toString())
             put("hideDecorativeLiveRows", preferencesRepository.hideDecorativeLiveRows.first().toString())
+            put("hideLiveLoopChannels", preferencesRepository.hideLiveLoopChannels.first().toString())
+            put("hideLiveRadioChannels", preferencesRepository.hideLiveRadioChannels.first().toString())
             put("liveChannelNumberingMode", preferencesRepository.liveChannelNumberingMode.first().name)
             put("liveChannelGroupingMode", preferencesRepository.liveChannelGroupingMode.first().name)
             put("groupedChannelLabelMode", preferencesRepository.groupedChannelLabelMode.first().name)
@@ -4293,6 +4297,10 @@ class BackupManagerImpl @Inject constructor(
             ?.let { preferencesRepository.setShowRecentChannelsCategory(it) }
         prefs["hideDecorativeLiveRows"]?.toBooleanStrictOrNull()
             ?.let { preferencesRepository.setHideDecorativeLiveRows(it) }
+        prefs["hideLiveLoopChannels"]?.toBooleanStrictOrNull()
+            ?.let { preferencesRepository.setHideLiveLoopChannels(it) }
+        prefs["hideLiveRadioChannels"]?.toBooleanStrictOrNull()
+            ?.let { preferencesRepository.setHideLiveRadioChannels(it) }
         prefs["liveChannelNumberingMode"]?.let { savedMode ->
             preferencesRepository.setLiveChannelNumberingMode(
                 com.streamvault.domain.model.ChannelNumberingMode.fromStorage(savedMode)

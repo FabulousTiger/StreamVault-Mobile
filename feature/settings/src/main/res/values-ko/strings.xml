@@ -182,8 +182,12 @@
     <string name="settings_customize_home">홈 사용자 지정</string>
     <string name="settings_default_landing_screen">기본 시작 화면</string>
     <string name="settings_guide_default_category">가이드 기본 카테고리</string>
-    <string name="settings_hide_decorative_live_rows">장식용 공급자 행 숨기기</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">`#### GENERAL HD/4K ####` 같은 재생할 수 없는 섹션 헤더를 라이브 TV 목록과 개수에서 숨깁니다.</string>
+    <string name="settings_hide_decorative_live_rows">헤더/구분선 행 숨기기</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">`#### UK SPORTS ####` 또는 `----- NL -----` 같은 섹션 헤더와 구분선을 라이브 TV 목록, 개수, 가이드, 검색에서 숨깁니다.</string>
+    <string name="settings_hide_live_loop_channels">24/7 채널 숨기기</string>
+    <string name="settings_hide_live_loop_channels_subtitle">계속 반복 재생되는 24/7 채널을 라이브 TV 목록, 개수, 가이드, 검색에서 숨깁니다.</string>
+    <string name="settings_hide_live_radio_channels">라디오 채널 숨기기</string>
+    <string name="settings_hide_live_radio_channels_subtitle">라디오 채널을 라이브 TV 목록, 개수, 가이드, 검색에서 숨깁니다.</string>
     <string name="settings_live_tv_quick_filters">Live TV 빠른 필터</string>
     <string name="settings_remote_shortcuts_subtitle">Android 빨강, 초록, 노랑, 파랑 색상 키 코드를 전송하는 리모컨에서 작동합니다.</string>
     <string name="settings_remote_shortcuts_title">리모컨 색상 버튼</string>

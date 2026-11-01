@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Sesuaikan Beranda</string>
     <string name="settings_default_landing_screen">Layar pendaratan default</string>
     <string name="settings_guide_default_category">Kategori panduan default</string>
-    <string name="settings_hide_decorative_live_rows">Sembunyikan baris dekoratif penyedia</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Sembunyikan header bagian yang tidak dapat diputar seperti `#### GENERAL HD/4K ####` dari daftar dan hitungan TV Langsung.</string>
+    <string name="settings_hide_decorative_live_rows">Sembunyikan baris judul/pemisah</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Sembunyikan judul bagian dan pemisah seperti `#### UK SPORTS ####` atau `----- NL -----` dari daftar, hitungan, panduan, dan pencarian TV Langsung.</string>
+    <string name="settings_hide_live_loop_channels">Sembunyikan saluran 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Sembunyikan saluran 24/7 yang diputar berulang tanpa henti dari daftar, hitungan, panduan, dan pencarian TV Langsung.</string>
+    <string name="settings_hide_live_radio_channels">Sembunyikan saluran radio</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Sembunyikan saluran radio dari daftar, hitungan, panduan, dan pencarian TV Langsung.</string>
     <string name="settings_live_tv_quick_filters">Filter Cepat Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Berfungsi pada remote yang mengirim kode tombol warna merah, hijau, kuning, dan biru Android.</string>
     <string name="settings_remote_shortcuts_title">Tombol Remote Berwarna</string>

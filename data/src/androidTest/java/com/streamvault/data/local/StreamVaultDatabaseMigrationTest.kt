@@ -2257,6 +2257,33 @@ class StreamVaultDatabaseMigrationTest {
         migrated.close()
     }
 
+    @Test
+    fun migrate87To88_addsJunkKindAndBackfillsExistingChannels() {
+        val name = "streamvault-87-88-junk-kind"
+        migrationTestHelper.createDatabase(name, 87).apply {
+            insertProvider78(1, "Synthetic", "M3U")
+            insertChannel72(id = 1, streamId = 101, name = "CNN", providerId = 1)
+            insertChannel72(id = 2, streamId = 102, name = "##### NEWS #####", providerId = 1)
+            insertChannel72(id = 3, streamId = 103, name = "Friends 24/7", providerId = 1)
+            insertChannel72(id = 4, streamId = 104, name = "BBC Radio 1", providerId = 1)
+            close()
+        }
+        val migrated = migrationTestHelper.runMigrationsAndValidate(
+            name,
+            88,
+            true,
+            StreamVaultDatabase.MIGRATION_87_88
+        )
+        assertEquals(1, countRows(migrated, "SELECT COUNT(*) FROM channels WHERE id=1 AND junk_kind=0"))
+        assertEquals(1, countRows(migrated, "SELECT COUNT(*) FROM channels WHERE id=2 AND junk_kind=1"))
+        assertEquals(1, countRows(migrated, "SELECT COUNT(*) FROM channels WHERE id=3 AND junk_kind=2"))
+        assertEquals(1, countRows(migrated, "SELECT COUNT(*) FROM channels WHERE id=4 AND junk_kind=3"))
+        assertEquals(1, countRows(migrated, "SELECT COUNT(*) FROM pragma_table_info('channel_import_stage') WHERE name='junk_kind'"))
+        assertEquals(1, countRows(migrated, "SELECT COUNT(*) FROM pragma_index_list('channels') WHERE name='index_channels_provider_id_category_id_junk_kind'"))
+        assertEquals(0, countRows(migrated, "SELECT COUNT(*) FROM pragma_foreign_key_check('channels')"))
+        migrated.close()
+    }
+
     private fun SupportSQLiteDatabase.insertProvider78(id: Long, name: String, type: String) {
         execSQL(
             "INSERT INTO providers (id,name,type,is_active,status,last_synced_at,created_at) VALUES (?,?,?,1,'UNKNOWN',0,0)",

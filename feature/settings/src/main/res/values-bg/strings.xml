@@ -202,8 +202,12 @@
     <string name="settings_customize_home">Персонализиране на началния екран</string>
     <string name="settings_default_landing_screen">Начален екран по подразбиране</string>
     <string name="settings_guide_default_category">Категория по подразбиране за програмата</string>
-    <string name="settings_hide_decorative_live_rows">Скрий декоративните редове на доставчика</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Скрива невъзпроизводимите заглавки на секции като `#### GENERAL HD/4K ####` от списъците и броячите в телевизията на живо.</string>
+    <string name="settings_hide_decorative_live_rows">Скриване на редове със заглавия и разделители</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Скрива заглавията на секции и разделителите, като `#### UK SPORTS ####` или `----- NL -----`, от списъците, броячите, програмата и търсенето в ТВ на живо.</string>
+    <string name="settings_hide_live_loop_channels">Скриване на канали 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Скрива безкрайно повтарящите се канали 24/7 от списъците, броячите, програмата и търсенето в ТВ на живо.</string>
+    <string name="settings_hide_live_radio_channels">Скриване на радиоканали</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Скрива радиоканалите от списъците, броячите, програмата и търсенето в ТВ на живо.</string>
     <string name="settings_live_tv_quick_filters">Бързи филтри за телевизия на живо</string>
     <string name="settings_remote_shortcuts_subtitle">Работи с дистанционни управления, които изпращат цветните кодове на Android за червен, зелен, жълт и син бутон.</string>
     <string name="settings_remote_shortcuts_title">Цветни бутони на дистанционното</string>

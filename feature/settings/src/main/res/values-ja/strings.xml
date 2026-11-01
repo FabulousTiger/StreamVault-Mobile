@@ -182,8 +182,12 @@
     <string name="settings_customize_home">ホームをカスタマイズ</string>
     <string name="settings_default_landing_screen">デフォルトの起動画面</string>
     <string name="settings_guide_default_category">ガイドのデフォルトカテゴリー</string>
-    <string name="settings_hide_decorative_live_rows">装飾的なプロバイダー行を非表示</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">`#### GENERAL HD/4K ####` のような再生できないセクションヘッダーをライブ TV の一覧と件数から非表示にします。</string>
+    <string name="settings_hide_decorative_live_rows">見出し・区切り行を非表示</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">`#### UK SPORTS ####` や `----- NL -----` などのセクション見出しと区切りを、ライブTVのリスト、件数、ガイド、検索から非表示にします。</string>
+    <string name="settings_hide_live_loop_channels">24/7チャンネルを非表示</string>
+    <string name="settings_hide_live_loop_channels_subtitle">延々と繰り返される24/7チャンネルを、ライブTVのリスト、件数、ガイド、検索から非表示にします。</string>
+    <string name="settings_hide_live_radio_channels">ラジオチャンネルを非表示</string>
+    <string name="settings_hide_live_radio_channels_subtitle">ラジオチャンネルを、ライブTVのリスト、件数、ガイド、検索から非表示にします。</string>
     <string name="settings_live_tv_quick_filters">ライブTVクイックフィルター</string>
     <string name="settings_remote_shortcuts_subtitle">Android の赤、緑、黄、青のカラーキーコードを送信するリモコンで動作します。</string>
     <string name="settings_remote_shortcuts_title">カラーボタン付きリモコン</string>

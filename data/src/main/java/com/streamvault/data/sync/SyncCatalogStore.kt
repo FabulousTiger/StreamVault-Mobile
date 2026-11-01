@@ -865,7 +865,8 @@ internal class SyncCatalogStore(
                     logicalGroupId = channel.logicalGroupId,
                     errorCount = channel.errorCount,
                     playbackMetadataJson = channel.playbackMetadataJson,
-                    syncFingerprint = channelFingerprint(channel)
+                    syncFingerprint = channelFingerprint(channel),
+                    junkKind = channel.junkKind
                 )
             }
     }

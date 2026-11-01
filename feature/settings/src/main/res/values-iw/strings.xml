@@ -182,8 +182,12 @@
     <string name="settings_customize_home">התאם אישית את מסך הבית</string>
     <string name="settings_default_landing_screen">מסך נחיתה ברירת מחדל</string>
     <string name="settings_guide_default_category">קטגוריית ברירת מחדל של מדריך</string>
-    <string name="settings_hide_decorative_live_rows">הסתר שורות ספק דקורטיביות</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">הסתר כותרות מקטע לא ניתנות להפעלה כגון `#### GENERAL HD/4K ####` מרשימות וספירות Live TV.</string>
+    <string name="settings_hide_decorative_live_rows">הסתר שורות כותרת/מפריד</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">הסתר כותרות מקטעים ומפרידים כגון `#### UK SPORTS ####` או `----- NL -----` מרשימות, ספירות, מדריך וחיפוש של Live TV.</string>
+    <string name="settings_hide_live_loop_channels">הסתר ערוצי 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">הסתר ערוצי 24/7 שחוזרים בלופ אינסופי מרשימות, ספירות, מדריך וחיפוש של Live TV.</string>
+    <string name="settings_hide_live_radio_channels">הסתר ערוצי רדיו</string>
+    <string name="settings_hide_live_radio_channels_subtitle">הסתר ערוצי רדיו מרשימות, ספירות, מדריך וחיפוש של Live TV.</string>
     <string name="settings_live_tv_quick_filters">מסננים מהירים ל-Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">פועל בשלטים ששולחים את קודי המקשים הצבעוניים אדום, ירוק, צהוב וכחול של Android.</string>
     <string name="settings_remote_shortcuts_title">לחצני שלט צבעוניים</string>

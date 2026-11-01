@@ -94,7 +94,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
@@ -113,7 +113,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
@@ -132,17 +132,18 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
         LEFT JOIN epg_channels ec ON ec.epg_source_id = cem.epg_source_id AND ec.xmltv_channel_id = cem.xmltv_channel_id
         WHERE c.provider_id = :providerId AND c.error_count = 0
+          AND c.junk_kind NOT IN (:hiddenKinds)
         ORDER BY c.number ASC
         LIMIT :limit
         """
     )
-    abstract fun getByProviderWithoutErrorsBrowsePage(providerId: Long, limit: Int): Flow<List<ChannelBrowseEntity>>
+    abstract fun getByProviderWithoutErrorsBrowsePage(providerId: Long, limit: Int, hiddenKinds: List<Int>): Flow<List<ChannelBrowseEntity>>
 
     @Query(
         """
@@ -152,17 +153,18 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
         LEFT JOIN epg_channels ec ON ec.epg_source_id = cem.epg_source_id AND ec.xmltv_channel_id = cem.xmltv_channel_id
         WHERE c.provider_id = :providerId
+          AND c.junk_kind NOT IN (:hiddenKinds)
         ORDER BY c.number ASC
         LIMIT :limit
         """
     )
-    abstract fun getByProviderBrowsePage(providerId: Long, limit: Int): Flow<List<ChannelBrowseEntity>>
+    abstract fun getByProviderBrowsePage(providerId: Long, limit: Int, hiddenKinds: List<Int>): Flow<List<ChannelBrowseEntity>>
 
     @Query(
         """
@@ -172,17 +174,18 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
         LEFT JOIN epg_channels ec ON ec.epg_source_id = cem.epg_source_id AND ec.xmltv_channel_id = cem.xmltv_channel_id
         WHERE c.provider_id = :providerId AND c.category_id = :categoryId
+          AND c.junk_kind NOT IN (:hiddenKinds)
         ORDER BY c.number ASC
         LIMIT :limit
         """
     )
-    abstract fun getByCategoryBrowsePage(providerId: Long, categoryId: Long, limit: Int): Flow<List<ChannelBrowseEntity>>
+    abstract fun getByCategoryBrowsePage(providerId: Long, categoryId: Long, limit: Int, hiddenKinds: List<Int>): Flow<List<ChannelBrowseEntity>>
 
     @Query("SELECT * FROM channels WHERE provider_id = :providerId ORDER BY number ASC LIMIT :limit OFFSET :offset")
     abstract fun getByProviderPage(providerId: Long, limit: Int, offset: Int): Flow<List<ChannelEntity>>
@@ -195,7 +198,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
@@ -214,7 +217,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
@@ -233,12 +236,13 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
         LEFT JOIN epg_channels ec ON ec.epg_source_id = cem.epg_source_id AND ec.xmltv_channel_id = cem.xmltv_channel_id
         WHERE c.provider_id = :providerId AND c.category_id = :categoryId AND c.error_count = 0
+          AND c.junk_kind NOT IN (:hiddenKinds)
         ORDER BY c.number ASC
         LIMIT :limit
         """
@@ -246,7 +250,8 @@ abstract class ChannelDao {
     abstract fun getByCategoryWithoutErrorsBrowsePage(
         providerId: Long,
         categoryId: Long,
-        limit: Int
+        limit: Int,
+        hiddenKinds: List<Int>
     ): Flow<List<ChannelBrowseEntity>>
 
     @Query(
@@ -257,17 +262,18 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
         LEFT JOIN epg_channels ec ON ec.epg_source_id = cem.epg_source_id AND ec.xmltv_channel_id = cem.xmltv_channel_id
         WHERE c.provider_id = :providerId
+          AND c.junk_kind NOT IN (:hiddenKinds)
         ORDER BY c.number ASC
         LIMIT :limit OFFSET :offset
         """
     )
-    abstract suspend fun getByProviderBrowsePageOffset(providerId: Long, limit: Int, offset: Int): List<ChannelBrowseEntity>
+    abstract suspend fun getByProviderBrowsePageOffset(providerId: Long, limit: Int, offset: Int, hiddenKinds: List<Int>): List<ChannelBrowseEntity>
 
     @Query(
         """
@@ -277,17 +283,18 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
         LEFT JOIN epg_channels ec ON ec.epg_source_id = cem.epg_source_id AND ec.xmltv_channel_id = cem.xmltv_channel_id
         WHERE c.provider_id = :providerId AND c.error_count = 0
+          AND c.junk_kind NOT IN (:hiddenKinds)
         ORDER BY c.number ASC
         LIMIT :limit OFFSET :offset
         """
     )
-    abstract suspend fun getByProviderWithoutErrorsBrowsePageOffset(providerId: Long, limit: Int, offset: Int): List<ChannelBrowseEntity>
+    abstract suspend fun getByProviderWithoutErrorsBrowsePageOffset(providerId: Long, limit: Int, offset: Int, hiddenKinds: List<Int>): List<ChannelBrowseEntity>
 
     @Query(
         """
@@ -297,17 +304,18 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
         LEFT JOIN epg_channels ec ON ec.epg_source_id = cem.epg_source_id AND ec.xmltv_channel_id = cem.xmltv_channel_id
         WHERE c.provider_id = :providerId AND c.category_id = :categoryId
+          AND c.junk_kind NOT IN (:hiddenKinds)
         ORDER BY c.number ASC
         LIMIT :limit OFFSET :offset
         """
     )
-    abstract suspend fun getByCategoryBrowsePageOffset(providerId: Long, categoryId: Long, limit: Int, offset: Int): List<ChannelBrowseEntity>
+    abstract suspend fun getByCategoryBrowsePageOffset(providerId: Long, categoryId: Long, limit: Int, offset: Int, hiddenKinds: List<Int>): List<ChannelBrowseEntity>
 
     @Query(
         """
@@ -317,17 +325,18 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
         LEFT JOIN epg_channels ec ON ec.epg_source_id = cem.epg_source_id AND ec.xmltv_channel_id = cem.xmltv_channel_id
         WHERE c.provider_id = :providerId AND c.category_id = :categoryId AND c.error_count = 0
+          AND c.junk_kind NOT IN (:hiddenKinds)
         ORDER BY c.number ASC
         LIMIT :limit OFFSET :offset
         """
     )
-    abstract suspend fun getByCategoryWithoutErrorsBrowsePageOffset(providerId: Long, categoryId: Long, limit: Int, offset: Int): List<ChannelBrowseEntity>
+    abstract suspend fun getByCategoryWithoutErrorsBrowsePageOffset(providerId: Long, categoryId: Long, limit: Int, offset: Int, hiddenKinds: List<Int>): List<ChannelBrowseEntity>
 
     @Query("SELECT * FROM channels WHERE provider_id = :providerId AND category_id = :categoryId ORDER BY number ASC LIMIT :limit OFFSET :offset")
     abstract fun getByCategoryPage(providerId: Long, categoryId: Long, limit: Int, offset: Int): Flow<List<ChannelEntity>>
@@ -340,7 +349,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         JOIN channels_fts ON c.id = channels_fts.rowid
@@ -362,7 +371,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
@@ -387,7 +396,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         JOIN channels_fts ON c.id = channels_fts.rowid
@@ -410,7 +419,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
@@ -445,7 +454,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
@@ -523,7 +532,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
@@ -541,7 +550,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
@@ -560,7 +569,7 @@ abstract class ChannelDao {
                (SELECT guide_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS guide_source_policy,
                (SELECT channel_logo_source_policy FROM provider_configs WHERE provider_id = c.provider_id) AS channel_logo_source_policy,
                ec.icon_url AS epg_icon_url,
-               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count
+               c.is_adult, c.is_user_protected, c.logical_group_id, c.error_count, c.junk_kind
         FROM channels c
         JOIN providers p ON p.id = c.provider_id
         LEFT JOIN channel_epg_mappings cem ON cem.provider_channel_id = c.id AND cem.provider_id = c.provider_id
@@ -580,11 +589,11 @@ abstract class ChannelDao {
         FROM channels
         WHERE provider_id = :providerId
           AND category_id IS NOT NULL
-          AND NOT (TRIM(name) LIKE '##%' AND TRIM(name) LIKE '%##')
+          AND junk_kind NOT IN (:hiddenKinds)
         GROUP BY category_id
         """
     )
-    abstract fun getCategoryCounts(providerId: Long): Flow<List<CategoryCount>>
+    abstract fun getCategoryCountsExcluding(providerId: Long, hiddenKinds: List<Int>): Flow<List<CategoryCount>>
 
     @Query(
         """
@@ -617,11 +626,14 @@ abstract class ChannelDao {
         FROM channels
         WHERE provider_id = :providerId
           AND category_id IS NOT NULL
-          AND NOT (TRIM(name) LIKE '##%' AND TRIM(name) LIKE '%##')
+          AND junk_kind NOT IN (:hiddenKinds)
         GROUP BY category_id
         """
     )
-    abstract fun getGroupedCategoryCounts(providerId: Long): Flow<List<CategoryCount>>
+    abstract fun getGroupedCategoryCountsExcluding(providerId: Long, hiddenKinds: List<Int>): Flow<List<CategoryCount>>
+
+    @Query("SELECT COUNT(*) FROM channels WHERE provider_id = :providerId AND junk_kind NOT IN (:hiddenKinds)")
+    abstract fun getCountExcluding(providerId: Long, hiddenKinds: List<Int>): Flow<Int>
 
     @Query("SELECT COUNT(*) FROM channels WHERE provider_id = :providerId")
     abstract fun getRawCount(providerId: Long): Flow<Int>

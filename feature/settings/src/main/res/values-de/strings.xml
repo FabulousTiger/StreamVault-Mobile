@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Startseite anpassen</string>
     <string name="settings_default_landing_screen">Standard-Startbildschirm</string>
     <string name="settings_guide_default_category">Standard-Guide-Kategorie</string>
-    <string name="settings_hide_decorative_live_rows">Dekorative Anbieterzeilen ausblenden</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Nicht abspielbare Abschnittsüberschriften wie `#### GENERAL HD/4K ####` aus Live-TV-Listen und Zählungen ausblenden.</string>
+    <string name="settings_hide_decorative_live_rows">Titel-/Trennzeilen ausblenden</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Blendet Abschnittsüberschriften und Trennzeilen wie `#### UK SPORTS ####` oder `----- NL -----` in Live-TV-Listen, Zählern, Programmführer und Suche aus.</string>
+    <string name="settings_hide_live_loop_channels">24/7-Kanäle ausblenden</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Blendet endlos wiederholte 24/7-Kanäle in Live-TV-Listen, Zählern, Programmführer und Suche aus.</string>
+    <string name="settings_hide_live_radio_channels">Radiokanäle ausblenden</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Blendet Radiokanäle in Live-TV-Listen, Zählern, Programmführer und Suche aus.</string>
     <string name="settings_live_tv_quick_filters">Schnellfilter für Live-TV</string>
     <string name="settings_remote_shortcuts_subtitle">Funktioniert mit Fernbedienungen, die die Android-Farbtastencodes Rot, Grün, Gelb und Blau senden.</string>
     <string name="settings_remote_shortcuts_title">Farbige Fernbedienungstasten</string>

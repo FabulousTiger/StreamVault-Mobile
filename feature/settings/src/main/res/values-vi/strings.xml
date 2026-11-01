@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Tùy chỉnh Trang chủ</string>
     <string name="settings_default_landing_screen">Màn hình bắt đầu mặc định</string>
     <string name="settings_guide_default_category">Danh mục mặc định hướng dẫn</string>
-    <string name="settings_hide_decorative_live_rows">Ẩn các hàng trang trí của nhà cung cấp</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Ẩn các tiêu đề mục không phát được như `#### GENERAL HD/4K ####` khỏi danh sách và số đếm TV trực tiếp.</string>
+    <string name="settings_hide_decorative_live_rows">Ẩn các dòng tiêu đề/phân cách</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Ẩn tiêu đề phần và dòng phân cách như `#### UK SPORTS ####` hoặc `----- NL -----` khỏi danh sách, số lượng, hướng dẫn và tìm kiếm của TV trực tiếp.</string>
+    <string name="settings_hide_live_loop_channels">Ẩn kênh 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Ẩn các kênh 24/7 phát lặp vô tận khỏi danh sách, số lượng, hướng dẫn và tìm kiếm của TV trực tiếp.</string>
+    <string name="settings_hide_live_radio_channels">Ẩn kênh radio</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Ẩn các kênh radio khỏi danh sách, số lượng, hướng dẫn và tìm kiếm của TV trực tiếp.</string>
     <string name="settings_live_tv_quick_filters">Bộ lọc nhanh Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Hoạt động trên điều khiển gửi mã phím màu đỏ, xanh lá, vàng và xanh dương của Android.</string>
     <string name="settings_remote_shortcuts_title">Nút màu trên điều khiển</string>

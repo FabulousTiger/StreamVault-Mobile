@@ -79,6 +79,8 @@ fun SettingsUiState.applyPreferenceSnapshot(
         liveTvCategoryFilters = snapshot.liveTvCategoryFilters,
         liveTvQuickFilterVisibilityMode = snapshot.liveTvQuickFilterVisibilityMode,
         hideDecorativeLiveRows = snapshot.hideDecorativeLiveRows,
+        hideLiveLoopChannels = snapshot.hideLiveLoopChannels,
+        hideLiveRadioChannels = snapshot.hideLiveRadioChannels,
         liveChannelNumberingMode = snapshot.liveChannelNumberingMode,
         liveChannelGroupingMode = snapshot.liveChannelGroupingMode,
         groupedChannelLabelMode = snapshot.groupedChannelLabelMode,

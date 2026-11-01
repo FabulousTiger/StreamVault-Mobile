@@ -260,6 +260,8 @@ private fun resolvedSettingsCatalog(
         setting("live.all_category", SettingsCategory.LIVE_TV, SettingsPage.LIVE_LAYOUT, R.string.settings_show_all_channels_category),
         setting("live.recent_category", SettingsCategory.LIVE_TV, SettingsPage.LIVE_LAYOUT, R.string.settings_show_recent_channels_category),
         setting("live.hide_decorative_rows", SettingsCategory.LIVE_TV, SettingsPage.LIVE_CHANNELS, R.string.settings_hide_decorative_live_rows),
+        setting("live.hide_loop_channels", SettingsCategory.LIVE_TV, SettingsPage.LIVE_CHANNELS, R.string.settings_hide_live_loop_channels),
+        setting("live.hide_radio_channels", SettingsCategory.LIVE_TV, SettingsPage.LIVE_CHANNELS, R.string.settings_hide_live_radio_channels),
         setting("live.numbering", SettingsCategory.LIVE_TV, SettingsPage.LIVE_CHANNELS, R.string.settings_live_channel_numbering_mode),
         setting("live.grouping", SettingsCategory.LIVE_TV, SettingsPage.LIVE_CHANNELS, R.string.settings_live_channel_grouping_mode),
         setting("live.group_label", SettingsCategory.LIVE_TV, SettingsPage.LIVE_CHANNELS, R.string.settings_grouped_channel_label_mode),

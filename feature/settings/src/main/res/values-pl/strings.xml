@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Dostosuj ekran główny</string>
     <string name="settings_default_landing_screen">Domyślny ekran startowy</string>
     <string name="settings_guide_default_category">Domyślna kategoria przewodnika</string>
-    <string name="settings_hide_decorative_live_rows">Ukryj dekoracyjne wiersze dostawcy</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Ukryj nienadające się do odtwarzania nagłówki sekcji, takie jak `#### GENERAL HD/4K ####`, z list i liczników telewizji na żywo.</string>
+    <string name="settings_hide_decorative_live_rows">Ukryj wiersze nagłówków i separatorów</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Ukrywa nagłówki sekcji i separatory, takie jak `#### UK SPORTS ####` lub `----- NL -----`, na listach, w licznikach, przewodniku i wyszukiwaniu telewizji na żywo.</string>
+    <string name="settings_hide_live_loop_channels">Ukryj kanały 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Ukrywa kanały 24/7 odtwarzane w nieskończonej pętli na listach, w licznikach, przewodniku i wyszukiwaniu telewizji na żywo.</string>
+    <string name="settings_hide_live_radio_channels">Ukryj kanały radiowe</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Ukrywa kanały radiowe na listach, w licznikach, przewodniku i wyszukiwaniu telewizji na żywo.</string>
     <string name="settings_live_tv_quick_filters">Szybkie filtry Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Działa na pilotach wysyłających kody klawiszy Androida: czerwonego, zielonego, żółtego i niebieskiego.</string>
     <string name="settings_remote_shortcuts_title">Kolorowe przyciski pilota</string>

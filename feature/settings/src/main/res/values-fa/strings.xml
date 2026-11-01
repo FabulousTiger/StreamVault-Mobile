@@ -202,8 +202,12 @@
     <string name="settings_customize_home">سفارشی‌سازی صفحه اصلی</string>
     <string name="settings_default_landing_screen">صفحه فرود پیش‌فرض</string>
     <string name="settings_guide_default_category">دسته پیش‌فرض راهنما</string>
-    <string name="settings_hide_decorative_live_rows">پنهان کردن ردیف‌های تزئینی ارائه‌دهنده</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">پنهان کردن سرصفحه‌های غیرقابل‌پخش مانند `#### GENERAL HD/4K ####` از فهرست‌ها و شمارش‌های پخش زنده.</string>
+    <string name="settings_hide_decorative_live_rows">پنهان کردن ردیف‌های عنوان و جداکننده</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">عنوان بخش‌ها و جداکننده‌هایی مانند `#### UK SPORTS ####` یا `----- NL -----` را از فهرست‌ها، شمارش‌ها، راهنما و جستجوی تلویزیون زنده پنهان کنید.</string>
+    <string name="settings_hide_live_loop_channels">پنهان کردن کانال‌های 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">کانال‌های 24/7 که بی‌پایان تکرار می‌شوند را از فهرست‌ها، شمارش‌ها، راهنما و جستجوی تلویزیون زنده پنهان کنید.</string>
+    <string name="settings_hide_live_radio_channels">پنهان کردن کانال‌های رادیویی</string>
+    <string name="settings_hide_live_radio_channels_subtitle">کانال‌های رادیویی را از فهرست‌ها، شمارش‌ها، راهنما و جستجوی تلویزیون زنده پنهان کنید.</string>
     <string name="settings_live_tv_quick_filters">فیلترهای سریع پخش زنده</string>
     <string name="settings_remote_shortcuts_subtitle">روی کنترل‌هایی کار می‌کند که کدهای کلید رنگی قرمز، سبز، زرد و آبی اندروید را ارسال می‌کنند.</string>
     <string name="settings_remote_shortcuts_title">دکمه‌های رنگی کنترل</string>

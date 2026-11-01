@@ -202,8 +202,12 @@
     <string name="settings_customize_home">Prispôsobiť domovskú obrazovku</string>
     <string name="settings_default_landing_screen">Predvolená úvodná obrazovka</string>
     <string name="settings_guide_default_category">Predvolená kategória sprievodcu</string>
-    <string name="settings_hide_decorative_live_rows">Skryť dekoratívne riadky poskytovateľa</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Skryť neprehrateľné hlavičky sekcií, ako napríklad `#### GENERAL HD/4K ####`, zo zoznamov a počtov živého vysielania.</string>
+    <string name="settings_hide_decorative_live_rows">Skryť riadky hlavičiek a oddeľovačov</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Skryje hlavičky sekcií a oddeľovače ako `#### UK SPORTS ####` alebo `----- NL -----` v zoznamoch, počtoch, sprievodcovi a vyhľadávaní živej TV.</string>
+    <string name="settings_hide_live_loop_channels">Skryť kanály 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Skryje donekonečna opakujúce sa kanály 24/7 v zoznamoch, počtoch, sprievodcovi a vyhľadávaní živej TV.</string>
+    <string name="settings_hide_live_radio_channels">Skryť rozhlasové kanály</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Skryje rozhlasové kanály v zoznamoch, počtoch, sprievodcovi a vyhľadávaní živej TV.</string>
     <string name="settings_live_tv_quick_filters">Rýchle filtre živého vysielania</string>
     <string name="settings_remote_shortcuts_subtitle">Funguje na diaľkových ovládačoch, ktoré odosielajú kódy červeného, zeleného, žltého a modrého tlačidla Android.</string>
     <string name="settings_remote_shortcuts_title">Farebné tlačidlá diaľkového ovládača</string>

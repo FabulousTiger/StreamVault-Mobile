@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Προσαρμογή αρχικής</string>
     <string name="settings_default_landing_screen">Προεπιλεγμένη οθόνη εκκίνησης</string>
     <string name="settings_guide_default_category">Προεπιλεγμένη κατηγορία οδηγού</string>
-    <string name="settings_hide_decorative_live_rows">Απόκρυψη διακοσμητικών σειρών παρόχου</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Απόκρυψη μη αναπαραγώγιμων κεφαλίδων ενοτήτων, όπως `#### GENERAL HD/4K ####`, από τις λίστες και τις μετρήσεις της ζωντανής TV.</string>
+    <string name="settings_hide_decorative_live_rows">Απόκρυψη γραμμών επικεφαλίδων/διαχωριστικών</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Απόκρυψη επικεφαλίδων ενοτήτων και διαχωριστικών όπως `#### UK SPORTS ####` ή `----- NL -----` από τις λίστες, τους αριθμούς, τον οδηγό και την αναζήτηση του Live TV.</string>
+    <string name="settings_hide_live_loop_channels">Απόκρυψη καναλιών 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Απόκρυψη καναλιών 24/7 που επαναλαμβάνονται συνεχώς από τις λίστες, τους αριθμούς, τον οδηγό και την αναζήτηση του Live TV.</string>
+    <string name="settings_hide_live_radio_channels">Απόκρυψη ραδιοφωνικών καναλιών</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Απόκρυψη ραδιοφωνικών καναλιών από τις λίστες, τους αριθμούς, τον οδηγό και την αναζήτηση του Live TV.</string>
     <string name="settings_live_tv_quick_filters">Γρήγορα Φίλτρα Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Λειτουργεί σε τηλεχειριστήρια που στέλνουν τους κωδικούς χρώματος κόκκινο, πράσινο, κίτρινο και μπλε του Android.</string>
     <string name="settings_remote_shortcuts_title">Έγχρωμα κουμπιά τηλεχειριστηρίου</string>

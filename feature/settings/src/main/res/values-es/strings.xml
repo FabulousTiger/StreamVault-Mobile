@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Personalizar inicio</string>
     <string name="settings_default_landing_screen">Pantalla de inicio predeterminada</string>
     <string name="settings_guide_default_category">Categoría predeterminada de la guía</string>
-    <string name="settings_hide_decorative_live_rows">Ocultar filas decorativas del proveedor</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Oculta encabezados de sección no reproducibles como `#### GENERAL HD/4K ####` de las listas y recuentos de TV en vivo.</string>
+    <string name="settings_hide_decorative_live_rows">Ocultar filas de encabezado y separador</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Oculta los encabezados de sección y separadores como `#### UK SPORTS ####` o `----- NL -----` en las listas, recuentos, guía y búsqueda de TV en directo.</string>
+    <string name="settings_hide_live_loop_channels">Ocultar canales 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Oculta los canales 24/7 que se repiten sin fin en las listas, recuentos, guía y búsqueda de TV en directo.</string>
+    <string name="settings_hide_live_radio_channels">Ocultar canales de radio</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Oculta los canales de radio en las listas, recuentos, guía y búsqueda de TV en directo.</string>
     <string name="settings_live_tv_quick_filters">Filtros rápidos de Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Funciona en mandos que envían los códigos de las teclas de color rojo, verde, amarillo y azul de Android.</string>
     <string name="settings_remote_shortcuts_title">Botones de color del mando</string>

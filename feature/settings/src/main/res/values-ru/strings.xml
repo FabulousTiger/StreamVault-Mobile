@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Настроить главный экран</string>
     <string name="settings_default_landing_screen">Стартовый экран по умолчанию</string>
     <string name="settings_guide_default_category">Категория гида по умолчанию</string>
-    <string name="settings_hide_decorative_live_rows">Скрывать декоративные строки провайдера</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Скрывать невоспроизводимые заголовки разделов, например `#### GENERAL HD/4K ####`, из списков и счётчиков Live TV.</string>
+    <string name="settings_hide_decorative_live_rows">Скрывать строки-заголовки и разделители</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Скрывает заголовки разделов и разделители, например `#### UK SPORTS ####` или `----- NL -----`, в списках, счётчиках, программе передач и поиске ТВ в эфире.</string>
+    <string name="settings_hide_live_loop_channels">Скрывать каналы 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Скрывает бесконечно повторяющиеся каналы 24/7 в списках, счётчиках, программе передач и поиске ТВ в эфире.</string>
+    <string name="settings_hide_live_radio_channels">Скрывать радиоканалы</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Скрывает радиоканалы в списках, счётчиках, программе передач и поиске ТВ в эфире.</string>
     <string name="settings_live_tv_quick_filters">Быстрые фильтры Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Работает на пультах, которые передают коды красной, зелёной, жёлтой и синей кнопок Android.</string>
     <string name="settings_remote_shortcuts_title">Цветные кнопки пульта</string>

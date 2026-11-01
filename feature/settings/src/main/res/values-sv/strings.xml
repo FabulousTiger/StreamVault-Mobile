@@ -182,8 +182,12 @@
     <string name="settings_customize_home">Anpassa hem</string>
     <string name="settings_default_landing_screen">Standardstartsida</string>
     <string name="settings_guide_default_category">Guidens standardkategori</string>
-    <string name="settings_hide_decorative_live_rows">Dölj dekorativa leverantörsrader</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Dölj icke-spelbara sektionsrubriker som `#### GENERAL HD/4K ####` från Live TV-listor och antal.</string>
+    <string name="settings_hide_decorative_live_rows">Dölj rubrik- och avdelarrader</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Döljer sektionsrubriker och avdelare som `#### UK SPORTS ####` eller `----- NL -----` i listor, antal, tablå och sökning i Live TV.</string>
+    <string name="settings_hide_live_loop_channels">Dölj 24/7-kanaler</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Döljer 24/7-kanaler som loopar i det oändliga i listor, antal, tablå och sökning i Live TV.</string>
+    <string name="settings_hide_live_radio_channels">Dölj radiokanaler</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Döljer radiokanaler i listor, antal, tablå och sökning i Live TV.</string>
     <string name="settings_live_tv_quick_filters">Snabbfilter för Live TV</string>
     <string name="settings_remote_shortcuts_subtitle">Fungerar på fjärrkontroller som skickar Androids färgkoder för röd, grön, gul och blå.</string>
     <string name="settings_remote_shortcuts_title">Färgade fjärrknappar</string>

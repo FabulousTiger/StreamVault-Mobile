@@ -112,6 +112,8 @@ class SettingsPreferenceSnapshotMapperTest {
         liveTvCategoryFilters = emptyList(),
         liveTvQuickFilterVisibilityMode = LiveTvQuickFilterVisibilityMode.ALWAYS_VISIBLE,
         hideDecorativeLiveRows = true,
+        hideLiveLoopChannels = false,
+        hideLiveRadioChannels = false,
         liveChannelNumberingMode = ChannelNumberingMode.GROUP,
         liveChannelGroupingMode = LiveChannelGroupingMode.RAW_VARIANTS,
         groupedChannelLabelMode = GroupedChannelLabelMode.HYBRID,

@@ -202,8 +202,12 @@
     <string name="settings_customize_home">Sesuaikan Halaman Utama</string>
     <string name="settings_default_landing_screen">Skrin pendaratan lalai</string>
     <string name="settings_guide_default_category">Kategori lalai panduan</string>
-    <string name="settings_hide_decorative_live_rows">Sembunyikan baris hiasan pembekal</string>
-    <string name="settings_hide_decorative_live_rows_subtitle">Sembunyikan pengepala bahagian yang tidak boleh dimainkan seperti `#### GENERAL HD/4K ####` daripada senarai dan kiraan TV Langsung.</string>
+    <string name="settings_hide_decorative_live_rows">Sembunyikan baris pengepala/pemisah</string>
+    <string name="settings_hide_decorative_live_rows_subtitle">Sembunyikan pengepala bahagian dan pemisah seperti `#### UK SPORTS ####` atau `----- NL -----` daripada senarai, kiraan, panduan dan carian TV Langsung.</string>
+    <string name="settings_hide_live_loop_channels">Sembunyikan saluran 24/7</string>
+    <string name="settings_hide_live_loop_channels_subtitle">Sembunyikan saluran 24/7 yang berulang tanpa henti daripada senarai, kiraan, panduan dan carian TV Langsung.</string>
+    <string name="settings_hide_live_radio_channels">Sembunyikan saluran radio</string>
+    <string name="settings_hide_live_radio_channels_subtitle">Sembunyikan saluran radio daripada senarai, kiraan, panduan dan carian TV Langsung.</string>
     <string name="settings_live_tv_quick_filters">Penapis Pantas TV Langsung</string>
     <string name="settings_remote_shortcuts_subtitle">Berfungsi pada alat kawalan jauh yang menghantar kod kekunci warna merah, hijau, kuning dan biru Android.</string>
     <string name="settings_remote_shortcuts_title">Butang Berwarna Alat Kawalan Jauh</string>
