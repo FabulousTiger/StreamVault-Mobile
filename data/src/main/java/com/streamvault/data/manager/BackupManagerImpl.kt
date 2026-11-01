@@ -6972,7 +6972,6 @@ private val M3U_CLASSIFICATION_RULE_LIST_TYPE: Type =
     object : TypeToken<List<M3uClassificationRuleBackup>>() {}.type
 private val PROGRAM_REMINDER_TYPE: Type = ProgramReminderBackup::class.java
 private const val BACKUP_LOG_TAG = "StreamVaultBackup"
-private val PORTABLE_CONTENT_REFERENCE_TYPE: Type = PortableContentReference::class.java
 private val PORTABLE_FAVORITE_TYPE: Type = PortableFavoriteBackup::class.java
 private val PORTABLE_CUSTOM_GROUP_TYPE: Type = PortableCustomGroupBackup::class.java
 private val PORTABLE_PLAYBACK_HISTORY_TYPE: Type = PortablePlaybackHistoryBackup::class.java
