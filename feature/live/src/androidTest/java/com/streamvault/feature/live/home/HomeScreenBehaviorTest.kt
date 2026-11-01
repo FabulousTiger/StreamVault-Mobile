@@ -178,6 +178,59 @@ class HomeScreenBehaviorTest {
     }
 
     @Test
+    fun categorySidebarHeader_reportsCategorySearchFocusSoAutoFocusMovesPause() {
+        val focusChanges = mutableListOf<Boolean>()
+        val categorySearchFocusRequester = FocusRequester()
+
+        composeRule.setContent {
+            StreamVaultTheme {
+                LiveCategorySidebarHeader(
+                    title = "Live TV",
+                    currentSource = null,
+                    sourceOptions = emptyList(),
+                    showSourceSwitcher = false,
+                    onSourceSelected = {},
+                    categorySearchQuery = "",
+                    onCategorySearchQueryChanged = {},
+                    categorySearchFocusRequester = categorySearchFocusRequester,
+                    categorySearchPlaceholder = "Search categories",
+                    quickFilterVisibilityMode = LiveTvQuickFilterVisibilityMode.HIDE,
+                    savedCategoryFilters = emptyList(),
+                    activeCategoryFilter = null,
+                    hiddenCategoriesButtonLabel = null,
+                    hiddenChannelsButtonLabel = null,
+                    quickFiltersButtonTitle = "Quick filters",
+                    quickFiltersTitle = "Saved filters",
+                    quickFiltersShowLabel = "Show",
+                    quickFiltersHideLabel = "Hide",
+                    quickFiltersShowingAllLabel = "Showing all categories",
+                    quickFiltersActiveLabel = "Filter active",
+                    quickFiltersManualSearchLabel = "Manual search",
+                    quickFiltersAllLabel = "All categories",
+                    quickFiltersEmptyLabel = "No saved filters",
+                    quickFiltersAddChipLabel = "Add quick filter",
+                    noSourceLabel = "No provider",
+                    selectedLabel = "Selected",
+                    unavailableLabel = "Unavailable",
+                    isReorderMode = false,
+                    onShowHiddenCategories = {},
+                    onShowHiddenChannels = {},
+                    onAddFilter = {},
+                    onAllSelected = {},
+                    onSavedFilterSelected = {},
+                    onCategorySearchFocusChanged = focusChanges::add
+                )
+            }
+        }
+
+        composeRule.runOnIdle { categorySearchFocusRequester.requestFocus() }
+        composeRule.waitForIdle()
+
+        assertThat(focusChanges.lastOrNull()).isTrue()
+        assertThat(shouldAutoMoveLiveFocus(textInputFocused = focusChanges.last())).isFalse()
+    }
+
+    @Test
     fun categorySidebarHeader_titleUsesLightOnSurfaceText() {
         composeRule.setContent {
             StreamVaultTheme {
