@@ -44,6 +44,7 @@ class AutomaticSyncRunner @Inject constructor(
         if (!policy.enabled) return AutomaticSyncOutcome.DISABLED
         val network = context.getSystemService(ConnectivityManager::class.java)
         if (network.activeNetwork == null || (policy.unmeteredOnly && network.isActiveNetworkMetered)) return AutomaticSyncOutcome.WAITING_NETWORK
+        if (policy.vpnOnly && !network.isVpnActive()) return AutomaticSyncOutcome.WAITING_VPN
         if (policy.chargingOnly && !context.getSystemService(BatteryManager::class.java).isCharging) return AutomaticSyncOutcome.WAITING_CHARGING
         if (policy.deviceIdleOnly && AutomaticSyncExecution.idleSatisfied.get() != true && !context.getSystemService(PowerManager::class.java).isDeviceIdleMode) return AutomaticSyncOutcome.WAITING_IDLE
         if (!policy.allowsHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY))) return AutomaticSyncOutcome.WAITING_WINDOW
@@ -116,7 +117,7 @@ class AutomaticSyncRunner @Inject constructor(
         val waiting = waitingReason(providerId)
         if (waiting != null) {
             report(waiting)
-            if (waiting in setOf(AutomaticSyncOutcome.WAITING_NETWORK, AutomaticSyncOutcome.WAITING_CHARGING, AutomaticSyncOutcome.WAITING_IDLE))
+            if (waiting in setOf(AutomaticSyncOutcome.WAITING_NETWORK, AutomaticSyncOutcome.WAITING_VPN, AutomaticSyncOutcome.WAITING_CHARGING, AutomaticSyncOutcome.WAITING_IDLE))
                 ProviderSyncWorker.enqueueAutomaticCheck(context, providerId, policy)
             return@withContext Result.success(Unit)
         }

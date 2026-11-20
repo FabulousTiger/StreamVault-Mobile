@@ -843,6 +843,8 @@
     <string name="settings_auto_sync_defer">Wait during playback or recording</string>
     <string name="settings_auto_sync_defer_hint">Automatic work resumes when playback and recording are no longer active. Paused playback also counts.</string>
     <string name="settings_auto_sync_unmetered">Use unmetered networks only</string>
+    <string name="settings_auto_sync_vpn">Only scan while a VPN is active</string>
+    <string name="settings_auto_sync_status_vpn">Waiting for a VPN connection</string>
     <string name="settings_auto_sync_charging">Require charging</string>
     <string name="settings_auto_sync_idle">Require device idle</string>
     <string name="settings_auto_sync_idle_hint">Android device idle differs from leaving the app untouched; it can delay refreshes substantially.</string>

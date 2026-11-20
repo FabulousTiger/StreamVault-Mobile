@@ -124,6 +124,7 @@ internal fun AutomaticSyncSettingsCard(
                             AutomaticSyncOutcome.DISABLED -> R.string.settings_auto_sync_status_disabled
                             AutomaticSyncOutcome.UP_TO_DATE -> R.string.settings_auto_sync_status_fresh
                             AutomaticSyncOutcome.WAITING_NETWORK -> R.string.settings_auto_sync_status_network
+                            AutomaticSyncOutcome.WAITING_VPN -> R.string.settings_auto_sync_status_vpn
                             AutomaticSyncOutcome.WAITING_CHARGING -> R.string.settings_auto_sync_status_charging
                             AutomaticSyncOutcome.WAITING_IDLE -> R.string.settings_auto_sync_status_idle
                             AutomaticSyncOutcome.WAITING_PLAYBACK -> R.string.settings_auto_sync_status_playback
@@ -293,6 +294,10 @@ internal fun AutomaticSyncSettingsCard(
                 SwitchSettingsRow(
                     stringResource(R.string.settings_auto_sync_unmetered), "", policy.unmeteredOnly,
                     { update(policy.copy(unmeteredOnly = it)) }, enabled = editable,
+                )
+                SwitchSettingsRow(
+                    stringResource(R.string.settings_auto_sync_vpn), "", policy.vpnOnly,
+                    { update(policy.copy(vpnOnly = it)) }, enabled = editable,
                 )
                 SwitchSettingsRow(
                     stringResource(R.string.settings_auto_sync_charging), "", policy.chargingOnly,
