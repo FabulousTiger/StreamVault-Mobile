@@ -7,6 +7,29 @@ Technical differences between StreamVault Mobile and upstream StreamVault, and t
 - Upstream: <https://github.com/Davidona/StreamVault-IPTV>, branch `master`, forked at `b777a112` (1.2.2).
 - Stack (unchanged): Kotlin, Jetpack Compose (incl. `androidx.tv` material3), Room, Hilt, WorkManager, Media3.
 
+## Staying in sync with upstream
+
+Remotes: `origin` = fork, `upstream` = Davidona/StreamVault-IPTV. Procedure (about 10 minutes when done often):
+
+1. `git fetch upstream`, then branch `merge/upstream-<version>` from `main`.
+2. `git merge upstream/master`. Never rebase; merge commits keep the fork history and make the next merge cheap.
+3. String files conflict almost every time because both sides append at the end of `strings.xml`. Run `python3 -I tools/resolve_strings_union.py <repo root>`: it keeps both sides and refuses files with duplicate names, which you fix by hand (keep fork `app_name`, take upstream wording elsewhere). Import-only conflicts in Kotlin: keep both import sets.
+4. Build and run the unit tests (CI does this), then merge the branch to `main`.
+
+Rules that keep merges small:
+- Fork features live in new files or in small additive hunks next to existing code (new field, new enum value, new `when` branch). Do not reformat, rename or move upstream code.
+- New fork strings go at the end of the `strings.xml` files; do not reorder existing ones.
+- Package names stay `com.streamvault.*`.
+- Do not edit upstream comments or KDoc to satisfy local style hooks; it creates conflicts for nothing.
+
+## Fork changes on top of upstream
+
+| Change | Where |
+|--------|-------|
+| Identity, signing, update source | `app/build.gradle.kts`, workflows, About strings |
+| Foreground catalog/EPG sync (phase 2a) | `data/.../sync/foreground/` |
+| VPN-only automatic sync (`AutomaticSyncSettings.vpnOnly`, default on) | `AutomaticSyncConstraints.kt`, `AutomaticSyncRunner.waitingReason`, Settings switch. Any VPN counts: Android does not expose which VPN app is active. Strings are English only so far. |
+
 ## Identity and distribution
 
 | Item | Upstream | Fork |
