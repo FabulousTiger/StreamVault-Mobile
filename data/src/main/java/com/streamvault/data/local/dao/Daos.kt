@@ -1459,6 +1459,22 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE provider_id = :providerId AND added_at > 0 ORDER BY added_at DESC, name ASC, id ASC LIMIT :limit")
     fun getFreshPreview(providerId: Long, limit: Int): Flow<List<MovieBrowseEntity>>
 
+    @Query(
+        """
+        SELECT * FROM movies
+        WHERE provider_id = :providerId
+          AND added_at > 0
+          AND (category_id IS NULL OR category_id NOT IN (:hiddenCategoryIds))
+        ORDER BY added_at DESC, name ASC, id ASC
+        LIMIT :limit
+        """
+    )
+    fun getFreshPreviewExcludingHiddenCategories(
+        providerId: Long,
+        hiddenCategoryIds: List<Long>,
+        limit: Int
+    ): Flow<List<MovieBrowseEntity>>
+
         @Query(
             """
             SELECT * FROM movies
@@ -2505,6 +2521,22 @@ interface SeriesDao {
         """
         SELECT * FROM series
         WHERE provider_id = :providerId
+          AND last_modified > 0
+          AND (category_id IS NULL OR category_id NOT IN (:hiddenCategoryIds))
+        ORDER BY last_modified DESC, name ASC
+        LIMIT :limit
+        """
+    )
+    fun getFreshPreviewExcludingHiddenCategories(
+        providerId: Long,
+        hiddenCategoryIds: List<Long>,
+        limit: Int
+    ): Flow<List<SeriesBrowseEntity>>
+
+    @Query(
+        """
+        SELECT * FROM series
+        WHERE provider_id = :providerId
         ORDER BY
             CASE WHEN COALESCE(release_date, '') != '' THEN 1 ELSE 0 END DESC,
             release_date DESC,
@@ -3417,6 +3449,9 @@ data class FavoriteGroupConstraint(
 
 @Dao
 abstract class FavoriteDao {
+    @Query("SELECT * FROM favorites WHERE provider_id = :providerId AND content_type = :contentType AND ((:groupId IS NULL AND group_id IS NULL) OR group_id = :groupId) ORDER BY position ASC, id ASC")
+    abstract suspend fun getPartitionSnapshot(providerId: Long, contentType: String, groupId: Long?): List<FavoriteEntity>
+
     @Query("SELECT * FROM favorites WHERE provider_id = :providerId AND group_id IS NULL ORDER BY position ASC")
     abstract fun getAllGlobal(providerId: Long): Flow<List<FavoriteEntity>>
 
@@ -3578,6 +3613,9 @@ interface VirtualGroupDao {
     @Query("UPDATE virtual_groups SET name = :name WHERE id = :id")
     suspend fun rename(id: Long, name: String)
 
+    @Query("UPDATE virtual_groups SET identity_key = :identityKey WHERE id = :id")
+    suspend fun updateIdentityKey(id: Long, identityKey: String)
+
     @Query("DELETE FROM virtual_groups WHERE id = :id")
     suspend fun delete(id: Long)
 
@@ -3588,6 +3626,9 @@ interface VirtualGroupDao {
 @Dao
 @RewriteQueriesToDropUnusedColumns
 interface PlaybackHistoryDao {
+    @Query("SELECT * FROM playback_history WHERE provider_id = :providerId AND series_id = :seriesId AND content_type = 'SERIES_EPISODE' ORDER BY last_watched_at DESC, content_id DESC LIMIT 1")
+    suspend fun getLatestEpisodeHistoryForSeries(providerId: Long, seriesId: Long): PlaybackHistoryEntity?
+
     @Query("SELECT * FROM playback_history ORDER BY last_watched_at DESC, content_id DESC, content_type DESC, provider_id DESC LIMIT :limit")
     fun getRecentlyWatched(limit: Int = 100): Flow<List<PlaybackHistoryLiteEntity>>
 

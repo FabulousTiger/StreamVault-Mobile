@@ -239,7 +239,8 @@ class ProviderExecutionArchitectureTest {
                 // SyncManager currently assembles the provider executors, catalog/index
                 // lifecycle, and durable backup-restore hooks. Keep this explicit rather
                 // than letting the budget drift silently as those responsibilities evolve.
-                maxConstructorDependencies = 44
+                // The adaptive Xtream policy also persists retry deadlines across restarts.
+                maxConstructorDependencies = 45
             ),
             DependencyBudget(
                 path = "data/src/main/java/com/streamvault/data/sync/SyncCoordinator.kt",
@@ -277,7 +278,8 @@ class ProviderExecutionArchitectureTest {
         )
 
         val automaticSyncSource = repositoryRoot.resolve("data/src/main/java/com/streamvault/data/sync/AutomaticSyncRunner.kt").readText()
-        assertThat(constructorDependencyCount(automaticSyncSource, "AutomaticSyncRunner")).isAtMost(8)
+        // ProviderRepository handles live-order reconciliation after a successful scheduled refresh.
+        assertThat(constructorDependencyCount(automaticSyncSource, "AutomaticSyncRunner")).isAtMost(9)
 
         budgets.forEach { budget ->
             val source = repositoryRoot.resolve(budget.path).readText()

@@ -12,7 +12,7 @@ data class AutomaticSyncSettings(
     val movies: Boolean = true,
     val series: Boolean = true,
     val epg: Boolean = true,
-    val deferWhileBusy: Boolean = true,
+    val deferWhileBusy: Boolean = false,
     val unmeteredOnly: Boolean = false,
     val vpnOnly: Boolean = true,
     val chargingOnly: Boolean = false,

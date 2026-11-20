@@ -1,7 +1,7 @@
 package com.streamvault.feature.catalog.presentation.components.dialogs
 
+import com.streamvault.core.ui.design.selectableFocusBorder
 import android.view.KeyEvent as AndroidKeyEvent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -27,7 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
+import com.streamvault.core.ui.components.dialogs.AppDialog as Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.tv.material3.*
 import com.streamvault.feature.catalog.R
@@ -288,10 +288,7 @@ private fun MenuFocusSurface(
             contentColor = AppColors.TextPrimary,
             focusedContentColor = AppColors.TextPrimary
         ),
-        border = ClickableSurfaceDefaults.border(
-            border = Border(border = BorderStroke(1.dp, AppColors.Outline), shape = actionShape),
-            focusedBorder = Border(border = BorderStroke(2.dp, AppColors.Focus), shape = actionShape)
-        ),
+        border = selectableFocusBorder(actionShape),
         scale = ClickableSurfaceDefaults.scale(focusedScale = 1f),
         content = content
     )

@@ -105,7 +105,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Dialog
+import com.streamvault.core.ui.components.dialogs.AppDialog as Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -179,6 +179,17 @@ fun LiveEpgScreen(
     var selectedProgram by remember { mutableStateOf<Pair<Channel, Program>?>(null) }
     var focusedChannel by remember { mutableStateOf<Channel?>(null) }
     var focusedProgram by remember { mutableStateOf<Program?>(null) }
+    var savedFocusedChannelId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var savedFocusCategoryId by rememberSaveable { mutableStateOf<Long?>(null) }
+    var handledFocusRestoreGeneration by remember { mutableStateOf(0) }
+    val pendingFocusRestore = uiState.focusRestoreGeneration != handledFocusRestoreGeneration
+    LaunchedEffect(uiState.focusRestoreGeneration) {
+        if (uiState.focusRestoreGeneration != handledFocusRestoreGeneration) {
+            savedFocusedChannelId = uiState.previewChannelId
+            savedFocusCategoryId = uiState.selectedCategoryId
+            handledFocusRestoreGeneration = uiState.focusRestoreGeneration
+        }
+    }
     var topNavVisible by rememberSaveable { mutableStateOf(true) }
     var showCategoryPicker by rememberSaveable { mutableStateOf(false) }
     var showGuideOptions by rememberSaveable { mutableStateOf(false) }
@@ -421,6 +432,13 @@ fun LiveEpgScreen(
             isPreviewLoading = uiState.isPreviewLoading,
             focusedChannel = focusedChannel,
             focusedProgram = focusedProgram,
+            focusCategoryId = uiState.selectedCategoryId,
+            focusRestoreGeneration = uiState.focusRestoreGeneration,
+            initialFocusedChannelId = if (pendingFocusRestore) uiState.previewChannelId else
+                savedFocusedChannelId.takeIf { savedFocusCategoryId == uiState.selectedCategoryId },
+            hasMoreChannels = uiState.hasMoreChannels,
+            loadedChannelCount = uiState.loadedChannelCount,
+            isLoadingMoreChannels = uiState.isLoadingMoreChannels,
             labels = LiveGuideContentLabels(
                 loading = stringResource(R.string.epg_loading),
                 preview = LiveGuidePreviewLabels(
@@ -490,11 +508,15 @@ fun LiveEpgScreen(
             },
             onChannelFocused = { channel, currentProgram, isFirstRow ->
                 topNavVisible = isFirstRow
+                savedFocusedChannelId = channel.id
+                savedFocusCategoryId = uiState.selectedCategoryId
                 focusedChannel = channel
                 focusedProgram = currentProgram
             },
             onProgramFocused = { channel, program, isFirstRow ->
                 topNavVisible = isFirstRow
+                savedFocusedChannelId = channel.id
+                savedFocusCategoryId = uiState.selectedCategoryId
                 focusedChannel = channel
                 focusedProgram = program
             },
@@ -615,7 +637,6 @@ fun LiveEpgScreen(
                 title = stringResource(R.string.epg_options_short),
                 showAppNavigation = stringResource(R.string.epg_show_app_navigation),
                 cancel = stringResource(R.string.settings_cancel),
-                manageEpgMatch = stringResource(R.string.epg_override_manage),
                 refreshGuide = stringResource(R.string.epg_refresh_guide)
             ),
             onDismiss = { showGuideOptions = false },
@@ -639,13 +660,7 @@ fun LiveEpgScreen(
             onDensitySelected = viewModel::selectDensity,
             onToggleScheduledOnly = viewModel::toggleScheduledOnly,
             onToggleFavoritesOnly = viewModel::toggleFavoritesOnly,
-            onRefresh = viewModel::refresh,
-            onManageEpgMatch = focusedChannel?.takeIf { it.providerId > 0L }?.let { ch ->
-                {
-                    showGuideOptions = false
-                    viewModel.openEpgOverride(ch)
-                }
-            }
+            onRefresh = viewModel::refresh
         )
     }
 
@@ -727,7 +742,8 @@ fun LiveEpgScreen(
                     scheduleWeeklyRecording = stringResource(R.string.epg_schedule_weekly_recording),
                     detailsShow = stringResource(R.string.epg_program_details_show),
                     detailsHide = stringResource(R.string.epg_program_details_hide),
-                    cancel = stringResource(R.string.settings_cancel)
+                    cancel = stringResource(R.string.settings_cancel),
+                    adjustEpgMatch = stringResource(R.string.epg_override_manage)
                 ),
                 onDismiss = { selectedProgram = null },
                 onWatchLive = {
@@ -803,6 +819,12 @@ fun LiveEpgScreen(
                     }
                 } else {
                     null
+                },
+                onAdjustEpgMatch = channel.takeIf { it.providerId > 0L }?.let {
+                    {
+                        selectedProgram = null
+                        viewModel.openEpgOverride(channel)
+                    }
                 }
             )
         }

@@ -349,4 +349,8 @@
     <string name="sync_battery_prompt_message">Penyegerakan katalog besar boleh mengambil masa. Apabila pengoptimuman bateri dihidupkan, Android mungkin menghentikan penyegerakan di latar belakang atau semasa skrin dikunci. Benarkan penggunaan bateri tanpa had supaya ia dapat diselesaikan. Pada telefon Samsung, pastikan juga apl tidak ditidurkan.</string>
     <string name="sync_battery_prompt_open">Buka tetapan bateri</string>
     <string name="sync_battery_prompt_dismiss">Tidak, terima kasih</string>
+    <string name="stremio_new_episode_channel">Pemberitahuan episod baharu</string>
+    <string name="stremio_new_episode_count">Episod baharu: %1$d</string>
+    <string name="tv_channel_favorites_title">Kegemaran</string>
+    <string name="tv_channel_favorites_description">Saluran, filem dan siri kegemaran anda</string>
 </resources>

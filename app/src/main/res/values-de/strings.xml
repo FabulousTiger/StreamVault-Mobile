@@ -295,4 +295,8 @@
     <string name="sync_battery_prompt_message">Große Kataloge brauchen eine Weile. Bei aktiver Akkuoptimierung kann Android die Synchronisierung im Hintergrund oder bei gesperrtem Bildschirm stoppen. Erlaube die uneingeschränkte Akkunutzung, damit sie abgeschlossen werden kann. Achte auf Samsung-Geräten außerdem darauf, dass die App nicht in den Standby-Modus versetzt wird.</string>
     <string name="sync_battery_prompt_open">Akkueinstellungen öffnen</string>
     <string name="sync_battery_prompt_dismiss">Nein danke</string>
+    <string name="stremio_new_episode_channel">Benachrichtigungen zu neuen Folgen</string>
+    <string name="stremio_new_episode_count">Neue Folgen: %1$d</string>
+    <string name="tv_channel_favorites_title">Favoriten</string>
+    <string name="tv_channel_favorites_description">Deine Lieblingssender, Filme und Serien</string>
 </resources>

@@ -296,4 +296,8 @@
     <string name="sync_battery_prompt_message">大きなカタログの同期には時間がかかることがあります。電池の最適化がオンの場合、バックグラウンドや画面ロック中に Android が同期を停止することがあります。同期を完了できるよう、電池の使用を「制限なし」にしてください。Samsung のスマートフォンでは、アプリがスリープ状態にならないことも確認してください。</string>
     <string name="sync_battery_prompt_open">電池の設定を開く</string>
     <string name="sync_battery_prompt_dismiss">今はしない</string>
+    <string name="stremio_new_episode_channel">新着エピソードの通知</string>
+    <string name="stremio_new_episode_count">新しいエピソード: %1$d</string>
+    <string name="tv_channel_favorites_title">お気に入り</string>
+    <string name="tv_channel_favorites_description">お気に入りのチャンネル、映画、シリーズ</string>
 </resources>

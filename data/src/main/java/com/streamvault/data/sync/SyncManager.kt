@@ -227,7 +227,8 @@ class SyncManager @Inject constructor(
     private val providerSyncWorkScheduler: ProviderSyncWorkScheduler,
     private val m3uClassificationDao: M3uClassificationDao? = null,
     private val m3uClassificationRepository: M3uClassificationRepository? = null,
-    private val pendingBackupRestoreCoordinator: PendingBackupRestoreCoordinator? = null
+    private val pendingBackupRestoreCoordinator: PendingBackupRestoreCoordinator? = null,
+    private val xtreamRetryDeadlineStore: XtreamRetryDeadlineStore? = null
 ) : ProviderSyncCommands, CatalogHydrationCommands, ProviderSyncStateSource, ProviderSyncLifecycle {
     init {
         InProcessSyncKeepAliveWorker.install(applicationContext)
@@ -239,7 +240,7 @@ class SyncManager @Inject constructor(
         transactionRunner = transactionRunner
     )
     private val syncErrorSanitizer = SyncErrorSanitizer()
-    private val xtreamAdaptiveSyncPolicy = XtreamAdaptiveSyncPolicy()
+    private val xtreamAdaptiveSyncPolicy = XtreamAdaptiveSyncPolicy(xtreamRetryDeadlineStore)
     private val syncCatalogStore = SyncCatalogStore(
         channelDao = channelDao,
         movieDao = movieDao,
@@ -366,11 +367,11 @@ class SyncManager @Inject constructor(
                         }
                     },
                     markAttemptFailed = { providerId, contentType, categoryId, hydration, attemptedPage,
-                                          now, message, retryable, pageFingerprint ->
+                                          now, message, retryable, pageFingerprint, deferredUntilMs ->
                         inFencedStalkerIndexTransaction(providerId) {
                             stalkerIndexCheckpointStore.markAttemptFailed(
                                 providerId, contentType, categoryId, hydration, attemptedPage, now,
-                                message, retryable, pageFingerprint
+                                message, retryable, pageFingerprint, deferredUntilMs
                             )
                         }
                     },
@@ -415,6 +416,18 @@ class SyncManager @Inject constructor(
         XtreamIncrementalIndexExecutor(
             operations = CallbackXtreamIncrementalIndexOperations(
                 XtreamIncrementalIndexCallbacks(
+                    beginSnapshot = { providerId, type ->
+                        transactionRunner.inTransaction {
+                            providerWorkflowCommitFence.assertCanCommit(providerId)
+                            xtreamContentIndexDao.beginSnapshot(providerId, type.name)
+                        }
+                    },
+                    finishSnapshot = { providerId, type ->
+                        transactionRunner.inTransaction {
+                            providerWorkflowCommitFence.assertCanCommit(providerId)
+                            xtreamContentIndexDao.pruneCompletedSnapshot(providerId, type.name)
+                        }
+                    },
                     getCategories = { providerId, contentType ->
                         categoryDao.getByProviderAndTypeSync(providerId, contentType.name)
                     },
@@ -1127,6 +1140,14 @@ class SyncManager @Inject constructor(
             )
             com.streamvault.domain.model.Result.success(Unit)
         } catch (e: CancellationException) {
+            withContext(NonCancellable) {
+                updateXtreamEpgJobState(
+                    provider = provider,
+                    state = "FAILED_RETRYABLE",
+                    now = System.currentTimeMillis(),
+                    lastAttemptAt = startedAt
+                )
+            }
             resetState(providerId)
             throw e
         } catch (e: Exception) {
@@ -1640,6 +1661,28 @@ class SyncManager @Inject constructor(
 
         val progressSession = beginProgressSession(providerId)
         publishSyncState(providerId, SyncState.Syncing("Retrying ${section.name}..."))
+        var epgAttemptAt = 0L
+        var epgHasRetryableFailure = false
+
+        suspend fun updateEpgJobState(
+            state: String,
+            now: Long,
+            indexedRows: Int? = null,
+            lastSuccessAt: Long? = null,
+            lastError: String? = null
+        ) {
+            if (section != SyncRepairSection.EPG) return
+            updateXtreamEpgJobState(
+                provider = provider,
+                state = state,
+                now = now,
+                indexedRows = indexedRows,
+                lastAttemptAt = epgAttemptAt.takeIf { it > 0L },
+                lastSuccessAt = lastSuccessAt,
+                lastError = lastError
+            )
+        }
+
         try {
             val persistedSnapshot = syncProviderSnapshotAdapter.getSnapshot(providerId)
                 ?: syncProviderSnapshotAdapter.toSnapshot(provider)
@@ -1654,17 +1697,24 @@ class SyncManager @Inject constructor(
                 persistedSnapshot
             }
             val sectionResult = withContext(Dispatchers.IO) {
+                if (section == SyncRepairSection.EPG) {
+                    epgAttemptAt = System.currentTimeMillis()
+                    updateEpgJobState("RUNNING", epgAttemptAt)
+                }
                 if (section == SyncRepairSection.EPG && !retryFailedCategoriesOnly) {
                     when (val guide = syncCoordinator.syncGuide(ProviderGuideSyncRequest(
                         snapshot = snapshot,
                         force = true,
-                        now = System.currentTimeMillis(),
+                        now = epgAttemptAt,
                         onProgress = onProgress
                     ))) {
-                        is CapabilityResolution.Available -> CapabilityResolution.Available(SyncOutcome(
-                            partial = guide.capability.hasRetryableFailure || guide.capability.warnings.isNotEmpty(),
-                            warnings = guide.capability.warnings
-                        ))
+                        is CapabilityResolution.Available -> {
+                            epgHasRetryableFailure = guide.capability.hasRetryableFailure
+                            CapabilityResolution.Available(SyncOutcome(
+                                partial = guide.capability.hasRetryableFailure || guide.capability.warnings.isNotEmpty(),
+                                warnings = guide.capability.warnings
+                            ))
+                        }
                         is CapabilityResolution.Unsupported -> guide
                         is CapabilityResolution.Restricted -> guide
                         is CapabilityResolution.ConfigurationError -> guide
@@ -1681,9 +1731,33 @@ class SyncManager @Inject constructor(
             }
             val outcome = when (sectionResult) {
                 is CapabilityResolution.Available -> sectionResult.capability
-                is CapabilityResolution.Unsupported -> return@lock failSectionResolution(providerId, sectionResult.reason)
-                is CapabilityResolution.Restricted -> return@lock failSectionResolution(providerId, sectionResult.reason)
-                is CapabilityResolution.ConfigurationError -> return@lock failSectionResolution(providerId, sectionResult.reason)
+                is CapabilityResolution.Unsupported -> {
+                    updateEpgJobState("FAILED_PERMANENT", System.currentTimeMillis(), lastError = sectionResult.reason)
+                    return@lock failSectionResolution(providerId, sectionResult.reason)
+                }
+                is CapabilityResolution.Restricted -> {
+                    updateEpgJobState("FAILED_PERMANENT", System.currentTimeMillis(), lastError = sectionResult.reason)
+                    return@lock failSectionResolution(providerId, sectionResult.reason)
+                }
+                is CapabilityResolution.ConfigurationError -> {
+                    updateEpgJobState("FAILED_PERMANENT", System.currentTimeMillis(), lastError = sectionResult.reason)
+                    return@lock failSectionResolution(providerId, sectionResult.reason)
+                }
+            }
+            if (section == SyncRepairSection.EPG) {
+                val finishedAt = System.currentTimeMillis()
+                val epgJobState = when {
+                    epgHasRetryableFailure -> "FAILED_RETRYABLE"
+                    outcome.warnings.isNotEmpty() -> "PARTIAL"
+                    else -> "SUCCESS"
+                }
+                updateEpgJobState(
+                    state = epgJobState,
+                    now = finishedAt,
+                    indexedRows = programDao.countByProvider(providerId),
+                    lastSuccessAt = finishedAt.takeIf { epgJobState == "SUCCESS" },
+                    lastError = outcome.warnings.takeIf { it.isNotEmpty() }?.joinToString("; ")
+                )
             }
             updateSyncStatusMetadata(
                 providerId = providerId,
@@ -1706,11 +1780,24 @@ class SyncManager @Inject constructor(
                 catalogChanged = outcome.activation == SyncActivation.ACTIVATED_CATALOG
             ))
         } catch (e: CancellationException) {
+            if (section == SyncRepairSection.EPG) {
+                withContext(NonCancellable) {
+                    updateEpgJobState("FAILED_RETRYABLE", System.currentTimeMillis())
+                }
+            }
             resetState(providerId)
             throw e
         } catch (e: Exception) {
             val safeMessage = syncErrorSanitizer.userMessage(e, "Retry failed")
             Log.e(TAG, "Section retry failed for provider $providerId [$section]: ${syncErrorSanitizer.throwableMessage(e)}")
+            if (section == SyncRepairSection.EPG) {
+                updateEpgJobState(
+                    state = if (isRetryableEpgException(e)) "FAILED_RETRYABLE" else "FAILED_PERMANENT",
+                    now = System.currentTimeMillis(),
+                    indexedRows = programDao.countByProvider(providerId),
+                    lastError = safeMessage
+                )
+            }
             updateSyncStatusMetadata(providerId = providerId, status = syncFailureStatus(provider, e))
             publishSyncState(providerId, SyncState.Error(safeMessage, e))
             com.streamvault.domain.model.Result.error(safeMessage, e)
@@ -2168,7 +2255,7 @@ class SyncManager @Inject constructor(
             val localId = existingByStreamId[movie.streamId]?.id ?: movie.id
             val row = movie.toXtreamIndexRow(providerId, localId, indexedAt)
             val existing = indexRowsBefore[row.remoteId]
-            existing == null || existing.copy(indexedAt = row.indexedAt) != row
+            existing == null || existing.indexedAt == 0L || existing.copy(indexedAt = row.indexedAt) != row
         }
         if (updatedMovies.isNotEmpty() || movieIndexChanged) {
             transactionRunner.inTransaction {
@@ -2190,7 +2277,7 @@ class SyncManager @Inject constructor(
                 }
                 val indexUpdates = indexRows.filter { row ->
                     val existing = indexRowsBefore[row.remoteId]
-                    existing == null || existing.copy(indexedAt = row.indexedAt) != row
+                    existing == null || existing.indexedAt == 0L || existing.copy(indexedAt = row.indexedAt) != row
                 }
                 if (indexUpdates.isNotEmpty()) xtreamContentIndexDao.upsertAll(indexUpdates)
             }
@@ -2229,7 +2316,7 @@ class SyncManager @Inject constructor(
             val localId = existingBySeriesId[item.seriesId]?.id ?: item.id
             val row = item.toXtreamIndexRow(providerId, localId, indexedAt)
             val existing = indexRowsBefore[row.remoteId]
-            existing == null || existing.copy(indexedAt = row.indexedAt) != row
+            existing == null || existing.indexedAt == 0L || existing.copy(indexedAt = row.indexedAt) != row
         }
         if (updatedSeries.isNotEmpty() || seriesIndexChanged) {
             transactionRunner.inTransaction {
@@ -2251,7 +2338,7 @@ class SyncManager @Inject constructor(
                 }
                 val indexUpdates = indexRows.filter { row ->
                     val existing = indexRowsBefore[row.remoteId]
-                    existing == null || existing.copy(indexedAt = row.indexedAt) != row
+                    existing == null || existing.indexedAt == 0L || existing.copy(indexedAt = row.indexedAt) != row
                 }
                 if (indexUpdates.isNotEmpty()) xtreamContentIndexDao.upsertAll(indexUpdates)
             }

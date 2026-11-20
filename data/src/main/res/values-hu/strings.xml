@@ -12,4 +12,5 @@
     <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
     <string name="sync_fg_section_working">%1$s: frissítés…</string>
     <string name="sync_fg_cancel">Mégse</string>
+    <string name="backup_live_order_restore_issue">Néhány élő tévécsatorna-sorrend beállítást nem sikerült visszaállítani.</string>
 </resources>

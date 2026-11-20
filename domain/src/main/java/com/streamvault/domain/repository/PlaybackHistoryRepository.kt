@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
 interface PlaybackHistoryRepository {
+    /** Nonblocking actual-playing-time sample; persistence and privacy checks belong to the repository. */
+    fun sampleLiveUsage(sample: com.streamvault.domain.model.LiveWatchSample) = Unit
     suspend fun isIncognitoModeEnabled(): Boolean = false
     fun getRecentlyWatched(limit: Int = 100): Flow<List<PlaybackHistory>>
     suspend fun getRecentlyWatchedPage(offset: Int, limit: Int): List<PlaybackHistory> {
@@ -19,6 +21,8 @@ interface PlaybackHistoryRepository {
     fun getRecentlyWatchedByProvider(providerId: Long, limit: Int = 100): Flow<List<PlaybackHistory>>
     fun getRecentlyWatchedByProviders(providerIds: Set<Long>, limit: Int = 100): Flow<List<PlaybackHistory>>
     fun getUnwatchedCount(providerId: Long, seriesId: Long): Flow<Int>
+    /** Exact provider/series match, including progress waiting to be flushed. */
+    suspend fun getLatestEpisodeHistoryForSeries(providerId: Long, seriesId: Long): PlaybackHistory? = null
     suspend fun getPlaybackHistory(
         contentId: Long,
         contentType: ContentType,

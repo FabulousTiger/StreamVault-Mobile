@@ -351,4 +351,8 @@
     <string name="sync_battery_prompt_message">Синхронизирането на големи каталози може да отнеме време. При включена оптимизация на батерията Android може да го спре във фонов режим или при заключен екран. Разрешете неограничено използване на батерията, за да може да завърши. На телефони Samsung проверете също, че приложението не се приспива.</string>
     <string name="sync_battery_prompt_open">Отваряне на настройките за батерията</string>
     <string name="sync_battery_prompt_dismiss">Не, благодаря</string>
+    <string name="stremio_new_episode_channel">Известия за нови епизоди</string>
+    <string name="stremio_new_episode_count">Нови епизоди: %1$d</string>
+    <string name="tv_channel_favorites_title">Любими</string>
+    <string name="tv_channel_favorites_description">Любимите ви канали, филми и сериали</string>
 </resources>

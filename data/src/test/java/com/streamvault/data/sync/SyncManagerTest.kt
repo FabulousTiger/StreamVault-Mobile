@@ -57,6 +57,7 @@ import com.streamvault.domain.model.CatalogLayout
 import com.streamvault.domain.model.StalkerPortalLearning
 import com.streamvault.domain.repository.ProviderSnapshotRepository
 import com.streamvault.domain.model.StalkerIndexState
+import com.streamvault.domain.model.StalkerCatalogMode
 import com.streamvault.domain.model.StalkerTransportMode
 import com.streamvault.domain.model.SyncMetadata
 import com.streamvault.domain.repository.EpgRepository
@@ -1234,33 +1235,66 @@ class SyncManagerTest {
     }
 
     @Test
-    fun `manual catalog refresh resumes pending indexes for both provider types without resetting checkpoints`() = runTest {
+    fun `manual catalog refresh restarts pending indexes for both provider types`() = runTest {
         for (type in listOf(ProviderType.XTREAM_CODES, ProviderType.STALKER_PORTAL)) {
-            val manager = buildManager(providerType = type)
+            val manager = buildManager(providerType = type, providerEntity =
+                sampleProvider(type).copy(stalkerMacAddress = "00:11:22:33:44:55"))
+            stubXtreamEmptyVodAndSeriesCategories()
+            org.mockito.kotlin.whenever(stalkerApiService.authenticate(any())).thenReturn(Result.success(
+                StalkerSession(
+                    loadUrl = "http://example.com/stalker_portal/server/load.php",
+                    portalReferer = "http://example.com/stalker_portal/c/", token = "token"
+                ) to StalkerProviderProfile(accountName = "Stalker")
+            ))
             for ((section, contentType) in listOf(
                 SyncRepairSection.MOVIES to ContentType.MOVIE,
                 SyncRepairSection.SERIES to ContentType.SERIES
             )) {
                 val existing = XtreamIndexJobEntity(
-                    providerId = 1L, section = contentType.name,
-                    state = if (type == ProviderType.STALKER_PORTAL) "QUEUED" else "PARTIAL",
+                    providerId = 1L, section = contentType.name, state = "QUEUED",
                     totalCategories = 12, completedCategories = 4, nextCategoryIndex = 4,
                     failedCategories = 1, indexedRows = 800, lastError = "Interrupted"
                 )
                 org.mockito.kotlin.whenever(xtreamIndexJobDao.get(1L, contentType.name)).thenReturn(existing)
-                val receipt = manager.syncSection(1L, section).getOrNull()
-                assertThat(receipt?.queued).isTrue()
-                assertThat(receipt?.partial).isFalse()
-                assertThat(xtreamIndexJobDao.get(1L, contentType.name)).isEqualTo(existing)
+                val result = manager.syncSection(1L, section)
+                assertThat(result.getOrNull()?.queued).isTrue()
+                verify(xtreamIndexJobDao).upsert(org.mockito.kotlin.argThat {
+                    this.section == contentType.name && state == "QUEUED" &&
+                        completedCategories == 0 && nextCategoryIndex == 0 && indexedRows == 0
+                })
+            }
+            if (type == ProviderType.XTREAM_CODES) {
+                assertThat(xtreamBackend.requestedActions).containsAtLeast("get_vod_categories", "get_series_categories")
+            } else {
+                verify(stalkerApiService).getVodCategories(any(), any())
+                verify(stalkerApiService).getSeriesCategories(any(), any())
+                verify(movieCategoryHydrationDao).deleteByProvider(1L)
+                verify(seriesCategoryHydrationDao).deleteByProvider(1L)
+            }
+            org.mockito.Mockito.clearInvocations(xtreamIndexJobDao, stalkerApiService, movieCategoryHydrationDao, seriesCategoryHydrationDao)
+        }
+    }
+
+    @Test
+    fun `scheduled catalog refresh resumes pending indexes`() = runTest {
+        for (type in listOf(ProviderType.XTREAM_CODES, ProviderType.STALKER_PORTAL)) {
+            val manager = buildManager(providerType = type, providerEntity = sampleProvider(type).copy(
+                stalkerCatalogMode = StalkerCatalogMode.BACKGROUND_INDEX
+            ))
+            for ((section, contentType) in listOf(
+                SyncRepairSection.MOVIES to ContentType.MOVIE,
+                SyncRepairSection.SERIES to ContentType.SERIES
+            )) {
+                val existing = XtreamIndexJobEntity(
+                    providerId = 1L, section = contentType.name, state = "QUEUED",
+                    totalCategories = 12, completedCategories = 4, nextCategoryIndex = 4,
+                    indexedRows = 800
+                )
+                org.mockito.kotlin.whenever(xtreamIndexJobDao.get(1L, contentType.name)).thenReturn(existing)
+                assertThat(manager.refreshScheduledSection(1L, section).getOrNull()?.queued).isTrue()
             }
         }
         verify(xtreamIndexJobDao, org.mockito.kotlin.never()).upsert(any())
-        verify(movieCategoryHydrationDao, org.mockito.kotlin.never()).deleteByProvider(any())
-        verify(seriesCategoryHydrationDao, org.mockito.kotlin.never()).deleteByProvider(any())
-        verify(xtreamContentIndexDao, org.mockito.kotlin.never()).markRowsStaleForProviderAndType(any(), any())
-        assertThat(xtreamBackend.requestedActions).isEmpty()
-        verify(stalkerApiService, org.mockito.kotlin.never()).getVodCategories(any(), any())
-        verify(stalkerApiService, org.mockito.kotlin.never()).getSeriesCategories(any(), any())
     }
 
     @Test
@@ -1297,7 +1331,7 @@ class SyncManagerTest {
     }
 
     @Test
-    fun `manual Stalker EPG refresh carries unsupported portal guide warnings to settings`() = runTest {
+    fun `manual Stalker EPG refresh inspects channels despite an old unsupported observation`() = runTest {
         val portalStateStore = mock<com.streamvault.data.remote.stalker.StalkerPortalStateStore>()
         org.mockito.kotlin.whenever(portalStateStore.getValidated(eq(1L), any())).thenReturn(
             com.streamvault.data.local.entity.StalkerPortalStateEntity(
@@ -1305,9 +1339,10 @@ class SyncManagerTest {
             )
         )
         val manager = buildManager(providerType = ProviderType.STALKER_PORTAL, portalStateStore = portalStateStore)
+        org.mockito.kotlin.whenever(channelDao.getGuideSyncEntriesByProvider(1L)).thenReturn(emptyList())
         val receipt = manager.syncSection(1L, SyncRepairSection.EPG).getOrNull()
-        assertThat(receipt?.partial).isTrue()
-        assertThat(receipt?.warnings).contains("Stalker portal guide is known to be unsupported; keeping cached guide data.")
+        assertThat(receipt?.partial).isFalse()
+        verify(channelDao).getGuideSyncEntriesByProvider(1L)
     }
 
     @Test
@@ -1928,6 +1963,25 @@ class SyncManagerTest {
                     job.totalCategories == 1
             }
         ).isTrue()
+    }
+
+    @Test
+    fun `transient Xtream category failure returns retryable result and keeps partial checkpoint`() = runBlocking {
+        val mgr = buildManager(providerType = ProviderType.XTREAM_CODES)
+        org.mockito.kotlin.whenever(categoryDao.getByProviderAndTypeSync(1L, ContentType.MOVIE.name)).thenReturn(
+            listOf(CategoryEntity(categoryId = 42L, name = "Action", type = ContentType.MOVIE, providerId = 1L)))
+        org.mockito.kotlin.whenever(xtreamIndexJobDao.get(1L, ContentType.MOVIE.name)).thenReturn(
+            XtreamIndexJobEntity(1L, "MOVIE", state = "PARTIAL", totalCategories = 1, failedCategories = 1))
+        xtreamBackend.respond(action = "get_vod_streams", body = "{}", code = 503)
+
+        val result = mgr.processQueuedXtreamIndexJobs(1L, ContentType.MOVIE, maxCategoriesPerSection = 2)
+
+        assertThat(result).isInstanceOf(Result.Error::class.java)
+        assertThat((result as Result.Error).exception).isInstanceOf(java.io.IOException::class.java)
+        val jobs = argumentCaptor<XtreamIndexJobEntity>()
+        verify(xtreamIndexJobDao, atLeastOnce()).upsert(jobs.capture())
+        assertThat(jobs.allValues.last().state).isEqualTo("PARTIAL")
+        assertThat(jobs.allValues.last().nextCategoryIndex).isEqualTo(0)
     }
 
     @Test
@@ -3788,7 +3842,7 @@ class SyncManagerTest {
     }
 
     @Test
-    fun sync_stalker_skips_known_unsupported_epg_and_finishes_ready_with_warning() = runTest {
+    fun sync_stalker_hands_off_epg_and_finishes_ready_with_warning() = runTest {
         val providerEntity = sampleProvider(ProviderType.STALKER_PORTAL).copy(
             serverUrl = "http://example.com",
             username = "",

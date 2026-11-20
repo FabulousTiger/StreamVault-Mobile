@@ -52,10 +52,24 @@ data class HomeUiState(
     val shouldAutoFocusFirstChannelOnEntry: Boolean = false,
     val selectedCategoryForOptions: Category? = null,
     val isChannelReorderMode: Boolean = false,
+    val isSavingChannelOrder: Boolean = false,
+    val canUndoChannelReorder: Boolean = false,
+    val canRedoChannelReorder: Boolean = false,
     val reorderCategory: Category? = null,
     val liveTvChannelMode: LiveTvChannelMode = LiveTvChannelMode.PRO,
     val liveTvAutoHideCategories: Boolean = false,
     val errorMessage: String? = null,
     val multiviewChannelCount: Int = 0,
     val multiviewSlotCapacity: Int = 4
-)
+) {
+    /** Browse totals come from category metadata, independently of the loaded page. */
+    val channelResultCount: Int
+        get() {
+            val category = selectedCategory ?: return filteredChannels.size
+            if (channelSearchQuery.isNotBlank() || category.isVirtual ||
+                selectedCombinedSourceProviderId != null || isChannelReorderMode
+            ) return filteredChannels.size
+            val total = categories.firstOrNull { it.id == category.id }?.count ?: category.count
+            return maxOf(total, filteredChannels.size)
+        }
+}

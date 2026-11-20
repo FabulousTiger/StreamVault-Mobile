@@ -12,4 +12,5 @@
     <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
     <string name="sync_fg_section_working">%1$s: uppdaterar…</string>
     <string name="sync_fg_cancel">Avbryt</string>
+    <string name="backup_live_order_restore_issue">Det gick inte att återställa vissa inställningar för ordningen på direktsänd tv.</string>
 </resources>

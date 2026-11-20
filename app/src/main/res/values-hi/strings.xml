@@ -348,4 +348,8 @@
     <string name="sync_battery_prompt_message">बड़े कैटलॉग को सिंक होने में समय लग सकता है। बैटरी ऑप्टिमाइज़ेशन चालू होने पर Android बैकग्राउंड में या स्क्रीन लॉक होने पर सिंक रोक सकता है। इसे पूरा होने देने के लिए बैटरी के असीमित उपयोग की अनुमति दें। Samsung फ़ोन पर यह भी पक्का करें कि ऐप को स्लीप में न डाला जाए।</string>
     <string name="sync_battery_prompt_open">बैटरी सेटिंग खोलें</string>
     <string name="sync_battery_prompt_dismiss">नहीं, धन्यवाद</string>
+    <string name="stremio_new_episode_channel">नए एपिसोड की सूचनाएँ</string>
+    <string name="stremio_new_episode_count">नए एपिसोड: %1$d</string>
+    <string name="tv_channel_favorites_title">पसंदीदा</string>
+    <string name="tv_channel_favorites_description">आपके पसंदीदा चैनल, फ़िल्में और सीरीज़</string>
 </resources>

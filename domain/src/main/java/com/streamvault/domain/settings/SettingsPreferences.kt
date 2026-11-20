@@ -1,5 +1,7 @@
 package com.streamvault.domain.settings
 
+import kotlinx.coroutines.flow.map
+import com.streamvault.domain.model.AppTextSize
 import com.streamvault.domain.model.GroupedChannelLabelMode
 import com.streamvault.domain.model.AudioOutputPreference
 import com.streamvault.domain.model.ChannelNumberingMode
@@ -42,6 +44,14 @@ interface SettingsPreferences {
         get() = kotlinx.coroutines.flow.flowOf(emptyMap())
     suspend fun setAutomaticSyncSettings(providerId: Long?, settings: com.streamvault.domain.sync.AutomaticSyncSettings?) {
         throw UnsupportedOperationException("Automatic sync preferences are unavailable")
+    }
+
+    /** App-wide fallback; Manual is always scoped to a category. */
+    val defaultLiveChannelOrder: Flow<com.streamvault.domain.model.LiveChannelOrderMode>
+        get() = kotlinx.coroutines.flow.flowOf(com.streamvault.domain.model.LiveChannelOrderMode.PROVIDER)
+
+    suspend fun setDefaultLiveChannelOrder(mode: com.streamvault.domain.model.LiveChannelOrderMode) {
+        throw UnsupportedOperationException("Live channel sorting is unavailable")
     }
 
     val isIncognitoMode: Flow<Boolean>
@@ -371,6 +381,11 @@ interface SettingsPreferences {
 
     suspend fun setAppTimeFormat(format: AppTimeFormat)
 
+    val appTextSize: Flow<AppTextSize>
+        get() = kotlinx.coroutines.flow.flowOf(AppTextSize())
+
+    suspend fun setAppTextSize(value: AppTextSize) {}
+
     val appTheme: Flow<AppTheme>
 
     suspend fun setAppTheme(theme: AppTheme)
@@ -437,6 +452,12 @@ interface SettingsPreferences {
 
     suspend fun setVodVariantPreferenceMode(mode: VodVariantPreferenceMode)
 
+    val movieFeaturedMode: Flow<String?> get() = kotlinx.coroutines.flow.flowOf(null)
+    val seriesFeaturedMode: Flow<String?> get() = kotlinx.coroutines.flow.flowOf(null)
+    suspend fun setVodFeaturedMode(series: Boolean, mode: String) {
+        throw UnsupportedOperationException("Featured preferences unavailable")
+    }
+
     val vodViewMode: Flow<String?>
 
     suspend fun setVodViewMode(mode: String)
@@ -499,6 +520,28 @@ interface SettingsPreferences {
     fun getCategorySortMode(providerId: Long, type: ContentType): Flow<CategorySortMode>
 
     suspend fun setCategorySortMode(providerId: Long, type: ContentType, mode: CategorySortMode)
+
+    fun getLiveCategoryOrder(providerId: Long): Flow<com.streamvault.domain.model.LiveCategoryOrder> =
+        getCategorySortMode(providerId, ContentType.LIVE).map { com.streamvault.domain.model.LiveCategoryOrder(sortMode = it) }
+
+    suspend fun saveLiveCategoryOrder(
+        providerId: Long, expectedRevision: Long, order: com.streamvault.domain.model.LiveCategoryOrder
+    ): com.streamvault.domain.model.SaveLiveCategoryOrderResult = throw UnsupportedOperationException()
+
+    /** Atomically saves the category order and pin membership under the same revision. */
+    suspend fun saveLiveCategoryOrderWithPins(
+        providerId: Long, expectedRevision: Long, order: com.streamvault.domain.model.LiveCategoryOrder
+    ): com.streamvault.domain.model.SaveLiveCategoryOrderResult = throw UnsupportedOperationException()
+
+    /** Combined category order is keyed by the profile's portable identity, never its local row id. */
+    fun getCombinedLiveCategoryOrder(profileIdentity: String): Flow<com.streamvault.domain.model.LiveCategoryOrder> =
+        kotlinx.coroutines.flow.flowOf(com.streamvault.domain.model.LiveCategoryOrder())
+
+    suspend fun saveCombinedLiveCategoryOrder(
+        profileIdentity: String,
+        expectedRevision: Long,
+        order: com.streamvault.domain.model.LiveCategoryOrder
+    ): com.streamvault.domain.model.SaveLiveCategoryOrderResult = throw UnsupportedOperationException()
 
     val multiViewCenterTwoSlotLayout: Flow<Boolean>
 

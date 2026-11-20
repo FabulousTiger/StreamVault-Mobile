@@ -295,4 +295,8 @@
     <string name="sync_battery_prompt_message">Ο συγχρονισμός μεγάλων καταλόγων μπορεί να διαρκέσει. Με ενεργή τη βελτιστοποίηση μπαταρίας, το Android μπορεί να τον σταματήσει στο παρασκήνιο ή όταν η οθόνη είναι κλειδωμένη. Επιτρέψτε απεριόριστη χρήση μπαταρίας για να ολοκληρωθεί. Στα τηλέφωνα Samsung, βεβαιωθείτε επίσης ότι η εφαρμογή δεν τίθεται σε αναστολή.</string>
     <string name="sync_battery_prompt_open">Άνοιγμα ρυθμίσεων μπαταρίας</string>
     <string name="sync_battery_prompt_dismiss">Όχι, ευχαριστώ</string>
+    <string name="stremio_new_episode_channel">Ειδοποιήσεις νέων επεισοδίων</string>
+    <string name="stremio_new_episode_count">Νέα επεισόδια: %1$d</string>
+    <string name="tv_channel_favorites_title">Αγαπημένα</string>
+    <string name="tv_channel_favorites_description">Τα αγαπημένα σας κανάλια, ταινίες και σειρές</string>
 </resources>

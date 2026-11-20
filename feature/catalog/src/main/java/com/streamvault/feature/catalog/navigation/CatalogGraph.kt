@@ -43,6 +43,7 @@ fun NavGraphBuilder.registerCatalogGraph(
     onPlayHistory: (PlaybackHistory, AppDestination) -> Unit,
     consumeMoviePresentationHint: (NavBackStackEntry) -> Unit,
     consumeSeriesPresentationHint: (NavBackStackEntry) -> Unit,
+    stremioContent: @androidx.compose.runtime.Composable () -> Boolean = { false },
     decodeDestination: (String) -> AppDestination? = ::decodeCatalogReturnDestination,
 ) {
     composable(CatalogRoutePatterns.HOME) {
@@ -78,6 +79,7 @@ fun NavGraphBuilder.registerCatalogGraph(
             onPlaybackHistoryClick = { history -> onPlayHistory(history, AppDestination.Home) },
             scaffold = scaffold,
             dashboardShelfCustomizationContent = dashboardShelfCustomizationContent,
+            stremioContent = stremioContent,
         )
     }
 
@@ -91,6 +93,7 @@ fun NavGraphBuilder.registerCatalogGraph(
 
     composable(CatalogRoutePatterns.SERIES) {
         SeriesScreen(
+            onFeaturedPlay = { history -> onPlayHistory(history, AppDestination.Series) },
             onSeriesClick = { series -> onOpenSeriesDetail(series, AppDestination.Series) },
             onSeriesIdClick = { seriesId ->
                 actions.navigate(
@@ -106,6 +109,7 @@ fun NavGraphBuilder.registerCatalogGraph(
         VodScreen(
             onMovieClick = { movie -> onOpenMovieDetail(movie, AppDestination.Vod) },
             onSeriesClick = { series -> onOpenSeriesDetail(series, AppDestination.Vod) },
+            onContinueWatchingPlay = { history -> onPlayHistory(history, AppDestination.Vod) },
             scaffold = scaffold,
         )
     }
@@ -169,6 +173,7 @@ fun NavGraphBuilder.registerCatalogGraph(
                 )
             },
             onBack = { actions.returnTo(returnDestination) },
+            onOpenSettings = { onTopLevelDestinationRequested(AppDestination.Settings(openTrakt = true)) },
             platformHost = platformHost,
         )
     }
@@ -198,6 +203,7 @@ fun NavGraphBuilder.registerCatalogGraph(
                 )
             },
             onBack = { actions.returnTo(returnDestination) },
+            onOpenSettings = { onTopLevelDestinationRequested(AppDestination.Settings(openTrakt = true)) },
             platformHost = platformHost,
         )
     }

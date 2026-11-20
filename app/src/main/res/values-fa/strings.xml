@@ -351,4 +351,8 @@
     <string name="sync_battery_prompt_message">همگام‌سازی فهرست‌های بزرگ ممکن است زمان‌بر باشد. وقتی بهینه‌سازی باتری روشن است، Android ممکن است همگام‌سازی را در پس‌زمینه یا هنگام قفل بودن صفحه متوقف کند. استفادهٔ نامحدود از باتری را مجاز کنید تا کامل شود. در گوشی‌های Samsung همچنین مطمئن شوید که برنامه به حالت خواب نمی‌رود.</string>
     <string name="sync_battery_prompt_open">باز کردن تنظیمات باتری</string>
     <string name="sync_battery_prompt_dismiss">نه، متشکرم</string>
+    <string name="stremio_new_episode_channel">اعلان قسمت‌های جدید</string>
+    <string name="stremio_new_episode_count">قسمت‌های جدید: %1$d</string>
+    <string name="tv_channel_favorites_title">موردعلاقه‌ها</string>
+    <string name="tv_channel_favorites_description">کانال‌ها، فیلم‌ها و سریال‌های موردعلاقهٔ شما</string>
 </resources>

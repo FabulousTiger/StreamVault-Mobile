@@ -297,4 +297,8 @@
     <string name="sync_battery_prompt_message">قد تستغرق مزامنة الكتالوجات الكبيرة بعض الوقت. عند تفعيل تحسين البطارية، قد يوقف Android المزامنة في الخلفية أو عند قفل الشاشة. اسمح باستخدام البطارية بلا قيود حتى تكتمل. على هواتف Samsung، تأكد أيضًا من عدم وضع التطبيق في وضع السكون.</string>
     <string name="sync_battery_prompt_open">فتح إعدادات البطارية</string>
     <string name="sync_battery_prompt_dismiss">لا، شكرًا</string>
+    <string name="stremio_new_episode_channel">إشعارات الحلقات الجديدة</string>
+    <string name="stremio_new_episode_count">الحلقات الجديدة: %1$d</string>
+    <string name="tv_channel_favorites_title">المفضلة</string>
+    <string name="tv_channel_favorites_description">قنواتك وأفلامك ومسلسلاتك المفضلة</string>
 </resources>
