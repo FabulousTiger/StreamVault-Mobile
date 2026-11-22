@@ -44,7 +44,8 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
     private val preferencesRepository: PreferencesRepository,
     private val movieDao: MovieDao,
     private val episodeDao: EpisodeDao,
-    private val transactionRunner: DatabaseTransactionRunner
+    private val transactionRunner: DatabaseTransactionRunner,
+    private val liveWatchUsageRepository: com.streamvault.domain.repository.LiveWatchUsageRepository? = null
 ) : PlaybackHistoryRepository {
     private val repositoryScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val pendingResumeUpdates = ConcurrentHashMap<PlaybackKey, PlaybackHistory>()
@@ -53,6 +54,15 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
     private val isIncognito: StateFlow<Boolean> =
         preferencesRepository.isIncognitoMode
             .stateIn(repositoryScope, SharingStarted.Eagerly, false)
+    private val liveUsageRecorder = liveWatchUsageRepository?.let {
+        LiveUsageRecorder(it, isIncognito, preferencesRepository.isIncognitoMode, repositoryScope) {
+            Log.w(TAG, "Live watch-time persistence failed")
+        }
+    }
+
+    override fun sampleLiveUsage(sample: com.streamvault.domain.model.LiveWatchSample) {
+        liveUsageRecorder?.sample(sample)
+    }
 
     init {
         repositoryScope.launch {
@@ -111,6 +121,16 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
             providerId = providerId,
             seriesId = seriesId,
             completionThreshold = DEFAULT_PLAYBACK_COMPLETION_THRESHOLD
+        )
+    }
+
+    override suspend fun getLatestEpisodeHistoryForSeries(providerId: Long, seriesId: Long): PlaybackHistory? {
+        val persisted = dao.getLatestEpisodeHistoryForSeries(providerId, seriesId)?.toDomain()
+        val pending = pendingResumeUpdates.values.filter {
+            it.providerId == providerId && it.seriesId == seriesId && it.contentType == ContentType.SERIES_EPISODE
+        }
+        return (pending + listOfNotNull(persisted)).maxWithOrNull(
+            compareBy<PlaybackHistory> { it.lastWatchedAt }.thenBy { it.contentId }
         )
     }
 
@@ -281,6 +301,7 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
 
     override suspend fun removeFromHistory(contentId: Long, contentType: ContentType, providerId: Long): Result<Unit> = try {
         pendingProgressMutex.withLock {
+            if (contentType == ContentType.LIVE) liveUsageRecorder?.clearContent(providerId, contentId)
             pendingResumeUpdates.remove(PlaybackKey(contentId, contentType, providerId))
             transactionRunner.inTransaction {
                 dao.delete(contentId, contentType.name, providerId)
@@ -297,6 +318,7 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
 
     override suspend fun clearAllHistory(): Result<Unit> = try {
         pendingProgressMutex.withLock {
+            liveUsageRecorder?.clearAll()
             pendingResumeUpdates.clear()
             transactionRunner.inTransaction {
                 dao.deleteAll()
@@ -314,6 +336,7 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
 
     override suspend fun clearHistoryForProvider(providerId: Long): Result<Unit> = try {
         pendingProgressMutex.withLock {
+            liveUsageRecorder?.clearProvider(providerId)
             pendingResumeUpdates.keys.removeIf { it.providerId == providerId }
             transactionRunner.inTransaction {
                 dao.deleteByProvider(providerId)
@@ -330,6 +353,7 @@ class PlaybackHistoryRepositoryImpl @Inject constructor(
 
     override suspend fun clearLiveHistoryForProvider(providerId: Long): Result<Unit> = try {
         pendingProgressMutex.withLock {
+            liveUsageRecorder?.clearProvider(providerId)
             pendingResumeUpdates.keys.removeIf { it.providerId == providerId && it.contentType == ContentType.LIVE }
             dao.deleteByProviderAndType(providerId, ContentType.LIVE.name)
             publishPendingResumeUpdates()

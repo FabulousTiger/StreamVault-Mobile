@@ -12,4 +12,5 @@
     <string name="sync_fg_progress_total">%1$s：%2$s / %3$s</string>
     <string name="sync_fg_section_working">%1$s: 更新中…</string>
     <string name="sync_fg_cancel">キャンセル</string>
+    <string name="backup_live_order_restore_issue">ライブTVの並び順設定の一部を復元できませんでした。</string>
 </resources>

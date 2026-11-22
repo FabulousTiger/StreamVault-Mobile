@@ -295,4 +295,8 @@
     <string name="sync_battery_prompt_message">A nagy katalógusok szinkronizálása eltarthat egy ideig. Bekapcsolt akkumulátor-optimalizálás mellett az Android leállíthatja a szinkronizálást a háttérben vagy zárolt képernyőnél. Engedélyezze a korlátlan akkumulátorhasználatot, hogy befejeződhessen. Samsung telefonokon arról is gondoskodjon, hogy az alkalmazás ne kerüljön alvó állapotba.</string>
     <string name="sync_battery_prompt_open">Akkumulátorbeállítások megnyitása</string>
     <string name="sync_battery_prompt_dismiss">Nem, köszönöm</string>
+    <string name="stremio_new_episode_channel">Értesítések új epizódokról</string>
+    <string name="stremio_new_episode_count">Új epizódok: %1$d</string>
+    <string name="tv_channel_favorites_title">Kedvencek</string>
+    <string name="tv_channel_favorites_description">Kedvenc csatornáid, filmjeid és sorozataid</string>
 </resources>

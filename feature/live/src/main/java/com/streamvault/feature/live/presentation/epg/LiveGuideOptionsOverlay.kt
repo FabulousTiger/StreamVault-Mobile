@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
+import com.streamvault.core.ui.components.dialogs.AppDialog as Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.tv.material3.MaterialTheme
 import androidx.tv.material3.Surface
@@ -34,7 +34,6 @@ data class LiveGuideOptionsLabels(
     val title: String,
     val showAppNavigation: String,
     val cancel: String,
-    val manageEpgMatch: String,
     val refreshGuide: String
 )
 
@@ -104,8 +103,7 @@ fun LiveGuideOptionsOverlay(
     onDensitySelected: (GuideDensity) -> Unit,
     onToggleScheduledOnly: () -> Unit,
     onToggleFavoritesOnly: () -> Unit,
-    onRefresh: () -> Unit,
-    onManageEpgMatch: (() -> Unit)? = null
+    onRefresh: () -> Unit
 ) {
     val optionsFocusRequester = remember { FocusRequester() }
     LaunchedEffect(Unit) {
@@ -196,12 +194,6 @@ fun LiveGuideOptionsOverlay(
                         .padding(horizontal = 24.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
                 ) {
-                    if (onManageEpgMatch != null) {
-                        LiveGuideShortcutChip(
-                            label = labels.manageEpgMatch,
-                            onClick = onManageEpgMatch
-                        )
-                    }
                     LiveGuideShortcutChip(
                         label = labels.refreshGuide,
                         onClick = onRefresh

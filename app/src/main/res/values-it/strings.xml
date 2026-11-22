@@ -295,4 +295,8 @@
     <string name="sync_battery_prompt_message">La sincronizzazione dei cataloghi grandi può richiedere tempo. Con l\'ottimizzazione della batteria attiva, Android può interromperla in background o a schermo bloccato. Consenti l\'uso illimitato della batteria per completarla. Sui telefoni Samsung, assicurati anche che l\'app non venga messa in sospensione.</string>
     <string name="sync_battery_prompt_open">Apri impostazioni batteria</string>
     <string name="sync_battery_prompt_dismiss">No, grazie</string>
+    <string name="stremio_new_episode_channel">Notifiche nuovi episodi</string>
+    <string name="stremio_new_episode_count">Nuovi episodi: %1$d</string>
+    <string name="tv_channel_favorites_title">Preferiti</string>
+    <string name="tv_channel_favorites_description">I tuoi canali, film e serie preferiti</string>
 </resources>

@@ -3,6 +3,8 @@ package com.streamvault.core.navigation
 import java.io.Serializable
 
 sealed interface ExternalNavigationRequest : Serializable {
+    data class Item(val link: ExternalItemLink) : ExternalNavigationRequest
+    data class StremioItem(val route: String) : ExternalNavigationRequest
     data class Search(val query: String) : ExternalNavigationRequest
     data class Player(val request: PlayerNavigationRequest) : ExternalNavigationRequest
     data class Destination(val destination: AppDestination) : ExternalNavigationRequest
@@ -23,6 +25,8 @@ sealed interface NavigationCommand : Serializable {
         val destination: AppDestination,
         val options: NavigationOptions = NavigationOptions()
     ) : NavigationCommand
+
+    data class StremioItem(val route: String) : NavigationCommand
 
     data class OpenPlayer(val request: PlayerNavigationRequest) : NavigationCommand
 

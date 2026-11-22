@@ -12,4 +12,5 @@
     <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
     <string name="sync_fg_section_working">%1$s: päivitetään…</string>
     <string name="sync_fg_cancel">Peruuta</string>
+    <string name="backup_live_order_restore_issue">Joidenkin suoran TV:n järjestysasetusten palauttaminen epäonnistui.</string>
 </resources>

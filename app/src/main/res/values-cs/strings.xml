@@ -295,4 +295,8 @@
     <string name="sync_battery_prompt_message">Synchronizace velkých katalogů může chvíli trvat. Se zapnutou optimalizací baterie ji Android může na pozadí nebo při zamčené obrazovce zastavit. Povolte neomezené využití baterie, aby se mohla dokončit. Na telefonech Samsung také zkontrolujte, že aplikace není uspávána.</string>
     <string name="sync_battery_prompt_open">Otevřít nastavení baterie</string>
     <string name="sync_battery_prompt_dismiss">Ne, díky</string>
+    <string name="stremio_new_episode_channel">Oznámení o nových dílech</string>
+    <string name="stremio_new_episode_count">Nové díly: %1$d</string>
+    <string name="tv_channel_favorites_title">Oblíbené</string>
+    <string name="tv_channel_favorites_description">Vaše oblíbené kanály, filmy a seriály</string>
 </resources>

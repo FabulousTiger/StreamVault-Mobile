@@ -295,4 +295,8 @@
     <string name="sync_battery_prompt_message">Sinkronisasi katalog besar bisa memakan waktu. Saat pengoptimalan baterai aktif, Android dapat menghentikan sinkronisasi di latar belakang atau saat layar terkunci. Izinkan penggunaan baterai tanpa batasan agar sinkronisasi selesai. Di ponsel Samsung, pastikan juga aplikasi tidak ditidurkan.</string>
     <string name="sync_battery_prompt_open">Buka setelan baterai</string>
     <string name="sync_battery_prompt_dismiss">Tidak, terima kasih</string>
+    <string name="stremio_new_episode_channel">Notifikasi episode baru</string>
+    <string name="stremio_new_episode_count">Episode baru: %1$d</string>
+    <string name="tv_channel_favorites_title">Favorit</string>
+    <string name="tv_channel_favorites_description">Saluran, film, dan serial favorit Anda</string>
 </resources>

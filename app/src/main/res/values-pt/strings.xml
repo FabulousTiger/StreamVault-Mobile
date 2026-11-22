@@ -295,4 +295,8 @@
     <string name="sync_battery_prompt_message">Catálogos grandes podem levar algum tempo para sincronizar. Com a otimização de bateria ativada, o Android pode interromper a sincronização em segundo plano ou com a tela bloqueada. Permita o uso irrestrito da bateria para que ela termine. Em celulares Samsung, verifique também se o app não está sendo colocado em suspensão.</string>
     <string name="sync_battery_prompt_open">Abrir configurações de bateria</string>
     <string name="sync_battery_prompt_dismiss">Não, obrigado</string>
+    <string name="stremio_new_episode_channel">Notificações de novos episódios</string>
+    <string name="stremio_new_episode_count">Novos episódios: %1$d</string>
+    <string name="tv_channel_favorites_title">Favoritos</string>
+    <string name="tv_channel_favorites_description">Os seus canais, filmes e séries favoritos</string>
 </resources>

@@ -2,6 +2,8 @@ package com.streamvault.core.ui.components
 
 import com.streamvault.core.ui.input.requiresInputActivation
 import com.streamvault.core.ui.input.withExternalText
+import com.streamvault.core.ui.design.BrowseFocusSpec
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -151,9 +153,7 @@ fun SearchInput(
     val modern = LocalBrowseVisuals.current
     val palette = if (modern) BrowseColors.current else AppColors.current
     val searchShape = if (modern) BrowseShapes.Control else RoundedCornerShape(12.dp)
-    val borderColor = if (isFocused) palette.focus else if (modern) palette.outline else OnSurfaceDim.copy(alpha = 0.5f)
-    val backgroundColor = if (isFocused) palette.surfaceEmphasis else palette.surfaceElevated
-    val borderWidth = if (isFocused) 2.dp else 1.dp
+    val interactionSource = remember { MutableInteractionSource() }
 
     Box(
         modifier = modifier
@@ -161,8 +161,12 @@ fun SearchInput(
             .heightIn(min = 56.dp)
             .focusRequester(focusRequester)
             .bringIntoViewRequester(bringIntoViewRequester)
-            .background(backgroundColor, searchShape)
-            .border(borderWidth, borderColor, searchShape)
+            .background(palette.controlContainer, searchShape)
+            // Rest state is a filled container with no stroke; the ring is the focus state only.
+            .then(
+                if (isFocused) Modifier.border(BrowseFocusSpec.SelectableRingWidth, palette.focus, searchShape)
+                else Modifier
+            )
             .semantics(mergeDescendants = true) {
                 contentDescription = placeholder
                 stateDescription = value.ifBlank { placeholder }
@@ -176,7 +180,11 @@ fun SearchInput(
             .mouseClickable(enabled = enabled, focusRequester = focusRequester) {
                 activateInput()
             }
-            .clickable(enabled = enabled) {
+            .clickable(
+                enabled = enabled,
+                interactionSource = interactionSource,
+                indication = null
+            ) {
                 activateInput()
             }
             .focusable(enabled = enabled)
@@ -185,7 +193,7 @@ fun SearchInput(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Box(modifier = Modifier.weight(1f)) {
-                if (value.isEmpty() && !isFocused) {
+                if (value.isEmpty()) {
                     Text(
                         text = placeholder,
                         style = MaterialTheme.typography.bodySmall,
@@ -208,10 +216,6 @@ fun SearchInput(
                         .focusRequester(inputFocusRequester)
                         .focusProperties {
                             canFocus = enabled && acceptsInput
-                            if (isTelevisionDevice && acceptsInput) {
-                                left = FocusRequester.Cancel
-                                right = FocusRequester.Cancel
-                            }
                         }
                         .onFocusChanged {
                             hasInputFocus = enabled && it.hasFocus
@@ -223,22 +227,14 @@ fun SearchInput(
                             }
                         }
                         .onPreviewKeyEvent { event ->
-                            if (!isTelevisionDevice || !acceptsInput || event.nativeKeyEvent.action != android.view.KeyEvent.ACTION_DOWN) {
+                            if (!isTelevisionDevice || !acceptsInput) {
                                 return@onPreviewKeyEvent false
                             }
-                            val cursor = textFieldValue.selection.end
-                            when (event.nativeKeyEvent.keyCode) {
-                                android.view.KeyEvent.KEYCODE_DPAD_LEFT -> {
-                                    val nextCursor = (cursor - 1).coerceAtLeast(0)
-                                    textFieldValue = textFieldValue.copy(selection = TextRange(nextCursor))
-                                    true
-                                }
-                                android.view.KeyEvent.KEYCODE_DPAD_RIGHT -> {
-                                    val nextCursor = (cursor + 1).coerceAtMost(textFieldValue.text.length)
-                                    textFieldValue = textFieldValue.copy(selection = TextRange(nextCursor))
-                                    true
-                                }
-                                else -> false
+                            handleTvSearchKey(event, textFieldValue, { textFieldValue = it },
+                                focusManager::moveFocus) {
+                                pendingInputActivation = false
+                                acceptsInput = false
+                                keyboardController?.hide()
                             }
                         },
                     textStyle = MaterialTheme.typography.bodySmall.copy(color = OnSurface),

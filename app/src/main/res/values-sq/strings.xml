@@ -348,4 +348,8 @@
     <string name="sync_battery_prompt_message">Sinkronizimi i katalogëve të mëdhenj mund të zgjasë. Me optimizimin e baterisë të aktivizuar, Android mund ta ndalojë sinkronizimin në sfond ose kur ekrani është i kyçur. Lejo përdorimin e pakufizuar të baterisë që të përfundojë. Në telefonat Samsung, sigurohu gjithashtu që aplikacioni të mos vihet në gjumë.</string>
     <string name="sync_battery_prompt_open">Hap cilësimet e baterisë</string>
     <string name="sync_battery_prompt_dismiss">Jo, faleminderit</string>
+    <string name="stremio_new_episode_channel">Njoftime për episode të reja</string>
+    <string name="stremio_new_episode_count">Episode të reja: %1$d</string>
+    <string name="tv_channel_favorites_title">Të preferuarat</string>
+    <string name="tv_channel_favorites_description">Kanalet, filmat dhe serialet tuaja të preferuara</string>
 </resources>

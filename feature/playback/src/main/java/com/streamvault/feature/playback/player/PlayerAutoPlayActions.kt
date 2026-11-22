@@ -3,6 +3,7 @@ package com.streamvault.feature.playback.player
 import androidx.lifecycle.viewModelScope
 import com.streamvault.domain.model.ContentType
 import com.streamvault.domain.model.Episode
+import com.streamvault.player.PlaybackState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -42,15 +43,25 @@ internal fun PlayerViewModel.handlePlaybackEnded() {
     val requestVersion = prepareRequestVersion
     playbackSessionScope(requestVersion)?.launch {
         persistPlaybackCompletion()
+        if (currentStremioPlaybackReference != null && autoPlayNextEpisodeEnabled) {
+            try {
+                if (tryNextStremioEpisode()) return@launch
+            } catch (cancel: kotlinx.coroutines.CancellationException) { throw cancel
+            } catch (_: Exception) {}
+        }
         if (currentContentType == ContentType.SERIES_EPISODE) {
             val position = playerEngine.currentPosition.value
             val duration = playerEngine.duration.value
             if (position > AUTO_PLAY_MIN_WATCHED_MS || duration > 0L) {
-                val next = nextEpisode.value ?: return@launch
-                if (autoPlayNextEpisodeEnabled && !creditsAutoPlayTriggeredForSession) {
+                val next = nextEpisode.value
+                if (next != null && autoPlayNextEpisodeEnabled && !creditsAutoPlayTriggeredForSession) {
                     startAutoPlayCountdown(next)
                 }
             }
+        }
+        if (autoPlayCountdownJob?.isActive == true) return@launch
+        if (requestVersion == prepareRequestVersion && playerEngine.playbackState.value == PlaybackState.ENDED) {
+            _playbackCompleted.value = true
         }
     }
 }

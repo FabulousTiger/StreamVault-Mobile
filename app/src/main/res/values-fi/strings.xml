@@ -295,4 +295,8 @@
     <string name="sync_battery_prompt_message">Suurten luetteloiden synkronointi voi kestää. Kun akun optimointi on käytössä, Android voi pysäyttää synkronoinnin taustalla tai näytön ollessa lukittuna. Salli rajoittamaton akun käyttö, jotta synkronointi valmistuu. Varmista Samsung-puhelimissa myös, ettei sovellusta aseteta lepotilaan.</string>
     <string name="sync_battery_prompt_open">Avaa akkuasetukset</string>
     <string name="sync_battery_prompt_dismiss">Ei kiitos</string>
+    <string name="stremio_new_episode_channel">Uusien jaksojen ilmoitukset</string>
+    <string name="stremio_new_episode_count">Uudet jaksot: %1$d</string>
+    <string name="tv_channel_favorites_title">Suosikit</string>
+    <string name="tv_channel_favorites_description">Suosikkikanavasi, -elokuvasi ja -sarjasi</string>
 </resources>

@@ -12,8 +12,9 @@ data class AutomaticSyncSettings(
     val movies: Boolean = true,
     val series: Boolean = true,
     val epg: Boolean = true,
-    val deferWhileBusy: Boolean = true,
+    val deferWhileBusy: Boolean = false,
     val unmeteredOnly: Boolean = false,
+    val vpnOnly: Boolean = true,
     val chargingOnly: Boolean = false,
     val deviceIdleOnly: Boolean = false,
     val windowStartHour: Int = 0,
@@ -75,7 +76,7 @@ object ProviderRefreshPlanner {
     }
 }
 
-enum class AutomaticSyncOutcome { UP_TO_DATE, WAITING_NETWORK, WAITING_CHARGING, WAITING_IDLE, WAITING_PLAYBACK, WAITING_WINDOW, DISABLED, RUNNING, QUEUED, REFRESHED, PARTIAL, FAILED }
+enum class AutomaticSyncOutcome { UP_TO_DATE, WAITING_NETWORK, WAITING_VPN, WAITING_CHARGING, WAITING_IDLE, WAITING_PLAYBACK, WAITING_WINDOW, DISABLED, RUNNING, QUEUED, REFRESHED, PARTIAL, FAILED }
 
 data class AutomaticSyncStatus(
     val checkedAt: Long = 0,

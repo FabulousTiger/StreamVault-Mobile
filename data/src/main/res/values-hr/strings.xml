@@ -12,4 +12,5 @@
     <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
     <string name="sync_fg_section_working">%1$s: ažuriranje…</string>
     <string name="sync_fg_cancel">Odustani</string>
+    <string name="backup_live_order_restore_issue">Neke postavke redoslijeda TV kanala uživo nije bilo moguće vratiti.</string>
 </resources>

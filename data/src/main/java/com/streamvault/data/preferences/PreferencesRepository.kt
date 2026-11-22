@@ -1,5 +1,6 @@
 package com.streamvault.data.preferences
 
+import com.streamvault.domain.model.AppTextSize
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Build
@@ -445,6 +446,7 @@ class PreferencesRepository @Inject constructor(
         val APP_TOP_LEVEL_DESTINATIONS = stringPreferencesKey("app_top_level_destinations")
         val APP_HOME_DASHBOARD_SHELVES = stringPreferencesKey("app_home_dashboard_shelves")
         val APP_TIME_FORMAT = stringPreferencesKey("app_time_format")
+        val APP_TEXT_SIZE = stringPreferencesKey("app_text_size")
         val APP_THEME = stringPreferencesKey("app_theme")
         val SPORTS_EVENT_SOURCE_MODE = stringPreferencesKey("sports_event_source_mode")
         val SPORTS_EVENT_SOURCE_INSTANCE_ID = stringPreferencesKey("sports_event_source_instance_id")
@@ -898,7 +900,7 @@ class PreferencesRepository @Inject constructor(
     }
 
     override val playerLiveOverlayTimeoutSeconds: Flow<Int> = context.dataStore.data.map { preferences ->
-        (preferences[PreferencesKeys.PLAYER_LIVE_OVERLAY_TIMEOUT_SECONDS] ?: 4).coerceIn(2, 60)
+        (preferences[PreferencesKeys.PLAYER_LIVE_OVERLAY_TIMEOUT_SECONDS] ?: 6).coerceIn(2, 60)
     }
 
     override val playerLiveClockEnabled: Flow<Boolean> = context.dataStore.data.map { preferences ->
@@ -2163,6 +2165,14 @@ class PreferencesRepository @Inject constructor(
         }
     }
 
+    override val appTextSize: Flow<AppTextSize> = context.dataStore.data.map {
+        AppTextSize.fromStorage(it[PreferencesKeys.APP_TEXT_SIZE])
+    }
+
+    override suspend fun setAppTextSize(value: AppTextSize) {
+        context.dataStore.edit { it[PreferencesKeys.APP_TEXT_SIZE] = value.toStorage() }
+    }
+
     override val appTheme: Flow<AppTheme> = context.dataStore.data.map { preferences ->
         parseAppThemePreference(preferences[PreferencesKeys.APP_THEME]?.trim())
     }
@@ -2447,6 +2457,20 @@ class PreferencesRepository @Inject constructor(
             val updated = decodeVodVariantObservations(preferences[PreferencesKeys.VOD_VARIANT_OBSERVATIONS]).toMutableMap()
             updated[rawItemId] = observation
             preferences[PreferencesKeys.VOD_VARIANT_OBSERVATIONS] = encodeVodVariantObservations(updated)
+        }
+    }
+
+    override val movieFeaturedMode: Flow<String?> = context.dataStore.data.map {
+        it[androidx.datastore.preferences.core.stringPreferencesKey("movie_featured_mode")]
+    }
+    override val seriesFeaturedMode: Flow<String?> = context.dataStore.data.map {
+        it[androidx.datastore.preferences.core.stringPreferencesKey("series_featured_mode")]
+    }
+    override suspend fun setVodFeaturedMode(series: Boolean, mode: String) {
+        context.dataStore.edit {
+            it[androidx.datastore.preferences.core.stringPreferencesKey(
+                if (series) "series_featured_mode" else "movie_featured_mode"
+            )] = mode
         }
     }
 
@@ -2879,6 +2903,7 @@ class PreferencesRepository @Inject constructor(
                 ?.mapNotNull { token -> token.toLongOrNull() }
                 ?.toMutableSet()
                 ?: mutableSetOf()
+            if (type == ContentType.LIVE && (categoryId in current) != pinned) LiveCategoryOrderStore.bumpRevision(preferences, providerId)
             if (pinned) {
                 current += categoryId
             } else {
@@ -2945,6 +2970,7 @@ class PreferencesRepository @Inject constructor(
     ) {
         val key = stringPreferencesKey(pinnedCategoriesKey(providerId, type))
         context.dataStore.edit { preferences ->
+            if (type == ContentType.LIVE) LiveCategoryOrderStore.bumpRevision(preferences, providerId)
             if (categoryIds.isEmpty()) {
                 preferences.remove(key)
             } else {
@@ -2952,6 +2978,43 @@ class PreferencesRepository @Inject constructor(
             }
         }
     }
+
+    private val liveCategoryOrderStore by lazy { LiveCategoryOrderStore(preferencesDataStore) }
+
+    internal suspend fun prepareDuplicateCombinedIdentityMigration(oldIdentity: String, profileId: Long): String =
+        liveCategoryOrderStore.prepareDuplicateCombinedIdentityMigration(oldIdentity, profileId)
+
+    internal suspend fun prepareCombinedIdentityMigration(oldIdentity: String): String =
+        liveCategoryOrderStore.prepareCombinedIdentityMigration(oldIdentity)
+
+    override val defaultLiveChannelOrder: Flow<com.streamvault.domain.model.LiveChannelOrderMode> =
+        preferencesDataStore.data.map { values ->
+            val mode = runCatching { com.streamvault.domain.model.LiveChannelOrderMode.valueOf(
+                values[stringPreferencesKey("default_live_channel_order")] ?: "PROVIDER") }.getOrNull()
+            mode?.takeIf { it in com.streamvault.domain.policy.liveChannelPresetModes }
+                ?: com.streamvault.domain.model.LiveChannelOrderMode.PROVIDER
+        }.distinctUntilChanged()
+
+    override suspend fun setDefaultLiveChannelOrder(mode: com.streamvault.domain.model.LiveChannelOrderMode) {
+        require(mode in com.streamvault.domain.policy.liveChannelPresetModes)
+        preferencesDataStore.edit { it[stringPreferencesKey("default_live_channel_order")] = mode.name }
+    }
+
+    override fun getLiveCategoryOrder(providerId: Long) = liveCategoryOrderStore.observe(providerId)
+
+    override suspend fun saveLiveCategoryOrder(providerId: Long, expectedRevision: Long, order: com.streamvault.domain.model.LiveCategoryOrder) =
+        liveCategoryOrderStore.save(providerId, expectedRevision, order)
+
+    override suspend fun saveLiveCategoryOrderWithPins(providerId: Long, expectedRevision: Long, order: com.streamvault.domain.model.LiveCategoryOrder) =
+        liveCategoryOrderStore.save(providerId, expectedRevision, order, includePins = true)
+
+    override fun getCombinedLiveCategoryOrder(profileIdentity: String) = liveCategoryOrderStore.observeCombined(profileIdentity)
+
+    override suspend fun saveCombinedLiveCategoryOrder(
+        profileIdentity: String,
+        expectedRevision: Long,
+        order: com.streamvault.domain.model.LiveCategoryOrder
+    ) = liveCategoryOrderStore.saveCombined(profileIdentity, expectedRevision, order)
 
     override fun getCategorySortMode(providerId: Long, type: ContentType): Flow<CategorySortMode> {
         val key = stringPreferencesKey(categorySortModeKey(providerId, type))
@@ -2965,6 +3028,7 @@ class PreferencesRepository @Inject constructor(
     override suspend fun setCategorySortMode(providerId: Long, type: ContentType, mode: CategorySortMode) {
         val key = stringPreferencesKey(categorySortModeKey(providerId, type))
         context.dataStore.edit { preferences ->
+            if (type == ContentType.LIVE && preferences[key] != mode.name) LiveCategoryOrderStore.bumpRevision(preferences, providerId)
             preferences[key] = mode.name
         }
     }

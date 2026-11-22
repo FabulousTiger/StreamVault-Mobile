@@ -348,4 +348,8 @@
     <string name="sync_battery_prompt_message">Maaaring matagalan ang pag-sync ng malalaking katalogo. Kapag naka-on ang battery optimization, puwedeng ihinto ng Android ang pag-sync sa background o kapag naka-lock ang screen. Payagan ang walang limitasyong paggamit ng baterya para matapos ito. Sa mga Samsung phone, tiyakin ding hindi pinapatulog ang app.</string>
     <string name="sync_battery_prompt_open">Buksan ang mga setting ng baterya</string>
     <string name="sync_battery_prompt_dismiss">Huwag na lang</string>
+    <string name="stremio_new_episode_channel">Mga abiso para sa bagong episode</string>
+    <string name="stremio_new_episode_count">Mga bagong episode: %1$d</string>
+    <string name="tv_channel_favorites_title">Mga Paborito</string>
+    <string name="tv_channel_favorites_description">Mga paborito mong channel, pelikula, at serye</string>
 </resources>

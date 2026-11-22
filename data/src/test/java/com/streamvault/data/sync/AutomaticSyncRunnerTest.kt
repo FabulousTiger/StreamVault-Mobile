@@ -3,6 +3,7 @@ package com.streamvault.data.sync
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
+import android.net.NetworkCapabilities
 import com.google.common.truth.Truth.assertThat
 import com.streamvault.data.local.dao.RecordingRunDao
 import com.streamvault.data.local.dao.XtreamIndexJobDao
@@ -36,11 +37,40 @@ class AutomaticSyncRunnerTest {
     @Before fun setup() = runTest {
         whenever(context.getSystemService(ConnectivityManager::class.java)).thenReturn(network)
         whenever(network.activeNetwork).thenReturn(mock<Network>())
+        vpnActive(true)
         whenever(preferences.automaticSyncConfiguration).thenReturn(flowOf(AutomaticSyncConfiguration()))
         whenever(recordings.getByStatus(RecordingStatus.RECORDING)).thenReturn(emptyList())
         whenever(metadata.getMetadata(7L)).thenReturn(fresh)
         whenever(commands.refreshScheduledSection(any(), any())).thenReturn(Result.success(ProviderSectionSyncResult(catalogChanged = true)))
         whenever(commands.refreshScheduledPlaylist(any(), any(), any())).thenReturn(Result.success(ProviderSectionSyncResult(catalogChanged = true)))
+    }
+
+    private fun vpnActive(active: Boolean) {
+        val vpn = mock<Network>()
+        val caps = mock<NetworkCapabilities>()
+        whenever(caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN)).thenReturn(active)
+        whenever(caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)).thenReturn(true)
+        whenever(network.allNetworks).thenReturn(arrayOf(vpn))
+        whenever(network.getNetworkCapabilities(vpn)).thenReturn(caps)
+    }
+
+    @Test fun `scan waits while no VPN is active`() = runTest {
+        vpnActive(false)
+        assertThat(runner.waitingReason(7L)).isEqualTo(AutomaticSyncOutcome.WAITING_VPN)
+    }
+
+    @Test fun `no waiting reason while a VPN is active`() = runTest {
+        vpnActive(true)
+        assertThat(runner.waitingReason(7L)).isNull()
+    }
+
+    @Test fun `scan runs without a VPN when vpnOnly is off`() = runTest {
+        snapshot(M3uConfig("https://example.test/list"))
+        whenever(metadata.getMetadata(7L)).thenReturn(null)
+        whenever(preferences.automaticSyncConfiguration).thenReturn(flowOf(AutomaticSyncConfiguration(AutomaticSyncSettings(vpnOnly = false))))
+        vpnActive(false)
+        runner.check(7L)
+        verify(commands).refreshScheduledPlaylist(any(), any(), any())
     }
 
     private suspend fun snapshot(config: ProviderConfiguration, active: Boolean = false) {
@@ -53,6 +83,26 @@ class AutomaticSyncRunnerTest {
         assertThat(runner.check(7L)).isInstanceOf(Result.Success::class.java)
         verify(commands).refreshScheduledPlaylist(7L, true, true)
         verify(commands, never()).refreshScheduledSection(any(), any())
+    }
+
+    @Test fun `completed scheduled live refresh reconciles ordering`() = runTest {
+        val providers: com.streamvault.domain.repository.ProviderRepository = mock()
+        val runner = AutomaticSyncRunner(context, preferences, snapshots, metadata, commands, xtream, stalker, recordings, providers)
+        snapshot(M3uConfig("https://example.test/list"))
+        whenever(metadata.getMetadata(7L)).thenReturn(fresh.copy(lastLiveSuccess = 0, lastMovieSuccess = 0))
+        runner.check(7L)
+        verify(providers).reconcileLiveOrderingAfterRefresh(7L)
+    }
+
+    @Test fun `partial scheduled live refresh does not reconcile ordering`() = runTest {
+        val providers: com.streamvault.domain.repository.ProviderRepository = mock()
+        val runner = AutomaticSyncRunner(context, preferences, snapshots, metadata, commands, xtream, stalker, recordings, providers)
+        snapshot(M3uConfig("https://example.test/list"))
+        whenever(metadata.getMetadata(7L)).thenReturn(fresh.copy(lastLiveSuccess = 0, lastMovieSuccess = 0))
+        whenever(commands.refreshScheduledPlaylist(any(), any(), any())).thenReturn(
+            Result.success(ProviderSectionSyncResult(partial = true, catalogChanged = true)))
+        runner.check(7L)
+        verify(providers, never()).reconcileLiveOrderingAfterRefresh(any())
     }
 
     @Test fun `fresh Jellyfin performs no catalog fetch`() = runTest {
@@ -112,6 +162,7 @@ class AutomaticSyncRunnerTest {
 
     @Test fun `playback defers all automatic provider requests`() = runTest {
         snapshot(M3uConfig("https://example.test/list"))
+        whenever(preferences.automaticSyncConfiguration).thenReturn(flowOf(AutomaticSyncConfiguration(AutomaticSyncSettings(deferWhileBusy = true))))
         whenever(metadata.getMetadata(7L)).thenReturn(null)
         val player = Any()
         try {
@@ -119,6 +170,17 @@ class AutomaticSyncRunnerTest {
             runner.check(7L)
             verify(commands, never()).refreshScheduledPlaylist(any(), any(), any())
             verify(preferences).recordAutomaticSyncStatus(eq(7L), argThat { outcome == AutomaticSyncOutcome.WAITING_PLAYBACK })
+        } finally { AutomaticSyncActivity.stopped(player) }
+    }
+
+    @Test fun `default automatic sync runs during playback`() = runTest {
+        snapshot(M3uConfig("https://example.test/list"))
+        whenever(metadata.getMetadata(7L)).thenReturn(null)
+        val player = Any()
+        try {
+            AutomaticSyncActivity.started(player)
+            runner.check(7L)
+            verify(commands).refreshScheduledPlaylist(7L, true, true)
         } finally { AutomaticSyncActivity.stopped(player) }
     }
 

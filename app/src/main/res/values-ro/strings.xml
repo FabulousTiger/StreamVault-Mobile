@@ -295,4 +295,8 @@
     <string name="sync_battery_prompt_message">Sincronizarea cataloagelor mari poate dura. Cu optimizarea bateriei activată, Android poate opri sincronizarea în fundal sau când ecranul este blocat. Permite utilizarea nerestricționată a bateriei pentru ca aceasta să se termine. Pe telefoanele Samsung, asigură-te și că aplicația nu este pusă în repaus.</string>
     <string name="sync_battery_prompt_open">Deschide setările bateriei</string>
     <string name="sync_battery_prompt_dismiss">Nu, mulțumesc</string>
+    <string name="stremio_new_episode_channel">Notificări pentru episoade noi</string>
+    <string name="stremio_new_episode_count">Episoade noi: %1$d</string>
+    <string name="tv_channel_favorites_title">Favorite</string>
+    <string name="tv_channel_favorites_description">Canalele, filmele și serialele tale preferate</string>
 </resources>

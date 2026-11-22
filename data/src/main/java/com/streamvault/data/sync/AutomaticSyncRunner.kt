@@ -37,13 +37,15 @@ class AutomaticSyncRunner @Inject constructor(
     private val commands: ProviderSyncCommands,
     private val xtreamJobs: XtreamIndexJobDao,
     private val stalkerJobs: StalkerIndexJobStore,
-    private val recordings: RecordingRunDao
+    private val recordings: RecordingRunDao,
+    private val providerRepository: com.streamvault.domain.repository.ProviderRepository? = null
 ) {
     suspend fun waitingReason(providerId: Long): AutomaticSyncOutcome? {
         val policy = preferences.automaticSyncConfiguration.first().forProvider(providerId)
         if (!policy.enabled) return AutomaticSyncOutcome.DISABLED
         val network = context.getSystemService(ConnectivityManager::class.java)
         if (network.activeNetwork == null || (policy.unmeteredOnly && network.isActiveNetworkMetered)) return AutomaticSyncOutcome.WAITING_NETWORK
+        if (policy.vpnOnly && !network.isVpnActive()) return AutomaticSyncOutcome.WAITING_VPN
         if (policy.chargingOnly && !context.getSystemService(BatteryManager::class.java).isCharging) return AutomaticSyncOutcome.WAITING_CHARGING
         if (policy.deviceIdleOnly && AutomaticSyncExecution.idleSatisfied.get() != true && !context.getSystemService(PowerManager::class.java).isDeviceIdleMode) return AutomaticSyncOutcome.WAITING_IDLE
         if (!policy.allowsHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY))) return AutomaticSyncOutcome.WAITING_WINDOW
@@ -116,7 +118,7 @@ class AutomaticSyncRunner @Inject constructor(
         val waiting = waitingReason(providerId)
         if (waiting != null) {
             report(waiting)
-            if (waiting in setOf(AutomaticSyncOutcome.WAITING_NETWORK, AutomaticSyncOutcome.WAITING_CHARGING, AutomaticSyncOutcome.WAITING_IDLE))
+            if (waiting in setOf(AutomaticSyncOutcome.WAITING_NETWORK, AutomaticSyncOutcome.WAITING_VPN, AutomaticSyncOutcome.WAITING_CHARGING, AutomaticSyncOutcome.WAITING_IDLE))
                 ProviderSyncWorker.enqueueAutomaticCheck(context, providerId, policy)
             return@withContext Result.success(Unit)
         }
@@ -136,6 +138,14 @@ class AutomaticSyncRunner @Inject constructor(
         report(AutomaticSyncOutcome.RUNNING)
         var queued = liveBackfillPending
         var partial = false
+        var liveRefreshed = false
+        suspend fun reconcileCompletedLive() {
+            if (!liveRefreshed) return
+            liveRefreshed = false
+            try { providerRepository?.reconcileLiveOrderingAfterRefresh(providerId) }
+            catch (cancelled: kotlinx.coroutines.CancellationException) { throw cancelled }
+            catch (error: Exception) { android.util.Log.w("AutomaticSyncRunner", "Live ordering reconciliation failed", error) }
+        }
         var failure: Result.Error? = null
         suspend fun permanentlyRejected(section: RefreshSection): Boolean {
             val content = when (section) { RefreshSection.MOVIES -> ContentType.MOVIE; RefreshSection.SERIES -> ContentType.SERIES; else -> return false }
@@ -155,13 +165,17 @@ class AutomaticSyncRunner @Inject constructor(
             when (val result = commands.refreshScheduledPlaylist(providerId,
                 RefreshSection.LIVE in catalogSections, RefreshSection.MOVIES in catalogSections)) {
                 is Result.Error -> failure = result
-                is Result.Success -> partial = partial || result.data.partial
+                is Result.Success -> {
+                    partial = partial || result.data.partial
+                    liveRefreshed = RefreshSection.LIVE in catalogSections && !result.data.partial && !result.data.queued && result.data.catalogChanged
+                }
                 Result.Loading -> failure = Result.error("Playlist refresh did not complete")
             }
             runnableSections.filter { it == RefreshSection.EPG }
         } else runnableSections.sortedBy {
             when (it) { RefreshSection.MOVIES -> 0; RefreshSection.SERIES -> 1; RefreshSection.LIVE -> 2; RefreshSection.EPG -> 3 }
         }
+        reconcileCompletedLive()
         for (section in sections) {
             val blocked = waitingReason(providerId)
             if (blocked != null) { report(blocked); return@withContext failure ?: Result.success(Unit) }
@@ -173,9 +187,13 @@ class AutomaticSyncRunner @Inject constructor(
             }
             when (result) {
                 is Result.Error -> failure = result
-                is Result.Success -> { queued = queued || result.data.queued; partial = partial || result.data.partial }
+                is Result.Success -> {
+                    queued = queued || result.data.queued; partial = partial || result.data.partial
+                    if (section == RefreshSection.LIVE && !result.data.partial && !result.data.queued && result.data.catalogChanged) liveRefreshed = true
+                }
                 Result.Loading -> failure = Result.error("Scheduled refresh did not complete")
             }
+            reconcileCompletedLive()
         }
         val latestPolicy = settings(providerId)
         val nextPlan = ProviderRefreshPlanner.plan(snapshot.provider.type, planningMetadata(snapshot, upgradeStartedAt), latestPolicy, System.currentTimeMillis(),

@@ -348,4 +348,8 @@
     <string name="sync_battery_prompt_message">Синхронизација великих каталога може да потраје. Када је оптимизација батерије укључена, Android може да заустави синхронизацију у позадини или када је екран закључан. Дозволите неограничено коришћење батерије да би се довршила. На Samsung телефонима проверите и да апликација није успавана.</string>
     <string name="sync_battery_prompt_open">Отвори подешавања батерије</string>
     <string name="sync_battery_prompt_dismiss">Не, хвала</string>
+    <string name="stremio_new_episode_channel">Обавештења о новим епизодама</string>
+    <string name="stremio_new_episode_count">Нове епизоде: %1$d</string>
+    <string name="tv_channel_favorites_title">Омиљено</string>
+    <string name="tv_channel_favorites_description">Ваши омиљени канали, филмови и серије</string>
 </resources>

@@ -29,7 +29,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
+import com.streamvault.core.ui.components.dialogs.AppDialog as Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.tv.material3.ButtonDefaults
 import androidx.tv.material3.MaterialTheme
@@ -58,7 +58,8 @@ data class LiveCompactGuideProgramLabels(
     val scheduleWeeklyRecording: String,
     val detailsShow: String,
     val detailsHide: String,
-    val cancel: String
+    val cancel: String,
+    val adjustEpgMatch: String? = null
 )
 
 @Composable
@@ -75,7 +76,8 @@ fun LiveCompactGuideProgramDialog(
     onToggleReminder: (() -> Unit)?,
     onScheduleRecording: (() -> Unit)?,
     onScheduleDailyRecording: (() -> Unit)?,
-    onScheduleWeeklyRecording: (() -> Unit)?
+    onScheduleWeeklyRecording: (() -> Unit)?,
+    onAdjustEpgMatch: (() -> Unit)? = null
 ) {
     var showDetails by rememberSaveable(program.startTime, program.endTime, program.title) { mutableStateOf(false) }
     val appTimeFormat = LocalLiveTimeFormat.current
@@ -149,6 +151,23 @@ fun LiveCompactGuideProgramDialog(
                         modifier = Modifier.fillMaxWidth().focusRequester(firstButtonFocusRequester),
                         scale = ButtonDefaults.scale(focusedScale = 1f)
                     ) { Text(labels.watchLive) }
+                    if (onAdjustEpgMatch != null && labels.adjustEpgMatch != null) {
+                        TvButton(
+                            onClick = onAdjustEpgMatch,
+                            modifier = Modifier.fillMaxWidth(),
+                            scale = ButtonDefaults.scale(focusedScale = 1f),
+                            colors = ButtonDefaults.colors(
+                                containerColor = SurfaceHighlight,
+                                contentColor = OnSurface
+                            )
+                        ) {
+                            Text(
+                                text = labels.adjustEpgMatch,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
                     if (onWatchArchive != null) {
                         TvButton(
                             onClick = onWatchArchive,

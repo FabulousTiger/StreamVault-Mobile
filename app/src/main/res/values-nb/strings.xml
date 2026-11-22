@@ -295,4 +295,8 @@
     <string name="sync_battery_prompt_message">Store kataloger kan ta litt tid å synkronisere. Med batterioptimalisering på kan Android stoppe synkroniseringen i bakgrunnen eller når skjermen er låst. Tillat ubegrenset batteribruk slik at den kan fullføres. På Samsung-telefoner bør du også sørge for at appen ikke settes i dvale.</string>
     <string name="sync_battery_prompt_open">Åpne batteriinnstillinger</string>
     <string name="sync_battery_prompt_dismiss">Nei takk</string>
+    <string name="stremio_new_episode_channel">Varsler om nye episoder</string>
+    <string name="stremio_new_episode_count">Nye episoder: %1$d</string>
+    <string name="tv_channel_favorites_title">Favoritter</string>
+    <string name="tv_channel_favorites_description">Dine favorittkanaler, filmer og serier</string>
 </resources>

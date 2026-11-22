@@ -12,4 +12,5 @@
     <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
     <string name="sync_fg_section_working">%1$s: atualizando…</string>
     <string name="sync_fg_cancel">Cancelar</string>
+    <string name="backup_live_order_restore_issue">Não foi possível restaurar algumas configurações de ordenação da TV ao vivo.</string>
 </resources>

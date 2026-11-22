@@ -12,4 +12,5 @@
     <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
     <string name="sync_fg_section_working">%1$s: 업데이트 중…</string>
     <string name="sync_fg_cancel">취소</string>
+    <string name="backup_live_order_restore_issue">일부 실시간 TV 정렬 설정을 복원하지 못했습니다.</string>
 </resources>

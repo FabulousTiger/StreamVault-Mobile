@@ -96,6 +96,11 @@ internal fun AppNavHost(
             platformHost = catalogPlatformHost,
             scaffold = appCatalogScaffold(onTopLevelDestinationRequested),
             dashboardShelfCustomizationContent = appDashboardShelfCustomizationContent(),
+            stremioContent = {
+                com.streamvault.feature.stremio.presentation.StremioHomeShelf(
+                    onOpen = { addonId, history -> navController.navigate(com.streamvault.feature.stremio.navigation.StremioRoutePatterns.historyRoute(addonId, history)) },
+                    onDetails = { addonId, preview -> navController.navigate(com.streamvault.feature.stremio.navigation.StremioRoutePatterns.itemRoute(addonId, preview)) })
+            },
             onTopLevelDestinationRequested = onTopLevelDestinationRequested,
             onOpenMovieDetail = catalogDetailActions::openMovieDetail,
             onOpenSeriesDetail = catalogDetailActions::openSeriesDetail,
@@ -145,7 +150,7 @@ internal fun AppNavHost(
             actions = actions,
             platformHost = settingsPlatformHost,
             navigationDestinations = navigationDestinations,
-            settingsContent = { backupUri, openOpenSubtitlesSignIn, platformHost, destinations, onBack ->
+            settingsContent = { backupUri, openOpenSubtitlesSignIn, openTrakt, platformHost, destinations, onBack ->
                 SettingsScreen(
                     onNavigate = { route ->
                         AppRouteCodec.decode(route)?.let(onTopLevelDestinationRequested)
@@ -171,6 +176,7 @@ internal fun AppNavHost(
                     },
                     initialBackupImportUri = backupUri,
                     openOpenSubtitlesSignIn = openOpenSubtitlesSignIn,
+                    openTrakt = openTrakt,
                     onCloseApp = onCloseApp
                 )
             },
@@ -182,6 +188,19 @@ internal fun AppNavHost(
                     },
                     onBack = onBack,
                     navigationDestinations = destinations,
+                    channelOrderContent = { providerId, category, openModePickerOnStart, dismiss ->
+                        com.streamvault.feature.live.home.ProviderChannelOrderEditor(
+                            providerId, category, dismiss, openModePickerOnStart
+                        )
+                    },
+                    channelOrderSummaryContent = { providerId, category, onChannelOrder, onReorderChannels ->
+                        com.streamvault.feature.live.home.ProviderCategoryChannelOrderControl(
+                            providerId, category, onChannelOrder, onReorderChannels
+                        )
+                    },
+                    categoryOrderContent = { providerId, dismiss ->
+                        com.streamvault.feature.live.home.ProviderCategoryOrderEditor(providerId, dismiss)
+                    },
                 )
             }
         )

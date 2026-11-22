@@ -12,4 +12,5 @@
     <string name="sync_fg_progress_total">%1$s: %2$s / %3$s</string>
     <string name="sync_fg_section_working">%1$s: се ажурира…</string>
     <string name="sync_fg_cancel">Откажи</string>
+    <string name="backup_live_order_restore_issue">Некои поставки за редоследот на ТВ каналите во живо не можеа да се обноват.</string>
 </resources>
