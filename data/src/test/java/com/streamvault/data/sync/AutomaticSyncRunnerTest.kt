@@ -3,6 +3,7 @@ package com.streamvault.data.sync
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
+import android.net.NetworkCapabilities
 import com.google.common.truth.Truth.assertThat
 import com.streamvault.data.local.dao.RecordingRunDao
 import com.streamvault.data.local.dao.XtreamIndexJobDao
@@ -36,11 +37,39 @@ class AutomaticSyncRunnerTest {
     @Before fun setup() = runTest {
         whenever(context.getSystemService(ConnectivityManager::class.java)).thenReturn(network)
         whenever(network.activeNetwork).thenReturn(mock<Network>())
+        vpnActive(true)
         whenever(preferences.automaticSyncConfiguration).thenReturn(flowOf(AutomaticSyncConfiguration()))
         whenever(recordings.getByStatus(RecordingStatus.RECORDING)).thenReturn(emptyList())
         whenever(metadata.getMetadata(7L)).thenReturn(fresh)
         whenever(commands.refreshScheduledSection(any(), any())).thenReturn(Result.success(ProviderSectionSyncResult(catalogChanged = true)))
         whenever(commands.refreshScheduledPlaylist(any(), any(), any())).thenReturn(Result.success(ProviderSectionSyncResult(catalogChanged = true)))
+    }
+
+    private fun vpnActive(active: Boolean) {
+        val vpn = mock<Network>()
+        val caps = mock<NetworkCapabilities>()
+        whenever(caps.hasTransport(NetworkCapabilities.TRANSPORT_VPN)).thenReturn(active)
+        whenever(caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)).thenReturn(true)
+        whenever(network.allNetworks).thenReturn(arrayOf(vpn))
+        whenever(network.getNetworkCapabilities(vpn)).thenReturn(caps)
+    }
+
+    @Test fun `scan waits while no VPN is active`() = runTest {
+        snapshot(M3uConfig("https://example.test/list"))
+        whenever(metadata.getMetadata(7L)).thenReturn(null)
+        vpnActive(false)
+        runner.check(7L)
+        verify(commands, never()).refreshScheduledPlaylist(any(), any(), any())
+        verify(preferences).recordAutomaticSyncStatus(eq(7L), argThat { outcome == AutomaticSyncOutcome.WAITING_VPN })
+    }
+
+    @Test fun `scan runs without a VPN when vpnOnly is off`() = runTest {
+        snapshot(M3uConfig("https://example.test/list"))
+        whenever(metadata.getMetadata(7L)).thenReturn(null)
+        whenever(preferences.automaticSyncConfiguration).thenReturn(flowOf(AutomaticSyncConfiguration(AutomaticSyncSettings(vpnOnly = false))))
+        vpnActive(false)
+        runner.check(7L)
+        verify(commands).refreshScheduledPlaylist(any(), any(), any())
     }
 
     private suspend fun snapshot(config: ProviderConfiguration, active: Boolean = false) {
