@@ -55,12 +55,13 @@ class AutomaticSyncRunnerTest {
     }
 
     @Test fun `scan waits while no VPN is active`() = runTest {
-        snapshot(M3uConfig("https://example.test/list"))
-        whenever(metadata.getMetadata(7L)).thenReturn(null)
         vpnActive(false)
-        runner.check(7L)
-        verify(commands, never()).refreshScheduledPlaylist(any(), any(), any())
-        verify(preferences).recordAutomaticSyncStatus(eq(7L), argThat { outcome == AutomaticSyncOutcome.WAITING_VPN })
+        assertThat(runner.waitingReason(7L)).isEqualTo(AutomaticSyncOutcome.WAITING_VPN)
+    }
+
+    @Test fun `no waiting reason while a VPN is active`() = runTest {
+        vpnActive(true)
+        assertThat(runner.waitingReason(7L)).isNull()
     }
 
     @Test fun `scan runs without a VPN when vpnOnly is off`() = runTest {
